@@ -29,3 +29,8 @@ module PageMakers =
             .Navbar(Navbar.MakeNavbar ctx EndPoint.MembersAdmin)
             .Main(client <@MemberAdminPage.RenderPage user@>) //TODO: test whether this is okay or not
             .Doc()
+    let Changelog ctx =
+        .Stylesheet(SiteTemplates.NormalStyle)
+        .Navbar(Navbar.MakeNavbar ctx EndPoint.MembersAdmin)
+        .Main(SiteParts.ChangelogTemplate().Doc())
+        .Doc()

@@ -25,30 +25,32 @@ type EndPoint =
     | [<EndPoint "POST /documentsubmit">] DocumentSubmit
     | [<EndPoint "POST /imagesubmit">] ImageSubmit
     | [<EndPoint "/logout">] Logout
+    | [<EndPoint "/changelog">] Changelog
 
 module EndPoints =
-    //(endpoint,minRole)
+    //(endpoint,(minRole,maxRole))
     //If minRole is -2, the page is to be accessed logged out
     let PermissionList = Map [
-        (EndPoint.Home,-1);
-        (EndPoint.Logout,0);
-        (EndPoint.Login,-2);
-        (EndPoint.Registration,-2);
-        (EndPoint.PasswordChange,0);
-        (EndPoint.NameChange,0);
-        (EndPoint.Information,0);
-        (EndPoint.Delivery,0);
-        (EndPoint.Taxi,1);
-        (EndPoint.Towing,7);
-        (EndPoint.Documents,0);
-        (EndPoint.ImageUpload,0);
-        (EndPoint.ImageSubmit,0);
-        (EndPoint.DocumentSubmit,0);
-        (EndPoint.AdminHome,12);
-        (EndPoint.CallsAdmin,12);
-        (EndPoint.CarsAdmin,12);
-        (EndPoint.MembersAdmin,12);
-        (EndPoint.NameChangeAdmin,12);
-        (EndPoint.RegistrationAdmin,12);
-        (EndPoint.ServiceAdmin,12);
+        (EndPoint.Home,(-1,13));
+        (EndPoint.Logout,(0,13));
+        (EndPoint.Login,(-2,13));
+        (EndPoint.Changelog,(0,13))
+        (EndPoint.Registration,(-2,13));
+        (EndPoint.PasswordChange,(0,13));
+        (EndPoint.NameChange,(0,13));
+        (EndPoint.Information,(0,13));
+        (EndPoint.Delivery,(0,0));
+        (EndPoint.Taxi,(1,6));
+        (EndPoint.Towing,(7,13));
+        (EndPoint.Documents,(0,13));
+        (EndPoint.ImageUpload,(0,13));
+        (EndPoint.ImageSubmit,(0,13));
+        (EndPoint.DocumentSubmit,(0,13));
+        (EndPoint.AdminHome,(11,13));
+        (EndPoint.CallsAdmin,(11,13));
+        (EndPoint.CarsAdmin,(11,13));
+        (EndPoint.MembersAdmin,(12,13));
+        (EndPoint.NameChangeAdmin,(12,13));
+        (EndPoint.RegistrationAdmin,(12,13));
+        (EndPoint.ServiceAdmin,(12,13));
     ]

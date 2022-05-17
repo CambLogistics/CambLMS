@@ -6,14 +6,17 @@ open WebSharper.UI.Html
 
 module Routing =
     let LoggedInRoute (user:Member) (ctx:Context<EndPoint>) endpoint =
-        let neededPermission = Map.find endpoint EndPoints.PermissionList
-        if user.Role < neededPermission || neededPermission = -2 then
+        let (minRole,maxRole) = Map.find endpoint EndPoints.PermissionList
+        let sessionID = (ctx.Request.Cookies.Item "clms_sid").Value
+        if user.Role < minRole || (user.Role > maxRole && User.verifyAdmin (sessionID) |> not) || neededPermission = -2 then
             Content.RedirectPermanent(EndPoint.Information)
         else
             match endpoint with
                 |EndPoint.Home -> Content.Page(Information.MakePage ctx)
+                |EndPoint.Logout -> User.makeLogout sessionID ctx
                 |EndPoint.PasswordChange -> Content.Page(PageMakers.PasswordChange ctx)
                 |EndPoint.NameChange -> Content.Page(PageMakers.NameChange ctx)
+                |EndPoint.Changelog -> Content.Page(PageMakers.Changelog ctx)
                 |EndPoint.AdminHome -> Content.Page(AdminHome.MakePage ctx)
                 |EndPoint.CallsAdmin -> Content.Page(CallsAdmin.MakePage ctx)
                 |EndPoint.CarsAdmin -> Content.Page(CarsAdmin.MakePage ctx)

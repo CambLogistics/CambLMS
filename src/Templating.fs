@@ -20,6 +20,7 @@ module SiteParts =
     type AdminHomeTemplate = Templating.Template<"wwwroot/templates/admin.html",ClientLoad.FromDocument,ServerLoad.WhenChanged>
     type DeliveryTemplate = Templating.Template<"wwwroot/templates/delivery.html",ClientLoad.FromDocument,ServerLoad.WhenChanged>
     type CarTemplate = Templating.Template<"wwwroot/templates/cars.html",ClientLoad.FromDocument,ServerLoad.WhenChanged>
+    type ChangelogTemplate = Templating.Template<"wwwroot/templates/changelog.html",ClientLoad.FromDocument,ServerLoad.WhenChanged>
     type CallsTemplate = Templating.Template<"wwwroot/templates/calls.html",ClientLoad.FromDocument,ServerLoad.WhenChanged>
     type InfoTemplate = Templating.Template<"wwwroot/templates/info.html",ClientLoad.FromDocument,ServerLoad.WhenChanged>
     type DocumentsTemplate = Templating.Template<"wwwroot/templates/docs.html",ClientLoad.FromDocument,ServerLoad.WhenChanged>

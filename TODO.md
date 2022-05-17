@@ -12,8 +12,8 @@
 - [] Car management
 - [] Action feedback
 - [] Service fee UI
-- [] Changelog
-- [] Logout
+- [x] Changelog
+- [x] Logout
 - [] Information page
 ## Alpha
 - [] Access images from admin UI

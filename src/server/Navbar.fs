@@ -13,6 +13,7 @@ module Navbar =
         Logo
         Separator
         Url (EndPoint.Information,"Információk")
+        Url (EndPoint.Changelog,"Changelog")
         Separator
         Url (EndPoint.Taxi,"Taxizás")
         Url (EndPoint.Towing,"Vontatás")
@@ -22,6 +23,7 @@ module Navbar =
         Url (EndPoint.ImageUpload,"Képfeltöltés")
         Separator
         Url (EndPoint.AdminHome,"Adminfelület")
+        Url (EndPoint.Logout,"Kijelentkezés")
     ]
     let AdminNavbar = [
         Logo

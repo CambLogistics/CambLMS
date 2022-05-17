@@ -1,6 +1,7 @@
 namespace camblms
 
 open WebSharper
+open WebSharper.UI.Server
 open System.Security.Cryptography
 
 [<JavaScript>]
@@ -149,6 +150,9 @@ module User =
             db.SubmitUpdates()
         with
             _ -> ()
+    let makeLogout sessionid ctx =
+        logoutUser sessionid
+        Content.RedirectPermanent(EndPoint.Home)
     let deleteUser sid userid =
         let db = Database.SqlConnection.GetDataContext()
         if not (verifyAdmin sid) then ()
