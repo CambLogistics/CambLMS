@@ -29,6 +29,7 @@ module Navbar =
         Logo
         Separator
         Url (EndPoint.Home,"Normál felület")
+        Separator
         Url (EndPoint.CallsAdmin,"Hívások")
         Url (EndPoint.NameChangeAdmin,"Névváltoztatások")
         Url (EndPoint.RegistrationAdmin,"Regisztációk")
@@ -36,6 +37,8 @@ module Navbar =
         Url(EndPoint.MembersAdmin,"Tagok")
         Url(EndPoint.CarsAdmin,"Autók")
         Url(EndPoint.ServiceAdmin,"Szervizdíjak")
+        Separator
+        Url(EndPoint.Logout,"Kijelentkezés")
     ]
     let MakeNavbar (ctx:Context<EndPoint>) endpoint =
         let navTemplate = NavTemplate()
@@ -51,18 +54,17 @@ module Navbar =
                     |Url (ep,name) ->
                         NavTemplate.NavbarElement().EndpointURL(ctx.Link ep).EndpointName(name).Doc()
             ) elements |> Doc.Concat
-        if Map.find endpoint EndPoints.PermissionList >= 12 then
-            navTemplate.NavList(
-            generateItems ctx AdminNavbar).Doc()
-        else 
-            navTemplate.NavList(
-               NormalNavbar |> List.filter (
-                   fun item ->
+        navTemplate.NavList(
+            let (endpointMinRole,_) = Map.find endpoint EndPoints.PermissionList
+            let navbarList = if endpointMinRole >= 11 then AdminNavbar else NormalNavbar
+            navbarList |> List.filter (
+                fun item ->
                     match item with
                         |Logo -> true
                         |Url (ep,name) ->
-                            if user.IsSome then user.Value.Role >= Map.find ep EndPoints.PermissionList
+                            let (minRole,maxRole) = Map.find ep EndPoints.PermissionList
+                            if user.IsSome then (user.Value.Role >= minRole && user.Value.Role <= maxRole) || (user.Value.Role >= 11 && navbarList = NormalNavbar)
                             else false
                         |Separator -> user.IsSome
-               ) |> generateItems ctx
-                ).Doc()
+            ) |> generateItems ctx
+        ).Doc()
