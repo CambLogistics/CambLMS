@@ -5,10 +5,10 @@
 	- [] Reactivation logic for registration
 - [x] Image uploading / Documents
 - [] Calls(Towing,Delivery,Taxi)
-	-[] Delivery
-	-[] Taxi
-	-[] Towing
-	-[] Call count/ closing week from admin UI
+	- [] Delivery
+	- [] Taxi
+	- [] Towing
+	- [] Call count/ closing week from admin UI
 - [] Car management
 - [] Action feedback
 - [] Service fee UI
