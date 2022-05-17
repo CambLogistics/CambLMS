@@ -128,3 +128,23 @@ form .pass-link a:hover,
 form .signup-link a:hover{
   text-decoration: underline;
 }
+#success{
+  font-family: 'Aclonica', sans-serif;
+  border: 0px;
+  background: rgba(11, 133, 3, 0.4);
+  padding: 10px 30px;
+  margin: 10px 25px;
+  font-size: 15px;
+  border-radius: 15px;
+  color: #fff;
+}
+#error{
+  font-family: 'Aclonica', sans-serif;
+  border: 0px;
+  background: rgba(171, 26, 3, 0.6);
+  padding: 10px 30px;
+  margin: 10px 25px;
+  font-size: 15px;
+  border-radius: 15px;
+  color: #fff;
+}

@@ -15,8 +15,8 @@ body{
 ul {
   list-style-type: none;
   margin: 0;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding: 0;
+  width: 18%;
   background-color: #262626;
   color: #fff;
   position: fixed;
@@ -68,7 +68,7 @@ hr{
   padding-top: 15px;
 }
 .uticel_taxi{
-  padding-top: 150px;
+  padding-top: 100px;
   text-align: left;
 }
 .terkep_cim{
@@ -94,6 +94,26 @@ hr{
   width: 300px;
   background: #ab1a03;
   padding: 15px 30px;
+  margin: 10px 25px;
+  font-size: 15px;
+  border-radius: 15px;
+  color: #fff;
+}
+#success{
+  font-family: 'Aclonica', sans-serif;
+  border: 0px;
+  background: rgba(11, 133, 3, 0.4);
+  padding: 10px 30px;
+  margin: 10px 25px;
+  font-size: 15px;
+  border-radius: 15px;
+  color: #fff;
+}
+#error{
+  font-family: 'Aclonica', sans-serif;
+  border: 0px;
+  background: rgba(171, 26, 3, 0.6);
+  padding: 10px 30px;
   margin: 10px 25px;
   font-size: 15px;
   border-radius: 15px;
@@ -150,6 +170,7 @@ hr{
 }
 .foinfo{
   font-family: 'Aclonica', sans-serif;
+  width: 400px;
   padding-top: 0px;
   padding-left: 30px;
   padding-right: 30px;
@@ -198,4 +219,13 @@ hr{
 }
 .option{
   padding: 10px;
+}
+/* Changelog */
+h2{
+  color: #fff;
+  padding-top: 150px;
+}
+h4, p{
+  padding-top: 25px;
+  color: #fff;
 }
