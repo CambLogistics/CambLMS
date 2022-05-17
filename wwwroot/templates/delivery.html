@@ -1,0 +1,20 @@
+     <div class="main">
+         <table class="uticel_taxi">
+            <th class="szoveg_th" colspan="2">Beszállítás</th>
+            <tr>
+               <td id="calc" class="szoveg_td" colspan="2" style="display: none;">A szolgáltatás ára:&nbsp;    ${Ar} $</td>
+               <td id="alap" class="szoveg_td" colspan="2">Jelenleg nincs kiválasztva szolgáltatás.</td>
+            </tr>
+            <tr>
+               <td>
+                  <form>
+                     <select ws-var="DeliveryType" ws-hole="TypeList" class="arus_dropdown" required>
+                     </select>
+                  </form>
+               </td>
+            </tr>
+            <tr>
+               <td><button class="szamla" ws-onlick="Accept">Számla átadva</button><button class="torles" ws-onclick="Reset"">Fuvar törlés</button></td>
+            </tr>
+         </table>
+      </div>

@@ -1,0 +1,34 @@
+      <div class="main">
+         <div class="listak">
+            <table>
+               <th colspan="10" class="szoveg_th">Tagok</th>
+               <tr class="szoveg_td">
+                  <td style="padding-right: 25px;">ID</td>
+                  <td style="padding-right: 25px;">Név</td>
+                  <td style="padding-right: 25px;">Account ID</td>
+                  <td style="padding-right: 25px;">Rang</td>
+                  <td style="padding-right: 25px;">Törlés</td>
+               </tr>
+               <tr><td colspan="10" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td></tr>
+               <div ws-replace="UserList"></div>
+               <tr ws-template="UserListItem">
+                  <td class="adat">${ID}</td>
+                  <td class="adat">${Name}</td>
+                  <td class="adat">${AccID}</td>
+		            <td class="adat">
+                     <div ws-replace="RoleSelectHole"></div>
+                     <select ws-template="RoleSelectorEnabled" class="dropdown" ws-var="Rank" ws-onchange="ChangeRank">
+                        <option ws-replace="RankList"></option>
+                        <option ws-template="RankListItem" value="${Level}">${Name}</option>
+                     </select>
+                     <select ws-template="RoleSelectorDisabled" class="dropdown" ws-var="Rank" disabled>
+                        <option ws-replace="RankList"></option>
+                     </select>
+                  </td>
+                  <td><div ws-replace="DeleteButtonHole"></div><button ws-template="DeleteButton" value="${ID}" class="delete" ws-onclick="DeleteUser">X</button></td>
+               </tr>
+            </table>
+         </div>
+      </div>
+   </body>
+</html>

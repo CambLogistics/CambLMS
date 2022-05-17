@@ -1,0 +1,22 @@
+      <div class="main">
+         <div class="listak">
+            <table>
+               <th colspan="5" class="szoveg_th">Regisztrációk</th>
+               <tr class="szoveg_td">
+                  <td style="padding-right: 25px;">Név</td>
+                  <td style="padding-right: 25px;">Account ID</td>
+                  <td style="padding-right: 25px;">E-mail</td>
+                  <td colspan="2" style="padding-right: 25px;">Jóváhagyás</td>
+               </tr>
+               <tr><td colspan="5" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td></tr>
+               <div ws-replace="UserList"></div>
+               <tr ws-template="UserListItem" class="adat">
+                  <td>${Name}</td>
+                  <td>${AccID}</td>
+                  <td>${Email}</td>
+                  <td><button value="${UserID}" class="approve" ws-onclick="Approve">Jóváhagy</button></td>
+                  <td><button value="${UserID}" class="deny" ws-onclick="Deny">Elutasít</button></td>
+               </tr>
+            </table>
+         </div>
+      </div>

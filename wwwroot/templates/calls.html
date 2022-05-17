@@ -1,0 +1,22 @@
+      <div class="main">
+         <div class="listak">
+            <button ws-onclick="CloseWeek" class="infogombok">Hét zárás</button><button class="infogombok" ws-onclick="DeleteCalls">Hívások törlése</button>
+            <table>
+               <th colspan="3" class="szoveg_th">Hívások</th>
+               <tr class="szoveg_td">
+                  <td style="padding-right: 25px;">Név</td>
+                  <td style="padding-right: 25px;">Rang</td>
+                  <td style="padding-right: 25px;">Hívásszám</td>
+               </tr>
+               <tr><td colspan="3" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td></tr>
+               <div ws-replace="MemberList"></div>
+               <tr ws-template="Member">
+                  <td class="adat">${Nev}</td>
+                  <td class="adat">${Rang}</td>
+                  <td class="adat">${CallNum}</td>
+               </tr>
+            </table>
+         </div>
+      </div>
+   </body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="hu" dir="ltr">
+   <head>
+      <meta charset="utf-8">
+      <title>CambLogistics progi</title>
+      <link rel="stylesheet" href="loginstyle.css">
+   </head>
+   <body>
+      <div class="wrapper">
+         <div class="title">
+            Regisztráció
+         </div>
+         <form>
+            <div class="field">
+               <input type="text" ws-var="Name" required>
+               <label>IG név (Példa_Béla)</label>
+            </div>
+            <div class="field">
+               <input type="text" ws-var="AccID" required>
+               <label>Account ID</label>
+            </div>
+            <div class="field">
+               <input type="text" ws-var="Email" required>
+               <label>Gmailes email</label>
+            </div>
+            <div class="field">
+               <input type="password" ws-var="Password" required>
+               <label>Jelszó</label>
+            </div>
+            <div class="field">
+               <input type="password" ws-var="PasswordRepeat" required>
+               <label>Jelszó mégegyszer</label>
+            </div>
+            <div class="content">
+               <div class="pass-link">
+                  <a href="#">Elfelejtetted <br>a jelszavad?</a>
+               </div>
+            </div>
+            <div class="field">
+               <button ws-onclick="Register">Regisztráció</button>
+            </div>
+            <div class="signup-link">
+               Tag vagy már? <a href="/">Jelentkezz be</a>
+            </div>
+         </form>
+      </div>
+   </body>
+</html>
