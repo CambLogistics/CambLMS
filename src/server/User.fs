@@ -2,6 +2,8 @@ namespace camblms
 
 open WebSharper
 open WebSharper.UI.Server
+open WebSharper.Sitelets
+open WebSharper.UI
 open System.Security.Cryptography
 
 [<JavaScript>]
@@ -46,7 +48,7 @@ module User =
             query{
                 for session in db.Sessions do
                     join user in db.Users on (session.UserId = user.Id) 
-                    where(session.Id = sessionID && session.Expiry > System.DateTime.Now)
+                    where(session.Id = sessionID && session.Expiry > System.DateTime.Now && user.Deleted = (sbyte 0))
                     select({Id = user.Id;
                             Name = user.Name;
                             Role = user.Role; 
@@ -103,10 +105,10 @@ module User =
         try
             let userList = query{
                     for user in db.Camblogistics.Users do
-                    where(user.Name = name && user.Password = hashPassword password)
+                    where(user.Name = name && user.Password = hashPassword password && user.Deleted = (sbyte 0))
                     select (user.Accepted,user.Id)
                     }
-            if Seq.length userList = 0 |> not then CredentialError
+            if Seq.isEmpty userList then CredentialError
             else
                 let (accepted,uid) = Seq.item 0 userList
                 if accepted = (sbyte 0) then NotApproved
@@ -120,13 +122,22 @@ module User =
         if String.length password < 5 || String.length name < 3 || String.length email < 5 then MissingData
         else
             try
-                let exists = 
+                let existing = 
                     query{
                         for user in db.Camblogistics.Users do
                         where(user.AccountId = accountid || user.Email = email)
-                        count
-                    }
-                if exists > 0 then Exists
+                        select user
+                    } |> Seq.toList
+                if List.length existing > 0 then
+                    (*If there is 2 or more accounts with the same accountID or Email, then there is huge trouble...
+                    ..maybe handle it later*)
+                    let user = List.item 0 existing
+                    if user.Deleted = (sbyte 0) then Exists
+                    else
+                        user.Deleted <- (sbyte 0)
+                        user.Accepted <- (sbyte 0)
+                        db.SubmitUpdates()
+                        RegisterResult.Success
                 else
                     let newUser = db.Camblogistics.Users.Create()
                     newUser.Accepted <- sbyte 0
@@ -158,11 +169,13 @@ module User =
         if not (verifyAdmin sid) then ()
         else
         try
-            (query{
-                for user in db.Camblogistics.Users do
-                    where(user.Id = userid)
-                    exactlyOne
-            }).Delete()
+            let user =
+                (query{
+                    for user in db.Camblogistics.Users do
+                        where(user.Id = userid)
+                        exactlyOne
+                })
+            user.Deleted <- (sbyte 1)
             db.SubmitUpdates()
         with
             _ -> ()
@@ -186,7 +199,7 @@ module User =
             let db = Database.SqlConnection.GetDataContext()
             query{
                 for user in db.Camblogistics.Users do
-                where (user.Accepted = (sbyte (if pending then 1 else 0)))
+                where (user.Deleted = (sbyte 0) && user.Accepted = (sbyte (if pending then 1 else 0)))
                 select({Id = user.Id;Name = user.Name;Email = user.Email;AccountID = user.AccountId;Role = user.Role})
             } |> Seq.toList
         with

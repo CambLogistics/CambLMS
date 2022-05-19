@@ -12,17 +12,21 @@ module PasswordChangePage =
                     let oldPassword = e.Vars.OldPassword.Value
                     let newPassword = e.Vars.NewPassword.Value
                     let newPasswordRepeat = e.Vars.NewPasswordRepeat.Value
-                    //TODO: display result message when the template has a hole for that
                     if not (newPassword = newPasswordRepeat) then ()
                     else
                     async{
                         let! result = UserCallable.doChangeUserPassword sessionID oldPassword newPassword
                         match result with
-                            |PasswordChangeResult.Success -> ()
-                            |PasswordChangeResult.WrongPassword -> ()
-                            |PasswordChangeResult.BadNewPassword -> ()
-                            |PasswordChangeResult.DatabaseError -> ()
-                            |PasswordChangeResult.InvalidSession -> ()
+                            |PasswordChangeResult.Success ->
+                                Feedback.giveFeedback false "Jelszavad megváltoztatásra került!"
+                            |PasswordChangeResult.WrongPassword ->
+                                Feedback.giveFeedback true "Rossz jelszó!"
+                            |PasswordChangeResult.BadNewPassword ->
+                                Feedback.giveFeedback true "Új jelszavad nem felel meg a követelményeknek!"
+                            |PasswordChangeResult.DatabaseError ->
+                                Feedback.giveFeedback true "Adatbázishiba. Értesítsd a (műszaki) igazgatót!" 
+                            |PasswordChangeResult.InvalidSession ->
+                                Feedback.giveFeedback true "Érvénytelen munkamenet. Lépj ki és lépj be újra!"
                     } |> Async.Start
             )
             .Doc()

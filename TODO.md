@@ -1,8 +1,8 @@
 # Development progress
 ## Pre-alpha 
 - [x] User management
-	- [] Deactivate user instead of deleting
-	- [] Reactivation logic for registration
+	- [x] Deactivate user instead of deleting
+	- [x] Reactivation logic for registration
 - [x] Image uploading / Documents
 - [] Calls(Towing,Delivery,Taxi)
 	- [] Delivery
@@ -10,7 +10,7 @@
 	- [] Towing
 	- [] Call count/ closing week from admin UI
 - [] Car management
-- [] Action feedback
+- [x] Action feedback
 - [] Service fee UI
 - [x] Changelog
 - [x] Logout

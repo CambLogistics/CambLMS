@@ -27,10 +27,11 @@ module PageMakers =
         SiteTemplates.MainTemplate()
             .Stylesheet(SiteTemplates.AdminStyle)
             .Navbar(Navbar.MakeNavbar ctx EndPoint.MembersAdmin)
-            .Main(client <@MemberAdminPage.RenderPage user@>) //TODO: test whether this is okay or not
+            .Main(client <@MemberAdminPage.RenderPage user@>)
             .Doc()
     let Changelog ctx =
-        .Stylesheet(SiteTemplates.NormalStyle)
-        .Navbar(Navbar.MakeNavbar ctx EndPoint.MembersAdmin)
-        .Main(SiteParts.ChangelogTemplate().Doc())
-        .Doc()
+        SiteTemplates.MainTemplate()
+            .Stylesheet(SiteTemplates.NormalStyle)
+            .Navbar(Navbar.MakeNavbar ctx EndPoint.MembersAdmin)
+            .Main(SiteParts.ChangelogTemplate().Doc())
+            .Doc()

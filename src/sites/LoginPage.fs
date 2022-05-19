@@ -22,7 +22,6 @@ module LoginPage =
                     async{
                         let! result = UserCallable.doLogin e.Vars.Name.Value e.Vars.Password.Value
                         match result with
-                        //TODO: display an error message when the template has a hole for that
                             |LoginResult.Success(id,exp) -> 
                                 JS.Document.Cookie <- "clms_sid=" + id + ";expires=" + exp.ToString()
                                 if e.Vars.RememberMe.Value then
@@ -32,9 +31,12 @@ module LoginPage =
                                     JavaScript.Cookies.Expire("clms_rm_name")
                                     JavaScript.Cookies.Set("clms_rm","false") 
                                 JS.Window.Location.Replace "/"
-                            |LoginResult.CredentialError -> ()
-                            |LoginResult.DatabaseError -> ()
-                            |LoginResult.NotApproved -> ()
+                            |LoginResult.CredentialError ->
+                                Feedback.giveFeedback true "Hibás felhasználónév vagy jelszó!"
+                            |LoginResult.DatabaseError ->
+                                Feedback.giveFeedback true "Adatbázishiba. Értesítsd a (műszaki) igazgatót!"
+                            |LoginResult.NotApproved ->
+                                Feedback.giveFeedback true "Regisztrációd még nem lett jóváhagyva. Kérjük légy türelemmel!"
                     } |> Async.Start
             )
             .Doc()

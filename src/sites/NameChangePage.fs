@@ -14,19 +14,26 @@ module NameChangePage =
                     let newName = e.Vars.NewName.Value
                     let password = e.Vars.Password.Value
                     let sid = JavaScript.Cookies.Get("clms_sid").Value
-                    //TODO: display an error/success message when the template has a hole for that
-                    if String.length oldName < 5 || String.length newName < 5 || String.length password < 3 then ()
+                    if String.length oldName < 5 || String.length newName < 5 || String.length password < 3 then 
+                        Feedback.giveFeedback true "Ellenőrizd a bevitt adatokat!"
                     else
                     async{
                         let! result = NameChangeServer.doProposeNameChange sid oldName newName password
                         match result with
-                            |Success -> ()
-                            |WrongPassword -> ()
-                            |WrongOldName -> ()
-                            |WrongNewName -> ()
-                            |ChangeAlreadyPending -> ()
-                            |InvalidSession -> ()
-                            |DatabaseError -> ()
+                            |Success -> 
+                                Feedback.giveFeedback false "Névváltoztatási kérelmed beadásra került"
+                            |WrongPassword ->
+                                Feedback.giveFeedback true "Rossz jelszó!"
+                            |WrongOldName ->
+                                Feedback.giveFeedback true "Rossz régi név!"
+                            |WrongNewName ->
+                                Feedback.giveFeedback true "Nem megfelelő régi név!"
+                            |ChangeAlreadyPending ->
+                                Feedback.giveFeedback true "Már van el nem bírált kérelmed!"
+                            |InvalidSession ->
+                                Feedback.giveFeedback true "Rossz munkamenet. Lépj ki és lépj be újra!"
+                            |DatabaseError ->
+                                Feedback.giveFeedback true "Adatbázishiba! Értesítsd a (műszaki) igazgatót!"
                     } |> Async.Start
             )
             .Doc()
