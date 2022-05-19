@@ -25,13 +25,17 @@ module NameChangeAdmin =
                             .NewName(item.NewName)
                             .Approve(
                                 fun e ->
-                                    NameChangeServer.doDecideNameChange sessionID item.UserID true |> Async.Start
-                                    updateList
+                                    async{
+                                        let! result = NameChangeServer.doDecideNameChange sessionID item.UserID true
+                                        updateList
+                                    } |> Async.Start
                             )
                             .Deny(
                                 fun e ->
-                                    NameChangeServer.doDecideNameChange sessionID item.UserID false |> Async.Start
-                                    updateList
+                                    async{
+                                        let! result = NameChangeServer.doDecideNameChange sessionID item.UserID false 
+                                        updateList
+                                    } |> Async.Start
                             )
                             .Doc()
                 )

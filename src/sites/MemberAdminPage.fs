@@ -75,14 +75,14 @@ module MemberAdminPage =
                                                 .Doc())
                                     )
                                     .Rank(string u.Role)
-                                    .ChangeRank(fun e ->
-                                    async {
-                                            let! result =
-                                                UserCallable.doChangeUserRank sessionID u.Id (int e.Target.NodeValue)
-
-                                            updateUserList
-                                        }
-                                        |> Async.Start)
+                                    .ChangeRank(
+                                        fun e ->
+                                            async {
+                                                let! result =
+                                                    UserCallable.doChangeUserRank sessionID u.Id (int e.Target.NodeValue)
+                                                updateUserList
+                                            } |> Async.Start
+                                    )
                                     .Doc()
                         )
                         .DeleteButtonHole(

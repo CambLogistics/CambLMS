@@ -30,15 +30,17 @@ module RegistrationAdminPage =
                             .UserID(string pu.Id)
                             .Approve(
                                 fun e ->
-                                    UserCallable.doApproveUser (JavaScript.Cookies.Get "camblms_sid").Value pu.Id
-                                        |> Async.Start
-                                    updateList
+                                    async{
+                                        let! result = UserCallable.doApproveUser (JavaScript.Cookies.Get "camblms_sid").Value pu.Id
+                                        updateList
+                                    } |> Async.Start
                             )
                             .Deny(
                                 fun e ->
-                                    UserCallable.doDeleteUser (JavaScript.Cookies.Get "camblms_sid").Value pu.Id 
-                                        |> Async.Start
-                                    updateList
+                                    async{
+                                        let! result = UserCallable.doDeleteUser (JavaScript.Cookies.Get "camblms_sid").Value pu.Id 
+                                        updateList
+                                    } |> Async.Start
                             )
                             .Doc()
                 )
