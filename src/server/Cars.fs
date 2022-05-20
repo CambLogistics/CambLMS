@@ -61,6 +61,22 @@ module Cars =
         } |> Seq.toList
         with
             _ -> []
+    let getCarsOfKeyHolder sid =
+        let user = User.getUserFromSID sid
+        match user with
+            |None -> []
+            |Some u ->
+                try
+                let db = Database.SqlConnection.GetDataContext()
+                query{
+                    for car in db.Camblogistics.Cars do
+                    where(car.KeyHolder1 = Some u.Id || car.KeyHolder2 = Some u.Id)
+                    select(
+                        car.RegNum
+                    )
+                } |> Seq.toList
+                with
+                    _ -> []
     let setCar sid car =
         if not (User.verifyAdmin sid) then ()
         else

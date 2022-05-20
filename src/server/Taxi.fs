@@ -41,5 +41,6 @@ module Taxi =
                 for c in calls do
                 where(c.ThisWeek || c.PreviousWeek)
                 count
-            }
+            },
+            List.length calls
         )

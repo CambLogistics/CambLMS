@@ -1,7 +1,7 @@
       <div class="main">
          <table class="foinfo_table">
             <th class="foinfo" colspan="2">
-               ${Nev}  
+               ${Name}  
             </th>
             <tr><td colspan="2"><hr class="infohr"></td></tr>
             <th class="foinfo" colspan="2">Alap információk</th>
@@ -17,9 +17,9 @@
                </td>
                <td class="foinfo">
                   <ul class="infolista">
-                     <li class="option">${Rang}
+                     <li class="option">${Rank}
                      <li class="option">${AccID}
-                     <li class="option">${CarNum}
+                     <li class="option"><ul class="infolista" ws-hole="Cars"><li ws-template="CarItem" class="option">${RegNum}</li></ul></li>
                      <li class="option">${MoneySum}
                      <li class="option">${2WeekMoney}
                   </ul>

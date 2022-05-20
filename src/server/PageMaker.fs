@@ -45,7 +45,7 @@ module PageMakers =
         SiteTemplates.MainTemplate()
             .Stylesheet(SiteTemplates.NormalStyle)
             .Navbar(Navbar.MakeNavbar ctx EndPoint.Information)
-            .Main()
+            .Main(Information.RenderPage ctx)
             .Doc()
     let Taxi ctx =
         SiteTemplates.MainTemplate()
