@@ -35,3 +35,9 @@ module PageMakers =
             .Navbar(Navbar.MakeNavbar ctx EndPoint.MembersAdmin)
             .Main(SiteParts.ChangelogTemplate().Doc())
             .Doc()
+    let CarsAdmin ctx =
+        SiteTemplates.MainTemplate()
+            .Stylesheet(SiteTemplates.AdminStyle)
+            .Navbar(Navbar.MakeNavbar ctx EndPoint.CarsAdmin)
+            .Main(client <@CarsAdmin.RenderPage@>)
+            .Doc()
