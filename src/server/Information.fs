@@ -17,6 +17,7 @@ module Information =
                 let (taxiDaily,taxiWeekly,taxiBiWeekly,taxiAll) = Taxi.getInfo sessionID.Value
                 let (deliveryDaily,deliveryWeekly,deliveryBiWeekly,deliveryAll) = Delivery.getInfo sessionID.Value
                 let (towingDaily,towingWeekly,towingBiWeekly,towingAll) = Tow.getInfo sessionID.Value
+                let callsOfUser = Calls.getCallsBySID sessionID.Value
                 SiteParts.InfoTemplate()
                     .Name(u.Name)
                     .Rank(
@@ -41,4 +42,6 @@ module Information =
                                 fun s rn -> Doc.Concat (SiteParts.InfoTemplate.CarItem().RegNum(rn).Doc()::[s])
                                 ) Doc.Empty (Cars.getCarsOfKeyHolder sessionID.Value)
                     )
+                    .MoneySum((callsOfUser |> List.sumBy (fun c -> c.Price) |> string) + " $")
+                    .TwoWeekMoney((callsOfUser |> List.filter (fun c -> c.PreviousWeek || c.ThisWeek) |> List.sumBy (fun c -> c.Price) |> string) + " $")
                     .Doc()

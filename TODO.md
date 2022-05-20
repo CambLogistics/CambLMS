@@ -14,7 +14,7 @@
 - [] Service fee UI
 - [x] Changelog
 - [x] Logout
-- [] Information page
+- [x] Information page
 ## Alpha
 - [] Access images from admin UI
 - [] Top members
