@@ -14,7 +14,7 @@ module Routing =
                 Content.RedirectPermanent(EndPoint.Information)
         else
             match endpoint with
-                |EndPoint.Home -> Content.Page(Information.MakePage ctx)
+                |EndPoint.Home -> Content.Page(PageMakers.Information ctx)
                 |EndPoint.Logout -> User.makeLogout sessionID ctx
                 |EndPoint.PasswordChange -> Content.Page(PageMakers.PasswordChange ctx)
                 |EndPoint.NameChange -> Content.Page(PageMakers.NameChange ctx)
