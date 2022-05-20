@@ -9,7 +9,7 @@
 	- [] Taxi
 	- [] Towing
 	- [] Call count/ closing week from admin UI
-- [] Car management
+- [x] Car management
 - [x] Action feedback
 - [] Service fee UI
 - [x] Changelog
