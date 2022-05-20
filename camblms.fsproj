@@ -8,6 +8,10 @@
     <Compile Include="src/server/Endpoint.fs" />
     <Compile Include="src/server/User.fs" />
     <Compile Include="src/server/Cars.fs" />
+    <Compile Include="src/server/Calls.fs" />
+    <Compile Include="src/server/Delivery.fs" />
+    <Compile Include="src/server/Tow.fs" />
+    <Compile Include="src/server/Taxi.fs" />
     <Compile Include="src/server/Navbar.fs" />
     <Compile Include="src/server/Images.fs" />
     <Compile Include="src/server/NameChange.fs" />

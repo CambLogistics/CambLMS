@@ -11,15 +11,18 @@ type Car = {Id:string;CarType: string;RegNum: string;
             KeyHolder1: Member option;KeyHolder2: Member option}
 
 module Cars =
+    [<Rpc>]
     let getTuningLevels =
+        async{
         try
             let db = Database.SqlConnection.GetDataContext()
-            query{
+            return query{
                 for tuning in db.Camblogistics.TuningLevels do
                 select (tuning.Level,tuning.Name)
             } |> Map.ofSeq
         with
-            _ -> Map.ofList []
+            _ -> return Map.ofList []
+        }
     let getCars sid =
         if not (User.verifyAdmin sid) then []
         else
@@ -90,4 +93,13 @@ module Cars =
             db.SubmitUpdates()
         with
             _ -> ()
-    
+    [<Rpc>]
+    let doGetCars sid =
+        async{
+            return getCars sid
+        }
+    [<Rpc>]
+    let doSetCar sid car =
+        async{
+            return setCar sid car
+        }

@@ -8,8 +8,10 @@ module Routing =
     let LoggedInRoute (user:Member) (ctx:Context<EndPoint>) endpoint =
         let (minRole,maxRole) = Map.find endpoint EndPoints.PermissionList
         let sessionID = (ctx.Request.Cookies.Item "clms_sid").Value
-        if user.Role < minRole || (user.Role > maxRole && User.verifyAdmin (sessionID) |> not) || neededPermission = -2 then
-            Content.RedirectPermanent(EndPoint.Information)
+        if user.Role < minRole || 
+            (user.Role > maxRole && (User.verifyAdmin (sessionID) |> not)) 
+            || minRole = -2 then
+                Content.RedirectPermanent(EndPoint.Information)
         else
             match endpoint with
                 |EndPoint.Home -> Content.Page(Information.MakePage ctx)

@@ -53,6 +53,7 @@ CREATE TABLE `calls` (
   `price` int(11) NOT NULL,
   `thisWeek` tinyint(1) NOT NULL,
   `type` smallint(6) NOT NULL,
+  `secondWeek` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `userID` (`userID`),
   CONSTRAINT `calls_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE
@@ -467,4 +468,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-20 11:54:53
+-- Dump completed on 2022-05-20 14:49:15
