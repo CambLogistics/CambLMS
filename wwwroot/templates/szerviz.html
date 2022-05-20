@@ -1,25 +1,54 @@
-      <div class="main">
-         <div class="listak">
-            <table>
-               <th colspan="4" class="szoveg_th">Szervíz díjak</th>
-               <tr>
-                  <td colspan="4">
-               <tr class="szoveg_td">
-                  <td style="padding-right: 25px;">ID</td>
-                  <td style="padding-right: 25px;">Név</td>
-                  <td style="padding-right: 25px;">Képekből összeg</td>
-                  <td style="padding-right: 25px;">Fizetve</td>
-               </tr>
-               <tr><td colspan="4" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td></tr>
-               <div ws-replace="ServiceList"></div>
-               <tr ws-template="ServiceListItem" class="adat">
-                  <td class="adat">${ID}</td>
-                  <td class="adat">${Nev}</td>
-                  <td class="adat">${ServiceFee}</td>
-                  <td><button value="${ID}" class="delete" ws-onclick="Delete">X</button></td>
-               </tr>
-            </table>
-         </div>
-      </div>
-   </body>
+<div class="main">
+   <div>
+      <h2 class="szoveg_th" style="text-align: left; padding-bottom: 0px;">Szervíz díjak felvétele</h2>
+      <form onsubmit="">
+         <table>
+            <tr>
+               <td style="padding-right: 30px;padding-top: 10px;">
+                  <label class="szoveg_td_also">ID</label><br>
+                  <input class="inputbox" type="text" name="ID">
+               </td>
+               <td style="padding-right: 30px;padding-top: 10px;">
+                  <label class="szoveg_td_also">Név</label><br>
+                  <input class="inputbox" type="text" name="Name">
+               </td>
+               <td style="padding-right: 30px;padding-top: 10px;">
+                  <label class="szoveg_td_also">Képekből összeg</label><br>
+                  <input class="inputbox" type="text" name="ServiceFee">
+               </td>
+            </tr>
+            <tr>
+               <td>
+                  <input type="submit" name="submit" value="Hozzáad" class="approve">
+               </td>
+            </tr>
+         </table>
+      </form>
+   </div>
+   <div class="listak">
+      <table>
+         <th colspan="4" class="szoveg_th">Szervíz díjak</th>
+         <tr>
+            <td colspan="4">
+         <tr class="szoveg_td">
+            <td style="padding-right: 25px;">ID</td>
+            <td style="padding-right: 25px;">Név</td>
+            <td style="padding-right: 25px;">Képekből összeg</td>
+            <td style="padding-right: 25px;">Fizetve</td>
+         </tr>
+         <tr>
+            <td colspan="4" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td>
+         </tr>
+         <div ws-replace="ServiceList"></div>
+         <tr ws-template="ServiceListItem" class="adat">
+            <td class="adat">${ID}</td>
+            <td class="adat">${Nev}</td>
+            <td class="adat">${ServiceFee}</td>
+            <td><button value="${ID}" class="delete" ws-onclick="Delete">X</button></td>
+         </tr>
+      </table>
+   </div>
+</div>
+</body>
+
 </html>
