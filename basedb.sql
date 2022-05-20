@@ -76,7 +76,7 @@ DROP TABLE IF EXISTS `cars`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cars` (
-  `id` int(11) NOT NULL,
+  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `regNum` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
   `airRide` tinyint(1) NOT NULL,
@@ -260,7 +260,7 @@ DROP TABLE IF EXISTS `roles`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `roles` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'NULL',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -271,7 +271,7 @@ CREATE TABLE `roles` (
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` VALUES (0,'Beszállító'),(1,'Próbaidős sofőr'),(2,'Gyakornok sofőr'),(3,'Sofőr'),(4,'Haladó sofőr'),(5,'Profi sofőr'),(6,'Veterán sofőr'),(7,'Vontatós gyakornok'),(8,'Vontatós'),(9,'Haladó vontatós'),(10,'Telephelyvezető gyakornok'),(11,'Telephelyvezető'),(12,'Igazgató-helyettes'),(13,'Igazgató');
+INSERT INTO `roles` VALUES (0,'Beszállító'),(1,'Próbaidős sofőr'),(2,'Gyakornok sofőr'),(3,'Sofőr'),(4,'Haladó sofőr'),(5,'Profi sofőr'),(6,'Veterán sofőr'),(7,'Vontatós gyakornok'),(8,'Vontatós'),(9,'Haladó vontatós'),(10,'Telephelyvezető gyakornok'),(11,'Telephelyvezető'),(12,'Műszaki igazgató'),(13,'Igazgató-helyettes'),(14,'Igazgató');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -390,7 +390,7 @@ DROP TABLE IF EXISTS `tuningLevels`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tuningLevels` (
   `level` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'NULL',
   PRIMARY KEY (`level`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -419,7 +419,8 @@ CREATE TABLE `users` (
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `accepted` tinyint(1) NOT NULL,
   `accountID` int(11) NOT NULL,
-  `email` varchar(128) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'NULL',
+  `deleted` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -466,4 +467,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-17  9:43:34
+-- Dump completed on 2022-05-20 11:54:53
