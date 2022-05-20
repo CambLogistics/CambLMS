@@ -39,7 +39,7 @@ module Information =
                     .TransSum(string deliveryAll)
                     .Cars(
                         List.fold (
-                                fun s rn -> Doc.Concat (SiteParts.InfoTemplate.CarItem().RegNum(rn).Doc()::[s])
+                                fun s (rn:string) -> Doc.Concat (SiteParts.InfoTemplate.CarItem().RegNum(rn).Doc()::[s])
                                 ) Doc.Empty (Cars.getCarsOfKeyHolder sessionID.Value)
                     )
                     .MoneySum((callsOfUser |> List.sumBy (fun c -> c.Price) |> string) + " $")
