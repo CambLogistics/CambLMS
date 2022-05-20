@@ -3,5 +3,6 @@ This is the administration system for the virtual (in-game) logistics company Ca
 ## Status
 The code is not ready to be compiled or ran, but progress is being made, see *TODO.md*
 ## Compiling and setup
-The default database can be created by running *basedb.sql*
+The default database can be created by running *basedb.sql* on a MySQL (compatible) database server.
+
 Adjust the connection string in *Database.fs* before compiling!
