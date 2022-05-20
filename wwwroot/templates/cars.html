@@ -5,53 +5,54 @@
                <tr>
                   <td style="padding-right: 30px;padding-top: 10px;">
                      <label class="szoveg_td_also">ID</label><br>
-                     <input class="inputbox" ws-var="NewID" type="text" name="ID" readonly>
+                     <input class="inputbox" id="NewID" ws-var="NewID" type="text" name="ID" readonly>
                   </td>
                   <td style="padding-right: 30px;padding-top: 10px;">
                      <label class="szoveg_td_also">Típus</label><br>
-                     <input class="inputbox" ws-var="NewType" type="text" name="Type">
+                     <input class="inputbox" id="NewType" ws-var="NewType" type="text" name="Type">
                   </td>
                   <td style="padding-right: 30px;padding-top: 10px;">
                      <label class="szoveg_td_also">Plate</label><br>
-                     <input class="inputbox" ws-var="NewRegNum" type="text" name="Plate">
+                     <input class="inputbox" id="NewRegNum" ws-var="NewRegNum" type="text" name="Plate">
                   </td>
                </tr>
                <tr>
                   <td style="padding-right: 30px;padding-top: 25px;">
                      <label class="szoveg_td_also">Parkjegy</label><br>
-                     <input type="checkbox" ws-var="NewTicket" name="Park">
+                     <input type="checkbox" id="NewTicket" ws-var="NewTicket" name="Park">
                   </td>
                   <td style="padding-right: 30px;padding-top: 25px;">
                      <label class="szoveg_td_also">Airride</label><br>
-                     <input type="checkbox" ws-var="NewAirRide" name="Air">
+                     <input type="checkbox" id="NewAirRide" ws-var="NewAirRide" name="Air">
                   </td>
                   <td style="padding-right: 30px;padding-top: 25px;">
                      <label class="szoveg_td_also">GPS</label><br>
-                     <input type="checkbox" ws-var="NewGPS" name="GPS">
+                     <input type="checkbox" id="NewGPS" ws-var="NewGPS" name="GPS">
                   </td>
                </tr>
                <tr>   
                   <td style="padding-right: 30px;padding-top: 25px;">
                      <label class="szoveg_td_also">Motor</label><br>
-                     <select class="dropdown" ws-var="NewEngine" style="width: 150px">
+                     <select class="dropdown" id="NewEngine" ws-var="NewEngine" style="width: 150px">
                         <option ws-replace="EngineTuningList"></option>
+                        <option ws-template="TuningItem" value="${TuningLevel}">${TuningName}</option>
                      </select>
                   </td>
                   <td style="padding-right: 30px;padding-top: 25px;">
                      <label class="szoveg_td_also">ECU</label><br>
-                     <select class="dropdown" ws-var="NewECU" style="width: 150px">
+                     <select class="dropdown" id="NewECU" ws-var="NewECU" style="width: 150px">
                         <option ws-replace="ECUTuningList"></option>
                      </select>
                   </td>
                   <td style="padding-right: 30px;padding-top: 25px;">
                      <label class="szoveg_td_also">Turbó</label><br>
-                     <select class="dropdown" ws-var="NewTurbo" style="width: 150px">
+                     <select class="dropdown" id="NewTurbo" ws-var="NewTurbo" style="width: 150px">
                         <option ws-replace="TurboTuningList"></option>
                      </select>
                   </td>
                   <td style="padding-right: 30px;padding-top: 25px;">
                      <label class="szoveg_td_also">Váltó</label><br>
-                     <select class="dropdown" ws-var="NewGearbox" style="width: 150px">
+                     <select class="dropdown" id="NewGearbox" ws-var="NewGearbox" style="width: 150px">
                         <option ws-replace="GearboxTuningList"></option>
                      </select>
                   </td>
@@ -59,25 +60,25 @@
                <tr>
                   <td style="padding-right: 30px;padding-top: 25px;">
                      <label class="szoveg_td_also">Fék</label><br>
-                     <select class="dropdown" ws-var="NewBrakes" style="width: 150px">
+                     <select class="dropdown" id="NewBrakes" ws-var="NewBrakes" style="width: 150px">
                         <option ws-replace="BrakeTuningList"></option>
                      </select>
                   </td>
                   <td style="padding-right: 30px;padding-top: 25px;">
                      <label class="szoveg_td_also">Gumi</label><br>
-                     <select class="dropdown" ws-var="NewTyres"  style="width: 150px">
+                     <select class="dropdown" id="NewTyres" ws-var="NewTyres"  style="width: 150px">
                         <option ws-replace="TyreTuningList"></option>
                      </select>
                   </td>
                   <td style="padding-right: 30px;padding-top: 25px;">
                      <label class="szoveg_td_also">Felfüggesztés</label><br>
-                     <select class="dropdown" ws-var="NewSuspension" style="width: 150px">
+                     <select class="dropdown" id="NewSuspension" ws-var="NewSuspension" style="width: 150px">
                         <option ws-replace="SuspensionTuningList"></option>
                      </select>
                   </td>
                   <td style="padding-right: 30px;padding-top: 25px;">
                      <label class="szoveg_td_also">Súlycsökkentés</label><br>
-                     <select class="dropdown" ws-var="NewWeightReduction" style="width: 150px">
+                     <select class="dropdown" id="NewWeightReduction" ws-var="NewWeightReduction" style="width: 150px">
                         <option ws-replace="WeightReductionTuningList"></option>
                      </select>
                   </td>
@@ -85,12 +86,13 @@
                <tr>
                   <td style="padding-right: 30px;padding-top: 25px;">
                      <label class="szoveg_td_also">Kulcs1</label><br>
-                     <select class="dropdown" ws-var="NewKeyHolder1" ws-hole="MemberList1" style="width: 150px">
+                     <select class="dropdown" id="NewKeyHolder1" ws-var="NewKeyHolder1" ws-hole="MemberList1" style="width: 150px">
+                     <option ws-template="KHListMember" value="${UserID}">${Name}</option>
                      </select>
                   </td>
                   <td style="padding-right: 30px;padding-top: 25px;">
                      <label class="szoveg_td_also">Kulcs2</label><br>
-                     <select class="dropdown" ws-var="NewKeyHolder2" ws-hole="MemberList2" style="width: 150px">
+                     <select class="dropdown" id="NewKeyHolder2" ws-var="NewKeyHolder2" ws-hole="MemberList2" style="width: 150px">
                      </select>
                   </td>
                   <td>
@@ -132,13 +134,13 @@
                   <td class="adat">${CarType}</td>
                   <td class="adat">${CarReg}</td>
                   <td class="adat">
-                     <input type="checkbox" value="${OldTicket}" class="checkbox" readonly>
+                     <input type="checkbox" ws-var="OldTicket" class="checkbox" readonly>
                   </td>
                   <td class="adat">
-                     <input type="checkbox" value="${OldAirRide}" class="checkbox" readonly>
+                     <input type="checkbox" ws-var="OldAirRide" class="checkbox" readonly>
                   </td>
                   <td class="adat">
-                     <input type="checkbox" value="${OldGPS}" class="checkbox" readonly>
+                     <input type="checkbox" ws-var="OldGPS" class="checkbox" readonly>
                   </td>
                   <td class="adat">${Engine}</td>
                   <td class="adat">${ECU}</td>

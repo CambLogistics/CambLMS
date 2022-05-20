@@ -201,7 +201,7 @@ module User =
                 for user in db.Camblogistics.Users do
                 where (user.Deleted = (sbyte 0) && user.Accepted = (sbyte (if pending then 1 else 0)))
                 select({Id = user.Id;Name = user.Name;Email = user.Email;AccountID = user.AccountId;Role = user.Role})
-            } |> Seq.toList
+            } |> Seq.toList |> List.sortBy (fun u -> u.Id)
         with
             _ -> []
     let getRankList =
