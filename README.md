@@ -1,5 +1,5 @@
 # CambLogistics Management System
-This is the management system from the virtual (in-game) logistics company CambLogistics
+This is the administration system for the virtual (in-game) logistics company CambLogistics
 ## Status
 The code is not ready to be compiled or ran, but progress is being made, see *TODO.md*
 ## Compiling and setup
