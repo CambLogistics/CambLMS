@@ -13,7 +13,17 @@ type CallType =
     |Taxi = 1
     |Towing = 2
 
-type Call = {Type: CallType;Price: int; Date: System.DateTime; ThisWeek: bool; SecondWeek: bool}
+[<JavaScript>]
+type CallDuration =
+    |All
+    |TwoWeeks
+    |Weekly
+
+[<JavaScript>]
+type Call = {Type: CallType;Price: int; Date: System.DateTime; ThisWeek: bool; PreviousWeek: bool}
+
+[<JavaScript>]
+type UserWithCalls = {User:Member;Calls: Call list}
 
 module Calls =
     let registerCall sid price (callType:CallType) =
@@ -27,7 +37,7 @@ module Calls =
                 call.Price <- price
                 call.UserId <- u.Id
                 call.ThisWeek <- (sbyte 1)
-                call.SecondWeek <- (sbyte 0)
+                call.PreviousWeek <- (sbyte 0)
                 call.Type <- int16 callType
                 db.SubmitUpdates()
                 Success
@@ -38,14 +48,14 @@ module Calls =
         let db = Database.SqlConnection.GetDataContext()
         query{
             for call in db.Camblogistics.Calls do
-            where(call.ThisWeek = (sbyte 1) || call.SecondWeek = (sbyte 1))
+            where(call.ThisWeek = (sbyte 1) || call.PreviousWeek = (sbyte 1))
             select call
         } |> Seq.iter (
                 fun c -> 
                     if c.ThisWeek = (sbyte 1) then 
                         c.ThisWeek <- (sbyte 0)
-                        c.SecondWeek <- (sbyte 1)
-                    else if c.SecondWeek = (sbyte 1) then c.SecondWeek <- (sbyte 0)
+                        c.PreviousWeek <- (sbyte 1)
+                    else if c.PreviousWeek = (sbyte 1) then c.PreviousWeek <- (sbyte 0)
             )
         with
         _ -> ()
@@ -55,7 +65,7 @@ module Calls =
         query{
             for c in db.Camblogistics.Calls do
             where(user.Id = c.UserId)
-            select {Type = enum <| int32 c.Type;Price = c.Price; Date = c.Date; ThisWeek = c.ThisWeek = (sbyte 1);SecondWeek = c.SecondWeek = (sbyte 1)}
+            select {Type = enum <| int32 c.Type;Price = c.Price; Date = c.Date; ThisWeek = c.ThisWeek = (sbyte 1);PreviousWeek = c.PreviousWeek = (sbyte 1)}
         } |> Seq.toList
         with
         _ -> []
@@ -64,5 +74,32 @@ module Calls =
         match user with
             |None -> []
             |Some u -> getCallsOfUser u
+    [<Rpc>]
+    let getUserListWithCalls sid duration =
+        async{
+                return User.getUserList sid false |> List.map(
+                    fun u ->
+                        {User = u;Calls = getCallsOfUser u |> 
+                                            List.filter
+                                                (
+                                                    fun c ->
+                                                        match duration with
+                                                            |All -> true
+                                                            |TwoWeeks -> c.PreviousWeek || c.ThisWeek
+                                                            |Weekly -> c.ThisWeek
+                                                )}
+                )
     
+        }
+    [<Rpc>]
+    let doGetUserCalls sid user =
+        async{
+            if User.verifyAdmin sid |> not then return []
+            else return getCallsOfUser user
+        }
+    [<Rpc>]
+    let doRotateWeek sid =
+        async{
+            return rotateWeek sid
+        }
 

@@ -8,7 +8,7 @@
 	- [] Delivery
 	- [] Taxi
 	- [] Towing
-	- [] Call count/ closing week from admin UI
+	- [x] Call count/ closing week from admin UI
 - [x] Car management
 - [x] Action feedback
 - [] Service fee UI

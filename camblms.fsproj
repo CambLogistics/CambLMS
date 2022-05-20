@@ -17,6 +17,7 @@
     <Compile Include="src/server/NameChange.fs" />
     <Compile Include="src/sites/Feedback.fs" />
     <Compile Include="src/sites/CarsAdmin.fs" />
+    <Compile Include="src/sites/CallsAdmin.fs" />
     <Compile Include="src/sites/NameChangeAdmin.fs" />
     <Compile Include="src/sites/NameChangePage.fs" />
     <Compile Include="src/sites/PasswordChangePage.fs" />

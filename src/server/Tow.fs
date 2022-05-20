@@ -38,7 +38,7 @@ module Tow =
             },
             query{
                 for c in calls do
-                where(c.ThisWeek || c.SecondWeek)
+                where(c.ThisWeek || c.PreviousWeek)
                 count
             }
         )
