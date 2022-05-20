@@ -11,12 +11,13 @@ module SiteTemplates =
     let NormalStyle = "normalstyle.css"
     let ChangeStyle = "changestyles.css"
     type MainTemplate = Templating.Template<"wwwroot/templates/main.html", ClientLoad.FromDocument, ServerLoad.WhenChanged>
-    type LoginTemplate = Templating.Template<"wwwroot/templates/login.html", ClientLoad.FromDocument, ServerLoad.WhenChanged>
-    type RegistrationTemplate = Templating.Template<"wwwroot/templates/registration.html", ClientLoad.FromDocument, ServerLoad.WhenChanged>
+    type LoginTemplate = Templating.Template<"wwwroot/templates/loginwrapper.html",ClientLoad.FromDocument,ServerLoad.WhenChanged>
 
 //Parts not servable on their own
 [<JavaScript>]
 module SiteParts = 
+    type LoginPage = Templating.Template<"wwwroot/templates/login.html", ClientLoad.FromDocument, ServerLoad.WhenChanged>
+    type RegistrationPage = Templating.Template<"wwwroot/templates/registration.html", ClientLoad.FromDocument, ServerLoad.WhenChanged>
     type AdminHomeTemplate = Templating.Template<"wwwroot/templates/admin.html",ClientLoad.FromDocument,ServerLoad.WhenChanged>
     type DeliveryTemplate = Templating.Template<"wwwroot/templates/delivery.html",ClientLoad.FromDocument,ServerLoad.WhenChanged>
     type CarTemplate = Templating.Template<"wwwroot/templates/cars.html",ClientLoad.FromDocument,ServerLoad.WhenChanged>

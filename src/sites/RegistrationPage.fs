@@ -5,8 +5,8 @@ open WebSharper.JavaScript
 
 [<JavaScript>]
 module RegistrationPage =
-    let RenderPage =
-        SiteTemplates.RegistrationTemplate()
+    let RenderPage() =
+        SiteParts.RegistrationPage()
             .Register(
                 fun e ->
                     async{

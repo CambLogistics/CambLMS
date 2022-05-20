@@ -39,9 +39,9 @@ module Routing =
         if neededPermission > -1 then Content.RedirectPermanent(EndPoint.Login)
         else
             match endpoint with
-                |EndPoint.Home -> Content.Page(client <@LoginPage.RenderPage@>)
-                |EndPoint.Login -> Content.Page(client <@LoginPage.RenderPage@>)
-                |EndPoint.Registration -> Content.Page(client <@RegistrationPage.RenderPage@>)
+                |EndPoint.Home -> Content.Page(PageMakers.LoginPage ctx)
+                |EndPoint.Login -> Content.Page(PageMakers.LoginPage ctx)
+                |EndPoint.Registration -> Content.Page(PageMakers.RegisterPage ctx)
 
     let MakeRoute (ctx:Context<EndPoint>) endpoint =
         match ctx.Request.Cookies.Item "clms_sid" with

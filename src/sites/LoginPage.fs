@@ -5,8 +5,8 @@ open WebSharper.JavaScript
 
 [<JavaScript>]
 module LoginPage =
-    let RenderPage =
-        SiteTemplates.LoginTemplate()
+    let RenderPage() =
+        SiteParts.LoginPage()
             .RememberMe(
                 match JavaScript.Cookies.Get "clms_rm" |> Optional.toOption with
                     |None -> false

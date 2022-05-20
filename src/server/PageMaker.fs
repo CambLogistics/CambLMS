@@ -83,3 +83,11 @@ module PageMakers =
             .Navbar(Navbar.MakeNavbar ctx EndPoint.ServiceAdmin)
             .Main()
             .Doc()
+    let LoginPage ctx =
+        SiteTemplates.LoginTemplate()
+            .Main(client <@LoginPage.RenderPage()@>)
+            .Doc()
+    let RegisterPage ctx =
+        SiteTemplates.LoginTemplate()
+            .Main(client <@RegistrationPage.RenderPage()@>)
+            .Doc()
