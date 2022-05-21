@@ -30,6 +30,8 @@ module TowPage =
         |None -> ""
         |Some s -> s
     let RenderPage() =
+        updateAreaList()
+        updateGarageList()
         SiteParts.TowTemplate()
             .Price(
                  selectedRoute.View.MapAsync(
@@ -52,7 +54,7 @@ module TowPage =
             .SelectCh(fun e -> selectedRoute.Set {selectedRoute.Value with Source = 4})
             .SelectBS(fun e -> selectedRoute.Set {selectedRoute.Value with Source = 5})
             .SelectFix(fun e -> selectedRoute.Set {selectedRoute.Value with Dest = 1})
-            .SelectAP(fun e -> selectedRoute.Set {selectedRoute.Value with Dest = 0})
+            .SelectBMS(fun e -> selectedRoute.Set {selectedRoute.Value with Dest = 0})
             .SelectJunk(fun e -> selectedRoute.Set {selectedRoute.Value with Dest = 2})
             .Submit(
                  fun e ->
