@@ -21,6 +21,7 @@
 - [] GDPR compliance 
 - [] Forgot password
 - [] Profile memory usage
+- [] Client-side routing
 ## Beta
 - [] Double prices / holidays
 - [] Config file
