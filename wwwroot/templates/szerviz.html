@@ -1,7 +1,6 @@
 <div class="main">
    <div>
       <h2 class="szoveg_th" style="text-align: left; padding-bottom: 0px;">Szervíz díjak felvétele</h2>
-      <form onsubmit="">
          <table>
             <tr>
                <td style="padding-right: 30px;padding-top: 10px;">
@@ -19,11 +18,10 @@
             </tr>
             <tr>
                <td>
-                  <input type="submit" name="submit" value="Hozzáad" class="approve">
+                  <button ws-onclick="Submit" name="submit" class="approve">Hozzáad</button>
                </td>
             </tr>
          </table>
-      </form>
    </div>
    <div class="listak">
       <table>
@@ -39,7 +37,7 @@
          <tr>
             <td colspan="4" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td>
          </tr>
-         <div ws-replace="ServiceList"></div>
+         <tr ws-replace="ServiceList"></div>
          <tr ws-template="ServiceListItem" class="adat">
             <td class="adat">${ID}</td>
             <td class="adat">${Nev}</td>
