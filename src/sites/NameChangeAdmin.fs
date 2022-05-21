@@ -8,13 +8,13 @@ open WebSharper.UI.Client
 module NameChangeAdmin =
     let userList= ListModel.FromSeq [{UserID = -1;OldName = "Whatever";NewName = "WhoCares"}]
     let sessionID = JavaScript.Cookies.Get("clms_sid").Value
-    let updateList =
+    let updateList() =
         async{
             let! pendingUsers = NameChangeServer.doGetPendingChanges sessionID
             userList.Set pendingUsers
         } |> Async.Start
     let RenderPage() =
-        updateList
+        updateList()
         SiteParts.NameAdminTemplate()
             .UserList(
                 userList.View |> Doc.BindSeqCached (
@@ -27,14 +27,14 @@ module NameChangeAdmin =
                                 fun e ->
                                     async{
                                         let! result = NameChangeServer.doDecideNameChange sessionID item.UserID true
-                                        return updateList
+                                        return updateList result
                                     } |> Async.Start
                             )
                             .Deny(
                                 fun e ->
                                     async{
                                         let! result = NameChangeServer.doDecideNameChange sessionID item.UserID false 
-                                        return updateList
+                                        return updateList result
                                     } |> Async.Start
                             )
                             .Doc()

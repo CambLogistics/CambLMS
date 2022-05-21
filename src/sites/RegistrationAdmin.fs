@@ -12,13 +12,13 @@ open WebSharper.UI.Client
 [<JavaScript>]
 module RegistrationAdminPage =
     let pendingUsers = ListModel.FromSeq [{Id = -1;Name="Dr.Who";AccountID=66666;Email="whoisthis@nope.no";Role = -1}]
-    let updateList =
+    let updateList() =
         async{
             let! userList = UserCallable.doGetUserList (JavaScript.Cookies.Get "clms_sid").Value  true
             pendingUsers.Set userList
         } |> Async.Start
     let RenderPage() =
-        updateList
+        updateList()
         SiteParts.RegistrationAdminTemplate()
             .UserList(
                 pendingUsers.View |> Doc.BindSeqCached (
@@ -32,14 +32,14 @@ module RegistrationAdminPage =
                                 fun e ->
                                     async{
                                         let! result = UserCallable.doApproveUser (JavaScript.Cookies.Get "clms_sid").Value pu.Id
-                                        return updateList
+                                        return updateList result
                                     } |> Async.Start
                             )
                             .Deny(
                                 fun e ->
                                     async{
                                         let! result = UserCallable.doDeleteUser (JavaScript.Cookies.Get "clms_sid").Value pu.Id 
-                                        return updateList
+                                        return updateList result
                                     } |> Async.Start
                             )
                             .Doc()

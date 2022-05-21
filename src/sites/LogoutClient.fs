@@ -7,4 +7,5 @@ open WebSharper.UI
 module LogoutClient =
     let Logout() =
         JavaScript.Cookies.Expire("clms_sid")
+        JavaScript.JS.Window.Location.Replace "/"
         Doc.Empty

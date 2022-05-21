@@ -21,21 +21,21 @@ module CarsAdmin =
                                                             Suspension=0;WeightReduction=0;Gearbox=0;
                                                             Tyres=0;Turbo=0;KeyHolder1=None;
                                                             KeyHolder2=None}
-    let updateTuningList =
+    let updateTuningList() =
         async{
             let! list = Cars.getTuningLevels()
             tuningList.Set list
-        }
-    let updateCarList =
+        } |> Async.Start
+    let updateCarList() =
         async{
             let! list = Cars.doGetCars sessionID
             carList.Set list
-        }
-    let updateMemberList =
+        } |> Async.Start
+    let updateMemberList() =
         async{
             let! list = UserCallable.doGetUserList sessionID false
             memberList.Set list
-        }
+        } |> Async.Start
     let renderTuningItem (t:System.Collections.Generic.KeyValuePair<int,string>) =
         SiteParts.CarTemplate.TuningItem()
             .TuningLevel(string t.Key)
@@ -48,9 +48,9 @@ module CarsAdmin =
             exactlyOne
         }).Value
     let RenderPage() =
-        updateTuningList |> Async.Start
-        updateMemberList |> Async.Start
-        updateCarList |> Async.Start
+        updateTuningList() 
+        updateMemberList()
+        updateCarList()
         SiteParts.CarTemplate()
             .BrakeTuningList(
                 tuningList.View |> Doc.BindSeqCached (renderTuningItem)
@@ -140,9 +140,9 @@ module CarsAdmin =
                 fun _ ->
                     async{
                         let! result = Cars.doSetCar sessionID selectedCar.Value
-                        let! updateCar = updateCarList
-                        let! updateTuning = updateTuningList
-                        return! updateMemberList
+                        let updateCar = updateCarList result
+                        let updateTuning = updateTuningList updateCar
+                        return updateMemberList()
                     } |> Async.Start
             )
             .CarList(
@@ -175,10 +175,7 @@ module CarsAdmin =
                             )
                             .Edit(
                                 fun _ ->
-                                    async{
-                                        let! updateCars = updateCarList
-                                        return selectedCar.Set c
-                                    } |> Async.Start
+                                    selectedCar.Set c
                             )
                             .Doc()
                 )

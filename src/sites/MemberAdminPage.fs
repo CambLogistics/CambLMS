@@ -16,13 +16,13 @@ module MemberAdminPage =
     let RankList = ListModel.FromSeq [ { Level = -1; Name = "???" } ]
     let sessionID = JavaScript.Cookies.Get("clms_sid").Value
 
-    let updateRankList =
+    let updateRankList() =
         async {
             let! list = UserCallable.doGetRankList()
             RankList.Set list
         } |> Async.Start
 
-    let updateUserList =
+    let updateUserList() =
         async {
             let! list = UserCallable.doGetUserList sessionID false
             UserList.Set list
@@ -30,8 +30,8 @@ module MemberAdminPage =
         |> Async.Start
 
     let RenderPage currentUser =
-        updateRankList
-        updateUserList
+        updateRankList()
+        updateUserList()
         SiteParts
             .MemberListTemplate()
             .UserList(
@@ -80,8 +80,8 @@ module MemberAdminPage =
                                         fun e ->
                                             async {
                                                 let! result =
-                                                    UserCallable.doChangeUserRank sessionID u.Id (int e.Target.NodeValue)
-                                                updateUserList
+                                                    UserCallable.doChangeUserRank sessionID u.Id (int e.Vars.Rank.Value)
+                                                updateUserList result
                                             } |> Async.Start
                                     )
                                     .Doc()
@@ -97,7 +97,7 @@ module MemberAdminPage =
                                     .DeleteUser(fun e ->
                                         async {
                                             let! finished = UserCallable.doDeleteUser sessionID u.Id
-                                            updateUserList
+                                            updateUserList finished
                                         }
                                         |> Async.Start)
                                     .Doc()
