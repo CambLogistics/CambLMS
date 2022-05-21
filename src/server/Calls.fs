@@ -25,7 +25,19 @@ type Call = {Type: CallType;Price: int; Date: System.DateTime; ThisWeek: bool; P
 [<JavaScript>]
 type UserWithCalls = {User:Member;Calls: Call list}
 
+[<JavaScript>]
+type Area = {Id:int;Name: string}
+
 module Calls =
+    let getAreaList() =
+        try
+            let db = Database.SqlConnection.GetDataContext()
+            query{
+                for a in db.Camblogistics.Areas do
+                    select({Id = a.Id;Name = a.Name})
+            } |> Seq.toList
+        with
+           _ -> []
     let registerCall sid price (callType:CallType) =
         let user = User.getUserFromSID sid
         match user with
@@ -101,5 +113,10 @@ module Calls =
     let doRotateWeek sid =
         async{
             return rotateWeek sid
+        }
+    [<Rpc>]
+    let doGetAreaList() =
+        async{
+            return getAreaList()
         }
 

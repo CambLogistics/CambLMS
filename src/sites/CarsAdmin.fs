@@ -3,7 +3,6 @@ namespace camblms
 open WebSharper
 open WebSharper.UI
 open WebSharper.UI.Client
-open WebSharper.UI.Html
 
 [<JavaScript>]
 module CarsAdmin =

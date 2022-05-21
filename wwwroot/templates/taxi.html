@@ -3,11 +3,10 @@
          <table class="uticel_taxi">
             <th class="szoveg_th" colspan="2">Taxizás</th>
             <tr>
-               <td id="calc" class="szoveg_td" colspan="2" style="display: none;">${From} - ${To} :&nbsp;    ${Price} $</td>
-               <td id="alap" class="szoveg_td" colspan="2">Jelenleg nincs kiválasztva az úticél.</td>
+               <td id="alap" class="szoveg_td" colspan="2">${PriceDisplay}</td>
             </tr>
             <tr>
-               <td><button class="szamla" ws-onclick="Submit">Számla átadva</button><button class="torles" ws-onclick="Reset">Fuvar törlés</button></td>
+               <td><button class="szamla" id="Submit" ws-onclick="Submit">Számla átadva</button><button class="torles" id="Reset" ws-onclick="Reset">Fuvar törlés</button></td>
             </tr>
          </table>
          <table class="terkepes_table">

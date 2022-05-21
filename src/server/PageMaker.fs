@@ -52,7 +52,7 @@ module PageMakers =
         SiteTemplates.MainTemplate()
             .Stylesheet(SiteTemplates.NormalStyle)
             .Navbar(Navbar.MakeNavbar ctx EndPoint.Taxi)
-            .Main()
+            .Main(client <@TaxiPage.RenderPage()@>)
             .Doc()
     let Towing ctx =
         SiteTemplates.MainTemplate()

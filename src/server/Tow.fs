@@ -4,12 +4,15 @@ open WebSharper
 
 module Tow =
     let calculatePrice source dest =
+        try
         let db = Database.SqlConnection.GetDataContext()
         (query{
             for route in db.Camblogistics.TowPrices do
             where(route.Source = source && route.Destination = dest)
             exactlyOne
             }).Price
+        with
+            _ -> 0
     [<Rpc>]
     let doCalculatePrice source dest =
         async{

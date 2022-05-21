@@ -4,12 +4,15 @@ open WebSharper
 
 module Delivery =
     let calculatePrice deliveryType =
+        try
         let db = Database.SqlConnection.GetDataContext()
         (query{
             for price in db.Camblogistics.DeliveryPrices do
             where(deliveryType = price.Type)
             exactlyOne
             }).Price
+        with
+            _ -> 0
     [<Rpc>]
     let doCalculatePrice dt =
         async{

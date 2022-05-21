@@ -4,6 +4,7 @@ open WebSharper
 
 module Taxi =
     let calculatePrice source dest =
+        try
         let db = Database.SqlConnection.GetDataContext()
         (query{
             for route in db.Camblogistics.TaxiPrices do
@@ -11,6 +12,8 @@ module Taxi =
                     (route.Source = dest && route.Destination = source))
             exactlyOne
             }).Price
+        with
+            _ -> 0
     [<Rpc>]
     let doCalculatePrice source dest =
         async{
