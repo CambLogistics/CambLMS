@@ -5,6 +5,7 @@ open WebSharper.Sitelets
 
 type EndPoint =
     | [<EndPoint "/">] Home
+    | [<EndPoint "/leave">] Logout
     | [<EndPoint "/login">] Login
     | [<EndPoint "/registration">] Registration
     | [<EndPoint "/passchange">] PasswordChange
@@ -24,7 +25,6 @@ type EndPoint =
     | [<EndPoint "/admin/service">] ServiceAdmin
     | [<EndPoint "POST /documentsubmit">] DocumentSubmit
     | [<EndPoint "POST /imagesubmit">] ImageSubmit
-    | [<EndPoint "/logout">] Logout
     | [<EndPoint "/changelog">] Changelog
 
 module EndPoints =
