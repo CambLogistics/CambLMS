@@ -47,13 +47,13 @@ DROP TABLE IF EXISTS `calls`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `calls` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `userID` int(11) NOT NULL,
   `date` datetime NOT NULL,
   `price` int(11) NOT NULL,
   `thisWeek` tinyint(1) NOT NULL,
   `type` smallint(6) NOT NULL,
-  `secondWeek` tinyint(1) NOT NULL,
+  `previousWeek` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `userID` (`userID`),
   CONSTRAINT `calls_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE
@@ -173,32 +173,6 @@ LOCK TABLES `deliveryTypes` WRITE;
 /*!40000 ALTER TABLE `deliveryTypes` DISABLE KEYS */;
 INSERT INTO `deliveryTypes` VALUES (0,'Farm beszállítás'),(1,'Műhely beszállítás'),(2,'Autószállítás műhelynél');
 /*!40000 ALTER TABLE `deliveryTypes` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `documents`
---
-
-DROP TABLE IF EXISTS `documents`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `documents` (
-  `userID` int(11) NOT NULL,
-  `personalID` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `driversLicense` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`personalID`,`driversLicense`),
-  KEY `fk_userid` (`userID`),
-  CONSTRAINT `fk_userid` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `documents`
---
-
-LOCK TABLES `documents` WRITE;
-/*!40000 ALTER TABLE `documents` DISABLE KEYS */;
-/*!40000 ALTER TABLE `documents` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -326,7 +300,7 @@ CREATE TABLE `taxiPrices` (
 
 LOCK TABLES `taxiPrices` WRITE;
 /*!40000 ALTER TABLE `taxiPrices` DISABLE KEYS */;
-INSERT INTO `taxiPrices` VALUES (0,0,700),(0,1,1200),(0,2,1500),(0,3,1300),(0,4,2000),(0,5,2500),(1,1,800),(1,3,1100),(1,4,2000),(1,5,1100),(2,1,1200),(2,2,800),(2,4,2000),(2,5,1200),(3,2,1200),(3,3,1000),(3,4,2000),(3,5,1200),(5,4,2000);
+INSERT INTO `taxiPrices` VALUES (0,0,700),(0,1,1200),(0,2,1500),(0,3,1300),(0,4,2000),(0,5,2500),(1,1,800),(1,3,1100),(1,4,2000),(1,5,1100),(2,1,1200),(2,2,800),(2,4,2000),(2,5,1200),(3,2,1200),(3,3,1000),(3,4,2000),(3,5,1200),(4,4,2000),(5,4,2000);
 /*!40000 ALTER TABLE `taxiPrices` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -434,30 +408,6 @@ LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `warnings`
---
-
-DROP TABLE IF EXISTS `warnings`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `warnings` (
-  `userID` int(11) NOT NULL,
-  `date` datetime NOT NULL,
-  PRIMARY KEY (`userID`,`date`),
-  CONSTRAINT `warnings_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `warnings`
---
-
-LOCK TABLES `warnings` WRITE;
-/*!40000 ALTER TABLE `warnings` DISABLE KEYS */;
-/*!40000 ALTER TABLE `warnings` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -468,4 +418,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-20 14:49:15
+-- Dump completed on 2022-05-22  0:04:31
