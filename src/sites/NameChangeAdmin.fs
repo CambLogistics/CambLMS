@@ -27,14 +27,14 @@ module NameChangeAdmin =
                                 fun e ->
                                     async{
                                         let! result = NameChangeServer.doDecideNameChange sessionID item.UserID true
-                                        updateList
+                                        return updateList
                                     } |> Async.Start
                             )
                             .Deny(
                                 fun e ->
                                     async{
                                         let! result = NameChangeServer.doDecideNameChange sessionID item.UserID false 
-                                        updateList
+                                        return updateList
                                     } |> Async.Start
                             )
                             .Doc()
