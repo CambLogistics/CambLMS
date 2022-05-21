@@ -27,19 +27,6 @@ module DeliveryPage =
                             "A szolgáltatás ára: " + string t.Price
                 )
             )
-            .Reset(fun _ -> selectedType.Set {ID= -1; Name="";Price=0})
-            .Accept(
-                fun _ ->
-                    async{
-                        let! result = Delivery.submitCall (JavaScript.Cookies.Get "clms_sid").Value selectedType.Value.ID
-                        match result with
-                            |CallResult.Success -> 
-                                Feedback.giveFeedback false "Sikeres művelet!"
-                                selectedType.Set {ID= -1; Name="";Price=0}
-                            |CallResult.InvalidSession -> Feedback.giveFeedback true "Érvénytelen munkamenet. Lépj ki és be újra!"
-                            |CallResult.DatabaseError -> Feedback.giveFeedback true "Adatbázishiba. Keresd a (műszaki) igazgatót!"
-                    } |> Async.Start
-            )
             .DeliveryTypeList(
                 TypeList.View |> Doc.BindSeqCached (
                     fun t ->
@@ -49,12 +36,25 @@ module DeliveryPage =
                             .Doc()
                 )
             )
-            .SetSelected(
-                fun e ->
-                    query{
-                        for t in TypeList.Value do
-                        where(t.ID = int e.Vars.DeliveryType.Value)
-                        exactlyOne
-                    } |> selectedType.Set
+            .DeliveryType(
+                selectedType.Lens (fun t -> string t.ID) (fun t newID -> query{
+                    for ty in TypeList.Value do
+                    where(ty.ID = int newID)
+                    exactlyOne
+                    })
             )
+            .Submit(
+                fun e ->
+                    async{
+                        let sessionID = JavaScript.Cookies.Get("clms_sid").Value
+                        let! result = Delivery.submitCall sessionID selectedType.Value.ID
+                        match result with
+                            |CallResult.Success -> 
+                                Feedback.giveFeedback false "Sikeres művelet!"
+                                selectedType.Set {ID= -1; Name="";Price=0}
+                            |CallResult.InvalidSession -> Feedback.giveFeedback true "Érvénytelen munkamenet. Lépj ki és be újra!"
+                            |CallResult.DatabaseError -> Feedback.giveFeedback true "Adatbázishiba. Keresd a (műszaki) igazgatót!"
+                    } |> Async.Start
+            )
+            .Reset(fun _ -> selectedType.Set {ID= -1; Name="";Price=0})
             .Doc()

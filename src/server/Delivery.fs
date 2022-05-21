@@ -2,6 +2,7 @@ namespace camblms
 
 open WebSharper
 
+[<JavaScript>]
 type DeliveryType = {ID: int;Name: string; Price: int}
 
 module Delivery =
@@ -31,12 +32,12 @@ module Delivery =
             return calculatePrice dt
         }
     [<Rpc>]
-    let submitCall sid dt=
+    let submitCall sid dt =
         async{
-        try
-            return calculatePrice dt |> Calls.registerCall sid <| CallType.Delivery
-        with
-            _ -> return CallResult.DatabaseError
+            try
+                return calculatePrice dt |> Calls.registerCall sid <| CallType.Delivery
+            with
+                _ -> return CallResult.DatabaseError
         }
     [<Rpc>]
     let doGetTypeList() =

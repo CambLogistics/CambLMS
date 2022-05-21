@@ -7,15 +7,15 @@
             </tr>
             <tr>
                <td>
-                     <select ws-var="DeliveryType" ws-onchange="SetSelected" class="arus_dropdown" required>
-                        <option ws-replace="DeliveryTypeList"></option>
+                     <select ws-var="DeliveryType" class="arus_dropdown" required>
                         <option value="-1"></option>
+                        <option ws-replace="DeliveryTypeList"></option>
                         <option ws-template="DeliveryTypeItem" value="${TypeID}">${Name}</option>
                      </select>
                </td>
             </tr>
             <tr>
-               <td><button class="szamla" id="Submit" ws-onlick="Accept">Számla átadva</button><button class="torles" ws-onclick="Reset"">Fuvar törlés</button></td>
+               <td><button class="szamla" id="Submit" ws-onclick="Submit">Számla átadva</button><button class="torles" ws-onclick="Reset"">Fuvar törlés</button></td>
             </tr>
          </table>
       </div>
