@@ -32,14 +32,14 @@ module RegistrationAdminPage =
                                 fun e ->
                                     async{
                                         let! result = UserCallable.doApproveUser (JavaScript.Cookies.Get "clms_sid").Value pu.Id
-                                        updateList
+                                        return updateList
                                     } |> Async.Start
                             )
                             .Deny(
                                 fun e ->
                                     async{
                                         let! result = UserCallable.doDeleteUser (JavaScript.Cookies.Get "clms_sid").Value pu.Id 
-                                        updateList
+                                        return updateList
                                     } |> Async.Start
                             )
                             .Doc()
