@@ -13,7 +13,7 @@ module NameChangeAdmin =
             let! pendingUsers = NameChangeServer.doGetPendingChanges sessionID
             userList.Set pendingUsers
         } |> Async.Start
-    let RenderPage =
+    let RenderPage() =
         updateList
         SiteParts.NameAdminTemplate()
             .UserList(

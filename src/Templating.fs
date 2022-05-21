@@ -7,7 +7,7 @@ open WebSharper.UI.Templating
 //Full templates with html tags
 [<JavaScript>]
 module SiteTemplates =
-    let AdminStyle = "adminstyle.css"
+    let AdminStyle = "../adminstyle.css"
     let NormalStyle = "normalstyle.css"
     let ChangeStyle = "changestyles.css"
     type MainTemplate = Templating.Template<"wwwroot/templates/main.html">

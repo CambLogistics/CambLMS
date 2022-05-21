@@ -22,7 +22,7 @@ module Information =
                     .Name(u.Name)
                     .Rank(
                         (query{
-                            for r in User.getRankList do
+                            for r in User.getRankList() do
                             where(r.Level = u.Role)
                             exactlyOne
                         }).Name

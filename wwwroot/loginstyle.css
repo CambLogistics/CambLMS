@@ -32,16 +32,16 @@ html,body{
   border-radius: 15px 15px 0 0;
   background: linear-gradient(-135deg, #ffb428, #f76c02);
 }
-.wrapper form{
+.wrapper {
   padding: 10px 30px 50px 30px;
 }
-.wrapper form .field{
+.wrapper .field{
   height: 50px;
   width: 100%;
   margin-top: 20px;
   position: relative;
 }
-.wrapper form .field input{
+.wrapper .field input{
   height: 100%;
   width: 100%;
   outline: none;
@@ -51,11 +51,11 @@ html,body{
   border-radius: 25px;
   transition: all 0.3s ease;
 }
-.wrapper form .field input:focus,
-form .field input:valid{
+.wrapper .field input:focus,
+.field input:valid{
   border-color: #ffb428;
 }
-.wrapper form .field label{
+.wrapper .field label{
   position: absolute;
   top: 50%;
   left: 20px;
@@ -66,15 +66,15 @@ form .field input:valid{
   transform: translateY(-50%);
   transition: all 0.3s ease;
 }
-form .field input:focus ~ label,
-form .field input:valid ~ label{
+.field input:focus ~ label,
+.field input:valid ~ label{
   top: 0%;
   font-size: 16px;
   color: #ffb428;
   background: #fff;
   transform: translateY(-50%);
 }
-form .content{
+.content{
   display: flex;
   width: 100%;
   height: 50px;
@@ -82,25 +82,25 @@ form .content{
   align-items: center;
   justify-content: space-around;
 }
-form .content .checkbox{
+.content .checkbox{
   display: flex;
   align-items: center;
   justify-content: center;
 }
-form .content input{
+.content input{
   width: 15px;
   height: 15px;
   background: red;
 }
-form .content label{
+.content label{
   color: #262626;
   user-select: none;
   padding-left: 5px;
 }
-form .content .pass-link{
+.content .pass-link{
   color: "";
 }
-form button{
+button{
   color: #fff;
   border: none;
   padding-left: 0;
@@ -111,21 +111,21 @@ form button{
   background: linear-gradient(-135deg, #ffb428, #f76c02);
   transition: all 0.3s ease;
 }
-form button:active{
+button:active{
   transform: scale(0.95);
 }
-form .signup-link{
+.signup-link{
   color: #262626;
   margin-top: 20px;
   text-align: center;
 }
-form .pass-link a,
-form .signup-link a{
+.pass-link a,
+.signup-link a{
   color: #ffb428;
   text-decoration: none;
 }
-form .pass-link a:hover,
-form .signup-link a:hover{
+.pass-link a:hover,
+.signup-link a:hover{
   text-decoration: underline;
 }
 #success{
@@ -145,6 +145,17 @@ form .signup-link a:hover{
   padding: 10px 30px;
   margin: 10px 25px;
   font-size: 15px;
+  border-radius: 15px;
+  color: #fff;
+}
+.submit{
+  width: 275px;
+  font-family: 'Aclonica', sans-serif;
+  border: 0px;
+  background: linear-gradient(-135deg, #ffb428, #f76c02);
+  padding: 10px 30px;
+  margin: 10px 25px;
+  font-size: 15pt;
   border-radius: 15px;
   color: #fff;
 }

@@ -40,7 +40,7 @@ type PasswordChangeResult =
     |DatabaseError
 
 module User =
-    let minimumAdmin = 12
+    let minimumAdmin = 11
     let getUserFromSID sessionID = 
         let db = Database.SqlConnection.GetDataContext().Camblogistics
         try
@@ -146,21 +146,19 @@ module User =
                     newUser.Email <- email
                     newUser.Name <- name
                     newUser.Password <- hashPassword password
+                    newUser.Deleted <- sbyte 0
                     db.SubmitUpdates()
                     RegisterResult.Success
             with
                 _ -> RegisterResult.DatabaseError
     let logoutUser sessionid =
         let db = Database.SqlConnection.GetDataContext()
-        try
-            (query{
-                for session in db.Camblogistics.Sessions do
-                    where(session.Id = sessionid)
-                    exactlyOne
+        (query{
+            for session in db.Camblogistics.Sessions do
+                where(session.Id = sessionid)
+                exactlyOne
             }).Delete()
-            db.SubmitUpdates()
-        with
-            _ -> ()
+        db.SubmitUpdates()
     let makeLogout sessionid ctx =
         logoutUser sessionid
         Content.RedirectPermanent(EndPoint.Home)
@@ -193,18 +191,15 @@ module User =
         with
             _ -> ()
     let getUserList sid pending =
-        if not (verifyAdmin sid) then []
+        if verifyAdmin sid |> not then []
         else
-        try
             let db = Database.SqlConnection.GetDataContext()
             query{
                 for user in db.Camblogistics.Users do
-                where (user.Deleted = (sbyte 0) && user.Accepted = (sbyte (if pending then 1 else 0)))
+                where (user.Deleted = (sbyte 0) && user.Accepted = (sbyte (if pending then 0 else 1)))
                 select({Id = user.Id;Name = user.Name;Email = user.Email;AccountID = user.AccountId;Role = user.Role})
             } |> Seq.toList |> List.sortBy (fun u -> u.Id)
-        with
-            _ -> []
-    let getRankList =
+    let getRankList() =
         try
         let db = Database.SqlConnection.GetDataContext()
         query{
@@ -297,7 +292,7 @@ module UserCallable =
             return User.changeUserRank sid userID newRank
         }
     [<Rpc>]
-    let doGetRankList =
+    let doGetRankList() =
         async{
-            return User.getRankList
+            return User.getRankList()
         }

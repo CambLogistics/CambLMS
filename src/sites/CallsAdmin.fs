@@ -16,10 +16,10 @@ module CallsAdmin =
         }
     let updateRankList =
         async{
-            let! list = UserCallable.doGetRankList
+            let! list = UserCallable.doGetRankList()
             rankList.Set list
         }
-    let RenderPage =
+    let RenderPage() =
         updateRankList |> Async.Start
         updateUserList |> Async.Start
         SiteParts.CallsTemplate()

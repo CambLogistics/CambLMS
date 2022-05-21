@@ -29,6 +29,7 @@ module Routing =
                 |EndPoint.ImageUpload -> Content.Page(ImageUpload.MakePage ctx)
                 |EndPoint.Information -> Content.Page(PageMakers.Information ctx)
                 |EndPoint.MembersAdmin -> Content.Page(PageMakers.MembersAdmin ctx user)
+                |EndPoint.NameChangeAdmin -> Content.Page(PageMakers.NameChangeAdmin ctx)
                 |EndPoint.RegistrationAdmin -> Content.Page(PageMakers.RegistrationAdmin ctx)
                 |EndPoint.ServiceAdmin -> Content.Page(PageMakers.ServiceAdmin ctx)
                 |EndPoint.Taxi -> Content.Page(PageMakers.Taxi ctx)

@@ -3,13 +3,14 @@ namespace camblms
 open WebSharper
 open WebSharper.UI
 open WebSharper.UI.Client
+open WebSharper.UI.Html
 
 [<JavaScript>]
 module CarsAdmin =
     let sessionID = JavaScript.Cookies.Get("clms_sid").Value
     let tuningList = ListModel.FromSeq <| Map.ofList [(0,"Gyári")]
     let carList = ListModel.FromSeq [{Id = "L04D1NG";RegNum="HAW-411";CarType="Fiat Panda II";
-                                                            ParkTicket=true;ECU=0;GPS=false;
+                                                            ParkTicket=false;ECU=0;GPS=false;
                                                             AirRide = false;Engine=0;Brakes=0;
                                                             Suspension=0;WeightReduction=0;Gearbox=0;
                                                             Tyres=0;Turbo=0;KeyHolder1=None;
@@ -23,7 +24,7 @@ module CarsAdmin =
                                                             KeyHolder2=None}
     let updateTuningList =
         async{
-            let! list = Cars.getTuningLevels
+            let! list = Cars.getTuningLevels()
             tuningList.Set list
         }
     let updateCarList =
@@ -47,7 +48,7 @@ module CarsAdmin =
             where(kvp.Key = level)
             exactlyOne
         }).Value
-    let RenderPage =
+    let RenderPage() =
         updateTuningList |> Async.Start
         updateMemberList |> Async.Start
         updateCarList |> Async.Start
@@ -65,22 +66,22 @@ module CarsAdmin =
             .TyreTuningList(tuningList.View |> Doc.BindSeqCached (renderTuningItem))
             .WeightReductionTuningList(tuningList.View |> Doc.BindSeqCached (renderTuningItem))
             .MemberList1(
-                memberList.View |> Doc.BindSeqCached(
+                Doc.Concat [SiteParts.CarTemplate.KHListMember().UserID(string -1).Name("Senki").Doc() ;memberList.View |> Doc.BindSeqCached(
                     fun u ->
                         SiteParts.CarTemplate.KHListMember()
                             .UserID(string u.Id)
                             .Name(u.Name)
                             .Doc()
-                )
+                )]
             )
             .MemberList2(
-                 memberList.View |> Doc.BindSeqCached(
+                 Doc.Concat [SiteParts.CarTemplate.KHListMember().UserID(string -1).Name("Senki").Doc();memberList.View |> Doc.BindSeqCached(
                     fun u ->
                         SiteParts.CarTemplate.KHListMember()
                             .UserID(string u.Id)
                             .Name(u.Name)
                             .Doc()
-                )
+                )]
             )
             .NewID(selectedCar.LensAuto (fun c -> c.Id))
             .NewType(selectedCar.LensAuto (fun c -> c.CarType))
@@ -125,9 +126,9 @@ module CarsAdmin =
                         } 
                 )
                 )
-            .NewAirRide(selectedCar.LensAuto (fun c -> c.AirRide))
-            .NewGPS(selectedCar.LensAuto(fun c -> c.GPS))
-            .NewTicket(selectedCar.LensAuto (fun c -> c.ParkTicket))
+            .NewAirRide(selectedCar.Lens (fun c -> c.AirRide) (fun c ar -> {c with AirRide = ar}))
+            .NewGPS(selectedCar.Lens(fun c -> c.GPS) (fun c gps -> {c with GPS = gps}))
+            .NewTicket(selectedCar.Lens (fun c -> c.ParkTicket) (fun c pt -> {c with ParkTicket = pt}))
             .NewEngine(selectedCar.Lens(fun c -> string c.Engine) (fun c s -> {c with Engine = int s}))
             .NewECU(selectedCar.Lens(fun c -> string c.ECU) (fun c s -> {c with ECU = int s}))
             .NewBrakes(selectedCar.Lens(fun c -> string c.Brakes) (fun c s -> {c with Brakes = int s}))

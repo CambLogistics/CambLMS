@@ -6,7 +6,7 @@ open WebSharper.UI.Client
 
 [<JavaScript>]
 module NameChangePage =
-    let RenderPage =
+    let RenderPage() =
         SiteParts.NameChangeTemplate()
             .Submit(
                 fun e ->

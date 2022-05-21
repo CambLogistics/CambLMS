@@ -12,7 +12,7 @@ type Car = {Id:string;CarType: string;RegNum: string;
 
 module Cars =
     [<Rpc>]
-    let getTuningLevels =
+    let getTuningLevels() =
         async{
         try
             let db = Database.SqlConnection.GetDataContext()
@@ -24,39 +24,37 @@ module Cars =
             _ -> return Map.ofList []
         }
     let getCars sid =
-        if not (User.verifyAdmin sid) then []
+        if User.verifyAdmin sid |> not then []
         else
         try
         let db = Database.SqlConnection.GetDataContext()
         query{
             for car in db.Camblogistics.Cars do
-            join user1 in db.Camblogistics.Users on (car.KeyHolder1 = Some user1.Id)
-            join user2 in db.Camblogistics.Users on (car.KeyHolder2 = Some user2.Id)
-            select(
-                {
-                    Id = car.Id
-                    RegNum = car.RegNum
-                    CarType = car.Type
-                    KeyHolder1 = 
-                        if car.KeyHolder1.IsSome then 
-                            Some {Id = user1.Id;Name = user1.Name;Role = user1.Role;AccountID = user1.AccountId;Email = user1.Email} 
-                            else None
-                    KeyHolder2 = 
-                        if car.KeyHolder2.IsSome then 
-                            Some {Id = user2.Id;Name = user2.Name;Role = user2.Role;AccountID = user2.AccountId;Email = user2.Email} 
-                            else None
-                    AirRide = car.AirRide = (sbyte 1)
-                    ParkTicket = car.Ticket = (sbyte 1) 
-                    GPS = car.AirRide = (sbyte 1)
-                    Engine = car.Engine
-                    ECU = car.Ecu
-                    Brakes = car.Brakes
-                    Suspension = car.Suspension
-                    Gearbox = car.Gearbox
-                    Tyres = car.Tyres
-                    Turbo = car.Turbo
-                    WeightReduction = car.WeightReduction
-                }
+                select(
+                    {
+                        Id = car.Id
+                        RegNum = car.RegNum
+                        CarType = car.Type
+                        KeyHolder1 = 
+                            if car.KeyHolder1.IsSome then 
+                                User.getUserByID car.KeyHolder1.Value
+                                else None
+                        KeyHolder2 = 
+                            if car.KeyHolder2.IsSome then 
+                                User.getUserByID car.KeyHolder1.Value 
+                                else None
+                        AirRide = car.AirRide = (sbyte 1)
+                        ParkTicket = car.Ticket = (sbyte 1) 
+                        GPS = car.AirRide = (sbyte 1)
+                        Engine = car.Engine
+                        ECU = car.Ecu
+                        Brakes = car.Brakes
+                        Suspension = car.Suspension
+                        Gearbox = car.Gearbox
+                        Tyres = car.Tyres
+                        Turbo = car.Turbo
+                        WeightReduction = car.WeightReduction
+                    }
             )
         } |> Seq.toList
         with
@@ -78,9 +76,9 @@ module Cars =
                 with
                     _ -> []
     let setCar sid car =
+        try
         if not (User.verifyAdmin sid) then ()
         else
-        try
             let db = Database.SqlConnection.GetDataContext()
             let existing =
                 query{
@@ -90,7 +88,7 @@ module Cars =
                 } |> Seq.toList
             let newCar = 
                 if List.isEmpty existing then db.Camblogistics.Cars.Create() else List.item 0 existing
-            newCar.Id <- car.Id
+            if List.isEmpty existing then newCar.Id <- car.Id
             newCar.Type <- car.CarType
             newCar.RegNum <- car.RegNum
             newCar.KeyHolder1 <- if car.KeyHolder1.IsSome then Some car.KeyHolder1.Value.Id else None

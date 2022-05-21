@@ -18,9 +18,9 @@ module MemberAdminPage =
 
     let updateRankList =
         async {
-            let! list = UserCallable.doGetRankList
+            let! list = UserCallable.doGetRankList()
             RankList.Set list
-        }
+        } |> Async.Start
 
     let updateUserList =
         async {
@@ -30,6 +30,7 @@ module MemberAdminPage =
         |> Async.Start
 
     let RenderPage currentUser =
+        updateRankList
         updateUserList
         SiteParts
             .MemberListTemplate()

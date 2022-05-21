@@ -1,11 +1,10 @@
       <div class="main">
          <h2 class="szoveg_th" style="text-align: left; padding-bottom: 0px;">Autó felvétele</h2>
-         <form>
             <table>
                <tr>
                   <td style="padding-right: 30px;padding-top: 10px;">
                      <label class="szoveg_td_also">ID</label><br>
-                     <input class="inputbox" id="NewID" ws-var="NewID" type="text" name="ID" readonly>
+                     <input class="inputbox" id="NewID" ws-var="NewID" type="text" name="ID">
                   </td>
                   <td style="padding-right: 30px;padding-top: 10px;">
                      <label class="szoveg_td_also">Típus</label><br>
@@ -87,12 +86,14 @@
                   <td style="padding-right: 30px;padding-top: 25px;">
                      <label class="szoveg_td_also">Kulcs1</label><br>
                      <select class="dropdown" id="NewKeyHolder1" ws-var="NewKeyHolder1" ws-hole="MemberList1" style="width: 150px">
-                     <option ws-template="KHListMember" value="${UserID}">${Name}</option>
+                        <option value="-1">Senki</option>
+                        <option ws-template="KHListMember" value="${UserID}">${Name}</option>
                      </select>
                   </td>
                   <td style="padding-right: 30px;padding-top: 25px;">
                      <label class="szoveg_td_also">Kulcs2</label><br>
                      <select class="dropdown" id="NewKeyHolder2" ws-var="NewKeyHolder2" ws-hole="MemberList2" style="width: 150px">
+                        <option value="-1">Senki</option>
                      </select>
                   </td>
                   <td>
@@ -100,7 +101,6 @@
                   </td>
                </tr>
             </table>
-         </form>
       </div>
       <div class="main">
             <table class="listak">
@@ -128,7 +128,7 @@
                   <td>Felfügi</td>
                </tr>
                <tr><td colspan="16" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td></tr>
-               <div ws-replace="CarList"></div>
+               <tr ws-replace="CarList"></tr>
                <tr ws-template="CarItem">
                   <td class="adat">${ID}</td>
                   <td class="adat">${CarType}</td>

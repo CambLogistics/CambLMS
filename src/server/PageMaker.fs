@@ -9,19 +9,19 @@ module PageMakers =
         SiteTemplates.MainTemplate()
             .Stylesheet(SiteTemplates.AdminStyle)
             .Navbar(Navbar.MakeNavbar ctx EndPoint.RegistrationAdmin)
-            .Main(client <@RegistrationAdminPage.RenderPage@>)
+            .Main(client <@RegistrationAdminPage.RenderPage()@>)
             .Doc()
     let PasswordChange ctx =
         SiteTemplates.MainTemplate()
             .Stylesheet(SiteTemplates.ChangeStyle)
             .Navbar(Navbar.MakeNavbar ctx EndPoint.PasswordChange)
-            .Main(client <@PasswordChangePage.RenderPage@>)
+            .Main(client <@PasswordChangePage.RenderPage()@>)
             .Doc()
     let NameChange ctx =
          SiteTemplates.MainTemplate()
             .Stylesheet(SiteTemplates.ChangeStyle)
             .Navbar(Navbar.MakeNavbar ctx EndPoint.NameChange)
-            .Main(client <@NameChangePage.RenderPage@>)
+            .Main(client <@NameChangePage.RenderPage()@>)
             .Doc()
     let MembersAdmin ctx user =
         SiteTemplates.MainTemplate()
@@ -32,14 +32,14 @@ module PageMakers =
     let Changelog ctx =
         SiteTemplates.MainTemplate()
             .Stylesheet(SiteTemplates.NormalStyle)
-            .Navbar(Navbar.MakeNavbar ctx EndPoint.MembersAdmin)
+            .Navbar(Navbar.MakeNavbar ctx EndPoint.Changelog)
             .Main(SiteParts.ChangelogTemplate().Doc())
             .Doc()
     let CarsAdmin ctx =
         SiteTemplates.MainTemplate()
             .Stylesheet(SiteTemplates.AdminStyle)
             .Navbar(Navbar.MakeNavbar ctx EndPoint.CarsAdmin)
-            .Main(client <@CarsAdmin.RenderPage@>)
+            .Main(client <@CarsAdmin.RenderPage()@>)
             .Doc()
     let Information ctx =
         SiteTemplates.MainTemplate()
@@ -75,7 +75,7 @@ module PageMakers =
         SiteTemplates.MainTemplate()
             .Stylesheet(SiteTemplates.AdminStyle)
             .Navbar(Navbar.MakeNavbar ctx EndPoint.CallsAdmin)
-            .Main(client <@CallsAdmin.RenderPage@>)
+            .Main(client <@CallsAdmin.RenderPage()@>)
             .Doc()
     let ServiceAdmin ctx =
         SiteTemplates.MainTemplate()
@@ -90,4 +90,10 @@ module PageMakers =
     let RegisterPage ctx =
         SiteTemplates.LoginTemplate()
             .Main(client <@RegistrationPage.RenderPage()@>)
+            .Doc()
+    let NameChangeAdmin ctx =
+        SiteTemplates.MainTemplate()   
+            .Stylesheet(SiteTemplates.AdminStyle)
+            .Navbar(Navbar.MakeNavbar ctx EndPoint.NameChangeAdmin)
+            .Main(client <@NameChangeAdmin.RenderPage()@>)
             .Doc()

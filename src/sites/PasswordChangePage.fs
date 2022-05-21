@@ -4,7 +4,7 @@ open WebSharper
 
 [<JavaScript>]
 module PasswordChangePage =
-    let RenderPage =
+    let RenderPage() =
         SiteParts.PasswordChangeTemplate()
             .ChangePassword(
                 fun e ->
