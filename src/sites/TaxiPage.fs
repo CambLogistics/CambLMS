@@ -37,7 +37,7 @@ module TaxiPage =
                                     return "Jelenleg nincs kiválasztva útvonal."
                                 else 
                                     let! price = Taxi.doCalculatePrice r.Source r.Dest
-                                    if price > 0 then JavaScript.JS.Document.GetElementById("Submit").SetAttribute("disabled","false")
+                                    if price > 0 then JavaScript.JS.Document.GetElementById("Submit").RemoveAttribute("disabled")
                                     return (getAreaName r.Source + " - " + getAreaName r.Dest + ": " + string price)
                             } 
                 )

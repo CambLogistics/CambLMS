@@ -69,6 +69,7 @@ module Calls =
                         c.PreviousWeek <- (sbyte 1)
                     else if c.PreviousWeek = (sbyte 1) then c.PreviousWeek <- (sbyte 0)
             )
+        db.SubmitUpdates()
         with
         _ -> ()
     let getCallsOfUser (user:Member) =
