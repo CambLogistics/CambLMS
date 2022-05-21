@@ -6,7 +6,7 @@
 - [x] Image uploading / Documents
 - [] Calls(Towing,Delivery,Taxi)
 	- [] Delivery
-	- [] Taxi
+	- [x] Taxi
 	- [] Towing
 	- [x] Call count/ closing week from admin UI
 - [x] Car management
