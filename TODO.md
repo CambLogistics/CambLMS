@@ -4,8 +4,8 @@
 	- [x] Deactivate user instead of deleting
 	- [x] Reactivation logic for registration
 - [x] Image uploading / Documents
-- [] Calls(Towing,Delivery,Taxi)
-	- [] Delivery
+- [x] Calls(Towing,Delivery,Taxi)
+	- [x] Delivery
 	- [x] Taxi
 	- [x] Towing
 	- [x] Call count/ closing week from admin UI

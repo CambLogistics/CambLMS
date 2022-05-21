@@ -2,7 +2,19 @@ namespace camblms
 
 open WebSharper
 
+type DeliveryType = {ID: int;Name: string; Price: int}
+
 module Delivery =
+    let getTypeList() =
+        try
+        let db = Database.SqlConnection.GetDataContext()
+        query{
+            for t in db.Camblogistics.DeliveryTypes do
+                join p in db.Camblogistics.DeliveryPrices on (t.Id = p.Type)
+                select({ID=t.Id;Name=t.Name;Price=p.Price})
+        } |> Seq.toList
+        with
+            _ -> []
     let calculatePrice deliveryType =
         try
         let db = Database.SqlConnection.GetDataContext()
@@ -25,6 +37,11 @@ module Delivery =
             return calculatePrice dt |> Calls.registerCall sid <| CallType.Delivery
         with
             _ -> return CallResult.DatabaseError
+        }
+    [<Rpc>]
+    let doGetTypeList() =
+        async{
+            return getTypeList()
         }
     let getInfo sid =
         let calls = Calls.getCallsBySID sid |> List.filter (fun c -> c.Type = CallType.Delivery)

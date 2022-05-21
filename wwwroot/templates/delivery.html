@@ -3,19 +3,19 @@
          <table class="uticel_taxi">
             <th class="szoveg_th" colspan="2">Beszállítás</th>
             <tr>
-               <td id="calc" class="szoveg_td" colspan="2" style="display: none;">A szolgáltatás ára:&nbsp;    ${Ar} $</td>
-               <td id="alap" class="szoveg_td" colspan="2">Jelenleg nincs kiválasztva szolgáltatás.</td>
+               <td id="alap" class="szoveg_td" colspan="2">${PriceDisplay}</td>
             </tr>
             <tr>
                <td>
-                  <form>
-                     <select ws-var="DeliveryType" ws-hole="TypeList" class="arus_dropdown" required>
+                     <select ws-var="DeliveryType" ws-onchange="SetSelected" class="arus_dropdown" required>
+                        <option ws-replace="DeliveryTypeList"></option>
+                        <option value="-1"></option>
+                        <option ws-template="DeliveryTypeItem" value="${TypeID}">${Name}</option>
                      </select>
-                  </form>
                </td>
             </tr>
             <tr>
-               <td><button class="szamla" ws-onlick="Accept">Számla átadva</button><button class="torles" ws-onclick="Reset"">Fuvar törlés</button></td>
+               <td><button class="szamla" id="Submit" ws-onlick="Accept">Számla átadva</button><button class="torles" ws-onclick="Reset"">Fuvar törlés</button></td>
             </tr>
          </table>
       </div>

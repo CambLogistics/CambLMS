@@ -64,7 +64,7 @@ module PageMakers =
         SiteTemplates.MainTemplate()
             .Stylesheet(SiteTemplates.NormalStyle)
             .Navbar(Navbar.MakeNavbar ctx EndPoint.Delivery)
-            .Main()
+            .Main(client <@DeliveryPage.RenderPage()@>)
             .Doc()
     let AdminHome ctx =
         SiteTemplates.MainTemplate()
