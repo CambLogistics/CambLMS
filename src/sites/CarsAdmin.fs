@@ -66,26 +66,26 @@ module CarsAdmin =
             .TyreTuningList(tuningList.View |> Doc.BindSeqCached (renderTuningItem))
             .WeightReductionTuningList(tuningList.View |> Doc.BindSeqCached (renderTuningItem))
             .MemberList1(
-                Doc.Concat [SiteParts.CarTemplate.KHListMember().UserID(string -1).Name("Senki").Doc() ;memberList.View |> Doc.BindSeqCached(
+               memberList.View |> Doc.BindSeqCached(
                     fun u ->
                         SiteParts.CarTemplate.KHListMember()
                             .UserID(string u.Id)
                             .Name(u.Name)
                             .Doc()
-                )]
+                )
             )
             .MemberList2(
-                 Doc.Concat [SiteParts.CarTemplate.KHListMember().UserID(string -1).Name("Senki").Doc();memberList.View |> Doc.BindSeqCached(
+                memberList.View |> Doc.BindSeqCached(
                     fun u ->
                         SiteParts.CarTemplate.KHListMember()
                             .UserID(string u.Id)
                             .Name(u.Name)
                             .Doc()
-                )]
+                )
             )
-            .NewID(selectedCar.LensAuto (fun c -> c.Id))
-            .NewType(selectedCar.LensAuto (fun c -> c.CarType))
-            .NewRegNum(selectedCar.LensAuto(fun c -> c.RegNum))
+            .NewID(selectedCar.Lens (fun c -> c.Id) (fun c id -> {c with Id = id}))
+            .NewType(selectedCar.Lens (fun c -> c.CarType) (fun c t -> {c with CarType = t}))
+            .NewRegNum(selectedCar.Lens(fun c -> c.RegNum) (fun c rn -> {c with RegNum = rn}))
             .NewKeyHolder1(selectedCar.Lens(
                 fun c ->
                     match c.KeyHolder1 with
@@ -110,7 +110,7 @@ module CarsAdmin =
                 fun c ->
                     match c.KeyHolder2 with
                         |None -> "-1"
-                        |Some m -> string m.Name 
+                        |Some m -> string m.Id
                 )
                 (
                     fun c idS ->
@@ -126,7 +126,7 @@ module CarsAdmin =
                         } 
                 )
                 )
-            .NewAirRide(selectedCar.Lens (fun c -> c.AirRide) (fun c ar -> {c with AirRide = ar}))
+            .NewAirRide((selectedCar.Lens (fun c -> c.AirRide) (fun c ar -> {c with AirRide = ar})))
             .NewGPS(selectedCar.Lens(fun c -> c.GPS) (fun c gps -> {c with GPS = gps}))
             .NewTicket(selectedCar.Lens (fun c -> c.ParkTicket) (fun c pt -> {c with ParkTicket = pt}))
             .NewEngine(selectedCar.Lens(fun c -> string c.Engine) (fun c s -> {c with Engine = int s}))
@@ -141,7 +141,9 @@ module CarsAdmin =
                 fun _ ->
                     async{
                         let! result = Cars.doSetCar sessionID selectedCar.Value
-                        return! updateCarList
+                        let! updateCar = updateCarList
+                        let! updateTuning = updateTuningList
+                        return! updateMemberList
                     } |> Async.Start
             )
             .CarList(
@@ -174,7 +176,10 @@ module CarsAdmin =
                             )
                             .Edit(
                                 fun _ ->
-                                    selectedCar.Set c
+                                    async{
+                                        let! updateCars = updateCarList
+                                        return selectedCar.Set c
+                                    } |> Async.Start
                             )
                             .Doc()
                 )

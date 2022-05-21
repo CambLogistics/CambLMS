@@ -41,11 +41,11 @@ module Cars =
                                 else None
                         KeyHolder2 = 
                             if car.KeyHolder2.IsSome then 
-                                User.getUserByID car.KeyHolder1.Value 
+                                User.getUserByID car.KeyHolder2.Value 
                                 else None
                         AirRide = car.AirRide = (sbyte 1)
                         ParkTicket = car.Ticket = (sbyte 1) 
-                        GPS = car.AirRide = (sbyte 1)
+                        GPS = car.Gps = (sbyte 1)
                         Engine = car.Engine
                         ECU = car.Ecu
                         Brakes = car.Brakes
