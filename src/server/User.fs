@@ -151,17 +151,14 @@ module User =
                     RegisterResult.Success
             with
                 _ -> RegisterResult.DatabaseError
-    let logoutUser sessionid =
+    let logoutUser (ctx:Context<EndPoint>) =
         let db = Database.SqlConnection.GetDataContext()
         (query{
             for session in db.Camblogistics.Sessions do
-                where(session.Id = sessionid)
-                exactlyOne
-            }).Delete()
+                where(session.Id = (ctx.Request.Cookies.Item "clms_sid").Value)
+                select session
+            }) |> Seq.iter(fun s -> s.Delete())
         db.SubmitUpdates()
-    let makeLogout sessionid ctx =
-        logoutUser sessionid
-        Content.RedirectPermanent(EndPoint.Home)
     let deleteUser sid userid =
         let db = Database.SqlConnection.GetDataContext()
         if not (verifyAdmin sid) then ()

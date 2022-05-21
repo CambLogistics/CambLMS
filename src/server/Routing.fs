@@ -15,7 +15,7 @@ module Routing =
         else
             match endpoint with
                 |EndPoint.Home -> Content.Page(PageMakers.Information ctx)
-                |EndPoint.Logout -> User.makeLogout sessionID ctx
+                |EndPoint.Logout -> Content.Page(PageMakers.Logout ctx)
                 |EndPoint.PasswordChange -> Content.Page(PageMakers.PasswordChange ctx)
                 |EndPoint.NameChange -> Content.Page(PageMakers.NameChange ctx)
                 |EndPoint.Changelog -> Content.Page(PageMakers.Changelog ctx)

@@ -1,5 +1,6 @@
 namespace camblms
 
+open WebSharper
 open WebSharper.UI
 open WebSharper.UI.Html
 open WebSharper.Sitelets
@@ -96,4 +97,11 @@ module PageMakers =
             .Stylesheet(SiteTemplates.AdminStyle)
             .Navbar(Navbar.MakeNavbar ctx EndPoint.NameChangeAdmin)
             .Main(client <@NameChangeAdmin.RenderPage()@>)
+            .Doc()
+    let Logout (ctx:Context<EndPoint>) =
+        User.logoutUser ctx
+        SiteTemplates.MainTemplate()
+            .Stylesheet(SiteTemplates.NormalStyle)
+            .Navbar()
+            .Main(client <@LogoutClient.Logout()@>)
             .Doc()
