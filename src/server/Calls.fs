@@ -34,10 +34,10 @@ module Calls =
             let db = Database.SqlConnection.GetDataContext()
             query{
                 for a in db.Camblogistics.Areas do
-                    select({Id = a.Id;Name = a.Name})
-            } |> Seq.toList
+                    select((a.Id,a.Name))
+            } |> Map.ofSeq
         with
-           _ -> []
+           _ -> Map.ofList []
     let registerCall sid price (callType:CallType) =
         let user = User.getUserFromSID sid
         match user with

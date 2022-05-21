@@ -18,6 +18,7 @@
     <Compile Include="src/server/NameChange.fs" />
     <Compile Include="src/sites/Feedback.fs" />
     <Compile Include="src/sites/LogoutClient.fs" />
+    <Compile Include="src/sites/TowPage.fs" />
     <Compile Include="src/sites/TaxiPage.fs" />
     <Compile Include="src/sites/CarsAdmin.fs" />
     <Compile Include="src/sites/CallsAdmin.fs" />

@@ -4,27 +4,21 @@ open WebSharper
 open WebSharper.UI
 
 [<JavaScript>]
-type Route = {Source:int; Dest:int}
+type TaxiRoute = {Source:int; Dest:int}
 
 [<JavaScript>]
 module TaxiPage =
     let selectedRoute = Var.Create {Source = -1; Dest = -1}
-    let areaList = Var.Create [{Id= -1;Name="Senkiföldje"}]
+    let areaList = Var.Create <| Map.ofSeq []
     let updateAreaList() =
         async{
             let! list = Calls.doGetAreaList()
             areaList.Set list
         } |> Async.Start
     let getAreaName id =
-        try
-        query{
-            for a in areaList.Value do
-            where(a.Id = id)
-            select a.Name
-            exactlyOne
-        }
-        with
-            _ -> ""
+       match Map.tryFind id areaList.Value with
+        |None -> ""
+        |Some s -> s
     let RenderPage() =
         updateAreaList()
         SiteParts.TaxiTemplate()

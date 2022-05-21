@@ -39,8 +39,8 @@ module Information =
                     .TransSum(string deliveryAll)
                     .Cars(
                         List.fold (
-                                fun s (rn:string) -> Doc.Concat (SiteParts.InfoTemplate.CarItem().RegNum(rn).Doc()::[s])
-                                ) Doc.Empty (Cars.getCarsOfKeyHolder sessionID.Value)
+                                fun s rn -> (s + " " + rn)
+                                ) "" (Cars.getCarsOfKeyHolder sessionID.Value)
                     )
                     .MoneySum((callsOfUser |> List.sumBy (fun c -> c.Price) |> string) + " $")
                     .TwoWeekMoney((callsOfUser |> List.filter (fun c -> c.PreviousWeek || c.ThisWeek) |> List.sumBy (fun c -> c.Price) |> string) + " $")

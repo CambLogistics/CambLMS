@@ -7,7 +7,7 @@
 - [] Calls(Towing,Delivery,Taxi)
 	- [] Delivery
 	- [x] Taxi
-	- [] Towing
+	- [x] Towing
 	- [x] Call count/ closing week from admin UI
 - [x] Car management
 - [x] Action feedback

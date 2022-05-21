@@ -3,6 +3,15 @@ namespace camblms
 open WebSharper
 
 module Tow =
+    let getGarageList() =
+        try
+            let db = Database.SqlConnection.GetDataContext()
+            query{
+                for g in db.Camblogistics.TowGarages do
+                select((g.Id,g.Name))
+            } |> Map.ofSeq
+        with
+            _ -> Map.ofList []
     let calculatePrice source dest =
         try
         let db = Database.SqlConnection.GetDataContext()
@@ -25,6 +34,11 @@ module Tow =
             return calculatePrice source dest |> Calls.registerCall sid <| CallType.Towing
         with
             _ -> return CallResult.DatabaseError
+        }
+    [<Rpc>]
+    let doGetGarageList() =
+        async{
+            return getGarageList()
         }
     let getInfo sid =
         let calls = Calls.getCallsBySID sid |> List.filter (fun c -> c.Type = CallType.Towing)

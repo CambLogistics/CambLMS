@@ -3,8 +3,7 @@
          <table class="uticel_taxi">
             <th class="szoveg_th" colspan="2">Vontatás</th>
             <tr>
-               <td id="calc" class="szoveg_td" colspan="2" style="display: none;">${From} - ${To} :&nbsp;    ${Ar} $</td>
-               <td id="alap" class="szoveg_td" colspan="2">Jelenleg nincs kiválasztva az úticél.</td>
+               <td ws-hole="Price" id="alap" class="szoveg_td" colspan="2"></td>
             </tr>
             <tr>
                <td><button class="szamla" ws-onclick="Submit">Számla átadva</button><button class="torles" ws-onclick="Reset">Fuvar törlés</button></td>
@@ -28,7 +27,7 @@
             <area ws-onclick="SelectLS" target="" alt="ls" title="ls" href="#" coords="498,333,497,499,260,498,253,378,250,360,253,345,253,332,289,322,316,310,337,298,361,294,379,298,382,313,400,320,415,326" shape="poly">
             <area ws-onclick="SelectOS" target="" alt="kul" title="kul" href="#" coords="496,181,498,334,417,326,383,314,379,297,362,293,336,298,291,322,254,331,253,325,245,324,235,316,224,278,161,277,169,216,325,183" shape="poly">
          </map>
-         <map name="image-map-vonti">
+         <map name="image-map-towing">
             <area ws-onclick="SelectFix" target="" alt="fix" title="fix" href="#" coords="130,176,55" shape="circle">
             <area ws-onclick="SelectJunk" target="" alt="junk" title="junk" href="#" coords="90,398,30" shape="circle">
             <area ws-onclick="SelectBMS" target="" alt="bms" title="bms" href="#" coords="397,341,35" shape="circle">
