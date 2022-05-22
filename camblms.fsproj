@@ -12,6 +12,7 @@
     <Compile Include="src/server/Delivery.fs" />
     <Compile Include="src/server/Tow.fs" />
     <Compile Include="src/server/Taxi.fs" />
+    <Compile Include="src/server/ServiceFee.fs" />
     <Compile Include="src/server/Information.fs" />
     <Compile Include="src/server/Navbar.fs" />
     <Compile Include="src/server/Images.fs" />
@@ -25,6 +26,7 @@
     <Compile Include="src/sites/CallsAdmin.fs" />
     <Compile Include="src/sites/NameChangeAdmin.fs" />
     <Compile Include="src/sites/NameChangePage.fs" />
+    <Compile Include="src/sites/ServiceFeeAdmin.fs" />
     <Compile Include="src/sites/PasswordChangePage.fs" />
     <Compile Include="src/sites/LoginPage.fs" />
     <Compile Include="src/sites/MemberAdminPage.fs" />

@@ -70,7 +70,7 @@ module PageMakers =
         SiteTemplates.MainTemplate()
             .Stylesheet(SiteTemplates.AdminStyle)
             .Navbar(Navbar.MakeNavbar ctx EndPoint.AdminHome)
-            .Main(SiteParts.AdminHomeTemplate().Doc())
+            .Main(Doc.Empty)
             .Doc()
     let CallsAdmin ctx =
         SiteTemplates.MainTemplate()
@@ -82,7 +82,7 @@ module PageMakers =
         SiteTemplates.MainTemplate()
             .Stylesheet(SiteTemplates.AdminStyle)
             .Navbar(Navbar.MakeNavbar ctx EndPoint.ServiceAdmin)
-            .Main()
+            .Main(client <@ServiceFeeAdmin.RenderPage()@>)
             .Doc()
     let LoginPage ctx =
         SiteTemplates.LoginTemplate()

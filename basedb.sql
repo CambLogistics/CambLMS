@@ -251,6 +251,34 @@ INSERT INTO `roles` VALUES (0,'Beszállító'),(1,'Próbaidős sofőr'),(2,'Gyak
 UNLOCK TABLES;
 
 --
+-- Table structure for table `serviceFees`
+--
+
+DROP TABLE IF EXISTS `serviceFees`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `serviceFees` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userID` int(11) NOT NULL,
+  `amount` int(11) NOT NULL,
+  `paid` tinyint(1) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `userID` (`userID`),
+  CONSTRAINT `serviceFees_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `serviceFees`
+--
+
+LOCK TABLES `serviceFees` WRITE;
+/*!40000 ALTER TABLE `serviceFees` DISABLE KEYS */;
+/*!40000 ALTER TABLE `serviceFees` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `sessions`
 --
 
@@ -418,4 +446,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-22  0:04:31
+-- Dump completed on 2022-05-22 13:03:27

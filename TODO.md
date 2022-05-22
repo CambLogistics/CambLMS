@@ -11,7 +11,7 @@
 	- [x] Call count/ closing week from admin UI
 - [x] Car management
 - [x] Action feedback
-- [] Service fee UI
+- [x] Service fee UI
 - [x] Changelog
 - [x] Logout
 - [x] Information page

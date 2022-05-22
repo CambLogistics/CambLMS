@@ -4,16 +4,15 @@
          <table>
             <tr>
                <td style="padding-right: 30px;padding-top: 10px;">
-                  <label class="szoveg_td_also">ID</label><br>
-                  <input class="inputbox" type="text" name="ID">
-               </td>
-               <td style="padding-right: 30px;padding-top: 10px;">
                   <label class="szoveg_td_also">Név</label><br>
-                  <input class="inputbox" type="text" name="Name">
+                  <select class="dropdown" ws-var="MemberSelectID" style="width: 300px">
+                     <option ws-replace="MemberList"></option>
+                     <option ws-template="MemberItem" value="${UserID}">${Member}</option>
+                  </select>
                </td>
                <td style="padding-right: 30px;padding-top: 10px;">
                   <label class="szoveg_td_also">Képekből összeg</label><br>
-                  <input class="inputbox" type="text" name="ServiceFee">
+                  <input class="inputbox" type="text" ws-var="Fee" name="ServiceFee">
                </td>
             </tr>
             <tr>
@@ -40,9 +39,9 @@
          <tr ws-replace="ServiceList"></div>
          <tr ws-template="ServiceListItem" class="adat">
             <td class="adat">${ID}</td>
-            <td class="adat">${Nev}</td>
+            <td class="adat">${Name}</td>
             <td class="adat">${ServiceFee}</td>
-            <td><button value="${ID}" class="delete" ws-onclick="Delete">X</button></td>
+            <td><button class="delete" ws-onclick="Paid">Fizetve</button></td>
          </tr>
       </table>
    </div>
