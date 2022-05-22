@@ -8,11 +8,13 @@ open WebSharper.UI.Client
 module ServiceFeeAdmin =
     let UserList = ListModel.FromSeq [{Id= -1;Name="Senki";AccountID = -1;Email="@";Role = -1}]
     let PendingList = ListModel.FromSeq [{ID = -1;Amount = 0;Username = ""}]
+    let SelectedUserID = Var.Create -1
     let sessionID = JavaScript.Cookies.Get("clms_sid").Value
     let updateUserList() =
         async{
             let! list = UserCallable.doGetUserList sessionID false
             UserList.Set list
+            SelectedUserID.Set (Seq.item 0 UserList.Value).Id
         } |> Async.Start
     let updatePendingList() =
         async{
@@ -32,6 +34,7 @@ module ServiceFeeAdmin =
                             .Doc()
                 )
             )
+            .MemberSelectID(SelectedUserID.Lens (fun id -> string id) (fun id s -> int s))
             .ServiceList(
                 PendingList.View |> Doc.BindSeqCached(
                     fun p ->

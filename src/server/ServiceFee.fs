@@ -21,7 +21,8 @@ module ServiceFee =
            _ -> []
     let submitPendingFee sid userid amount =
         if not <| User.verifyAdmin sid then ()
-        try
+        else
+        //try
             let db = Database.SqlConnection.GetDataContext()
             let newFee = db.Camblogistics.ServiceFees.Create()
             newFee.Amount <- amount
@@ -29,8 +30,8 @@ module ServiceFee =
             newFee.Date <- System.DateTime.Now
             newFee.Paid <- (sbyte 0)
             db.SubmitUpdates()
-        with
-            _ -> ()
+        (*with
+            _ -> ()*)
     let payFee sid feeID =
         if not <| User.verifyAdmin sid then ()
         try

@@ -128,6 +128,15 @@ hr{
   font-size: 13px;
   color: #fff;
 }
+.paid{
+  font-family: 'Aclonica', sans-serif;
+  border: 0px;
+  background: #0b8503;
+  padding: 15px 30px;
+  margin: 10px 25px;
+  font-size: 13px;
+  color: #fff;
+}
 .dropdown{
   font-family: 'Aclonica', sans-serif;
   border: 0px;
