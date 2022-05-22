@@ -78,7 +78,7 @@ module User =
             |Some u -> u.Role >= minimumAdmin
     let hashPassword (password:string) = 
         let hash = SHA512.Create()
-        System.Text.Encoding.UTF8.GetString(hash.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password)))
+        (hash.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password)) |> System.Convert.ToHexString).ToLower()
     let authenticateLoggedInUser sid password =
         let dbContext = Database.SqlConnection.GetDataContext()
         query{
