@@ -7,4 +7,4 @@ The default database can be created by running *basedb.sql* on a MySQL (compatib
 
 Register an user and set its accepted column to 1 with a database client. There will be an easier way to setup this, but not for now:)
 
-Adjust the connection string in *Database.fs* before compiling!
+Adjust the connection string in *Database.fs* before compiling! The runtime connection string can be set in *db.conf*
