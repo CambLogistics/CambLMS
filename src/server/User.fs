@@ -42,12 +42,12 @@ type PasswordChangeResult =
 module User =
     let minimumAdmin = 11
     let getUserFromSID sessionID = 
-        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString()).Camblogistics
+        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         try
         let list =
             query{
-                for session in db.Sessions do
-                    join user in db.Users on (session.UserId = user.Id) 
+                for session in db.Camblogistics.Sessions do
+                    join user in db.Camblogistics.Users on (session.UserId = user.Id) 
                     where(session.Id = sessionID && session.Expiry > System.DateTime.Now && user.Deleted = (sbyte 0))
                     select({Id = user.Id;
                             Name = user.Name;
@@ -60,11 +60,11 @@ module User =
         with
             _ -> None
     let getUserByID userid =
-        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString()).Camblogistics
+        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         try
         let list =
             query{
-                for user in db.Users do
+                for user in db.Camblogistics.Users do
                 where(user.Id = userid)
                 select({Id = user.Id;Name =user.Name;Role = user.Role;AccountID = user.AccountId;Email = user.Email})
             } |> Seq.toList
