@@ -24,7 +24,7 @@
 - [] Client-side routing
 ## Beta
 - [] Double prices / holidays
-- [] Config file
+- [x] Config file
 ## Release 1.0
 - [] Filtered call list in admin UI
 - [] Make last *n* calls editable
