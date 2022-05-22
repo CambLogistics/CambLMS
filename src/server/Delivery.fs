@@ -8,7 +8,7 @@ type DeliveryType = {ID: int;Name: string; Price: int}
 module Delivery =
     let getTypeList() =
         try
-        let db = Database.SqlConnection.GetDataContext()
+        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         query{
             for t in db.Camblogistics.DeliveryTypes do
                 join p in db.Camblogistics.DeliveryPrices on (t.Id = p.Type)
@@ -18,7 +18,7 @@ module Delivery =
             _ -> []
     let calculatePrice deliveryType =
         try
-        let db = Database.SqlConnection.GetDataContext()
+        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         (query{
             for price in db.Camblogistics.DeliveryPrices do
             where(deliveryType = price.Type)

@@ -5,7 +5,7 @@ open WebSharper
 module Taxi =
     let calculatePrice source dest =
         try
-        let db = Database.SqlConnection.GetDataContext()
+        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         (query{
             for route in db.Camblogistics.TaxiPrices do
             where((route.Source = source && route.Destination = dest) ||

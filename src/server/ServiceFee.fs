@@ -10,7 +10,7 @@ module ServiceFee =
         if not <| User.verifyAdmin sid then []
         else
         try
-            let db = Database.SqlConnection.GetDataContext()
+            let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
             query{
                 for fee in db.Camblogistics.ServiceFees do
                 where (fee.Paid = (sbyte 0))
@@ -23,7 +23,7 @@ module ServiceFee =
         if not <| User.verifyAdmin sid then ()
         else
         //try
-            let db = Database.SqlConnection.GetDataContext()
+            let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
             let newFee = db.Camblogistics.ServiceFees.Create()
             newFee.Amount <- amount
             newFee.UserId <- userid
@@ -35,7 +35,7 @@ module ServiceFee =
     let payFee sid feeID =
         if not <| User.verifyAdmin sid then ()
         try
-        let db = Database.SqlConnection.GetDataContext()
+        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         (query{
             for f in db.Camblogistics.ServiceFees do
             where(f.Id = feeID)

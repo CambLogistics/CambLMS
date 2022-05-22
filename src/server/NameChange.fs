@@ -17,7 +17,7 @@ type PendingChange = {UserID: int;OldName: string;NewName: string}
 module NameChangeServer =
 
     let proposeNameChange sid oldname newname password =
-        let db = Database.SqlConnection.GetDataContext()
+        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         let user = User.getUserFromSID sid
         let passwordOkay = User.authenticateLoggedInUser sid password
         match user with
@@ -51,7 +51,7 @@ module NameChangeServer =
         if User.verifyAdmin sid |> not then ()
         else
         try
-        let db = Database.SqlConnection.GetDataContext()
+        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         let nc = 
             query{
                 for x in db.Camblogistics.NameChanges do
@@ -78,7 +78,7 @@ module NameChangeServer =
         if User.verifyAdmin sid |> not then []
         else
         try
-            let db = Database.SqlConnection.GetDataContext()
+            let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
             query{
                 for x in db.Camblogistics.NameChanges do
                 join u in db.Camblogistics.Users on (x.UserId = u.Id)

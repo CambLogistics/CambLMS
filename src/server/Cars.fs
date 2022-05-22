@@ -15,7 +15,7 @@ module Cars =
     let getTuningLevels() =
         async{
         try
-            let db = Database.SqlConnection.GetDataContext()
+            let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
             return query{
                 for tuning in db.Camblogistics.TuningLevels do
                 select (tuning.Level,tuning.Name)
@@ -27,7 +27,7 @@ module Cars =
         if User.verifyAdmin sid |> not then []
         else
         try
-        let db = Database.SqlConnection.GetDataContext()
+        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         query{
             for car in db.Camblogistics.Cars do
                 select(
@@ -65,7 +65,7 @@ module Cars =
             |None -> []
             |Some u ->
                 try
-                let db = Database.SqlConnection.GetDataContext()
+                let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
                 query{
                     for car in db.Camblogistics.Cars do
                     where(car.KeyHolder1 = Some u.Id || car.KeyHolder2 = Some u.Id)
@@ -79,7 +79,7 @@ module Cars =
         try
         if not (User.verifyAdmin sid) then ()
         else
-            let db = Database.SqlConnection.GetDataContext()
+            let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
             let existing =
                 query{
                     for c in db.Camblogistics.Cars do

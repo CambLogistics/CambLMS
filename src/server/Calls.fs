@@ -31,7 +31,7 @@ type Area = {Id:int;Name: string}
 module Calls =
     let getAreaList() =
         try
-            let db = Database.SqlConnection.GetDataContext()
+            let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
             query{
                 for a in db.Camblogistics.Areas do
                     select((a.Id,a.Name))
@@ -43,7 +43,7 @@ module Calls =
         match user with
             |None -> InvalidSession
             |Some u ->
-                let db = Database.SqlConnection.GetDataContext()
+                let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
                 let call = db.Camblogistics.Calls.Create()
                 call.Date <- System.DateTime.Now
                 call.Price <- price
@@ -57,7 +57,7 @@ module Calls =
         if User.verifyAdmin sid |> not then ()
         else
         try
-        let db = Database.SqlConnection.GetDataContext()
+        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         query{
             for call in db.Camblogistics.Calls do
             where(call.ThisWeek = (sbyte 1) || call.PreviousWeek = (sbyte 1))
@@ -74,7 +74,7 @@ module Calls =
         _ -> ()
     let getCallsOfUser (user:Member) =
         try 
-        let db = Database.SqlConnection.GetDataContext()
+        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         query{
             for c in db.Camblogistics.Calls do
             where(user.Id = c.UserId)

@@ -37,6 +37,9 @@
     <Compile Include="src/server/Site.fs" />
     <Compile Include="src/server/Startup.fs" />
     <None Include="wsconfig.json" />
+    <Content Include ="db.conf"/>
+    <Content Include ="service/**/*"/>
+    <Content Include ="basedb.sql"/>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MySQL.Data" Version="8.0.29" />

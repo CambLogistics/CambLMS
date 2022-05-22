@@ -71,7 +71,7 @@ module ImageSubmitter =
         try
             let file = Seq.item 0 ctx.Request.Files
             let filename = getRandomString 32 + System.IO.Path.GetExtension file.FileName
-            let db = Database.SqlConnection.GetDataContext()
+            let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
             if System.IO.Directory.Exists "wwwroot/img" |> not then System.IO.Directory.CreateDirectory "wwwroot/img" |> ignore
             file.SaveAs (@"wwwroot/img/" + filename)
             let newFileEntry = db.Camblogistics.Images.Create()

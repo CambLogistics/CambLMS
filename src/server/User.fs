@@ -42,7 +42,7 @@ type PasswordChangeResult =
 module User =
     let minimumAdmin = 11
     let getUserFromSID sessionID = 
-        let db = Database.SqlConnection.GetDataContext().Camblogistics
+        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString()).Camblogistics
         try
         let list =
             query{
@@ -60,7 +60,7 @@ module User =
         with
             _ -> None
     let getUserByID userid =
-        let db = Database.SqlConnection.GetDataContext().Camblogistics
+        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString()).Camblogistics
         try
         let list =
             query{
@@ -80,7 +80,7 @@ module User =
         let hash = SHA512.Create()
         (hash.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password)) |> System.Convert.ToHexString).ToLower()
     let authenticateLoggedInUser sid password =
-        let dbContext = Database.SqlConnection.GetDataContext()
+        let dbContext = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         query{
             for user in dbContext.Camblogistics.Users do
             join session in dbContext.Camblogistics.Sessions on (user.Id = session.UserId)
@@ -88,7 +88,7 @@ module User =
             select user
         } |> Seq.isEmpty |> not
     let generateSession userid =
-        let dbContext = Database.SqlConnection.GetDataContext()
+        let dbContext = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         use rng = RandomNumberGenerator.Create()
         let mutable sessionRandom = Array.create 64 0uy
         rng.GetBytes sessionRandom
@@ -101,7 +101,7 @@ module User =
         dbContext.SubmitUpdates()
         (sessId,expDate)
     let loginUser (name, password) =
-        let db = Database.SqlConnection.GetDataContext()
+        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         try
             let userList = query{
                     for user in db.Camblogistics.Users do
@@ -118,7 +118,7 @@ module User =
             _ -> LoginResult.DatabaseError
 
     let registerUser (name,password,accountid,email) = 
-        let db = Database.SqlConnection.GetDataContext()
+        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         if String.length password < 5 || String.length name < 3 || String.length email < 5 then MissingData
         else
             try
@@ -152,7 +152,7 @@ module User =
             with
                 _ -> RegisterResult.DatabaseError
     let logoutUser (ctx:Context<EndPoint>) =
-        let db = Database.SqlConnection.GetDataContext()
+        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         (query{
             for session in db.Camblogistics.Sessions do
                 where(session.Id = (ctx.Request.Cookies.Item "clms_sid").Value)
@@ -160,7 +160,7 @@ module User =
             }) |> Seq.iter(fun s -> s.Delete())
         db.SubmitUpdates()
     let deleteUser sid userid =
-        let db = Database.SqlConnection.GetDataContext()
+        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         if not (verifyAdmin sid) then ()
         else
         try
@@ -175,7 +175,7 @@ module User =
         with
             _ -> ()
     let approveUser sid userid =
-        let db = Database.SqlConnection.GetDataContext()
+        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         if not (verifyAdmin sid) then ()
         else
         try
@@ -190,7 +190,7 @@ module User =
     let getUserList sid pending =
         if verifyAdmin sid |> not then []
         else
-            let db = Database.SqlConnection.GetDataContext()
+            let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
             query{
                 for user in db.Camblogistics.Users do
                 where (user.Deleted = (sbyte 0) && user.Accepted = (sbyte (if pending then 0 else 1)))
@@ -198,7 +198,7 @@ module User =
             } |> Seq.toList |> List.sortBy (fun u -> u.Id)
     let getRankList() =
         try
-        let db = Database.SqlConnection.GetDataContext()
+        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         query{
             for r in db.Camblogistics.Roles do
             select({Level = r.Id;Name = r.Name})
@@ -214,7 +214,7 @@ module User =
                 if u.Role <= (getUserByID userID).Value.Role || u.Id = userID then ()
                 else
                 try
-                    let db = Database.SqlConnection.GetDataContext()
+                    let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
                     let user =
                         query{
                             for u in db.Camblogistics.Users do
@@ -226,7 +226,7 @@ module User =
                 with
                     _-> ()
     let changeUserPassword sid oldPassword newPassword =
-        let db = Database.SqlConnection.GetDataContext()
+        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         if String.length newPassword < 3 then BadNewPassword
         else
         if authenticateLoggedInUser sid oldPassword |> not then PasswordChangeResult.WrongPassword
