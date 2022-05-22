@@ -11,7 +11,7 @@ module Routing =
         if user.Role < minRole || 
             (user.Role > maxRole && (User.verifyAdmin (sessionID) |> not)) 
             || minRole = -2 then
-                Content.RedirectPermanent(EndPoint.Information)
+                Content.RedirectTemporary(EndPoint.Information)
         else
             match endpoint with
                 |EndPoint.Home -> Content.Page(PageMakers.Information ctx)
@@ -36,7 +36,7 @@ module Routing =
                 |EndPoint.Towing -> Content.Page(PageMakers.Towing ctx)
     let LoggedOutRoute (ctx:Context<EndPoint>) endpoint =
         let neededPermission,_ = Map.find endpoint EndPoints.PermissionList
-        if neededPermission > -1 then Content.RedirectPermanent(EndPoint.Login)
+        if neededPermission > -1 then Content.RedirectTemporary(EndPoint.Login)
         else
             match endpoint with
                 |EndPoint.Home -> Content.Page(PageMakers.LoginPage ctx)
