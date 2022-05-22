@@ -1,0 +1,17 @@
+[Unit]
+Description=CambLogistics Management System
+
+[Service]
+#Change the directory depending on the actual location
+WorkingDirectory=/var/www/camblms
+ExecStart=/var/www/camblms
+Restart=always
+RestartSec=10
+KillSignal=SIGINT
+SyslogIdentifier=camblms
+User=camblms
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+[Install]
+WantedBy=multi-user.target
