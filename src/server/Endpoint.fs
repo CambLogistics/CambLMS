@@ -32,7 +32,7 @@ module EndPoints =
     //(endpoint,(minRole,maxRole))
     //If minRole is -2, the page is to be accessed logged out
     let PermissionList = Map [
-        (EndPoint.Home,(-1,13));
+        (EndPoint.Home,(-1,14));
         (EndPoint.Logout,(0,14));
         (EndPoint.Login,(-2,14));
         (EndPoint.Changelog,(0,14))

@@ -65,9 +65,14 @@ module TowPage =
                             |CallResult.Success -> 
                                 selectedRoute.Set {Source = -1; Dest = -1}
                                 Feedback.giveFeedback false "Sikeres művelet!"
+                                JavaScript.JS.Window.Location.Replace "/"
                             |CallResult.InvalidSession -> Feedback.giveFeedback true "Érvénytelen munkamenet. Jelentkezz be és ki újra!"
                             |CallResult.DatabaseError -> Feedback.giveFeedback true "Adatbázishiba. Értesítsd a (műszaki) igazgatót!"
                     } |> Async.Start
             )
-            .Reset(fun e -> selectedRoute.Set {Source = -1;Dest = -1})
+            .Reset(
+                fun e -> 
+                    selectedRoute.Set {Source = -1;Dest = -1}
+                    JavaScript.JS.Window.Location.Replace "/"
+                )
             .Doc()

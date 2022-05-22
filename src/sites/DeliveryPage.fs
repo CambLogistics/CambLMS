@@ -52,9 +52,14 @@ module DeliveryPage =
                             |CallResult.Success -> 
                                 Feedback.giveFeedback false "Sikeres művelet!"
                                 selectedType.Set {ID= -1; Name="";Price=0}
+                                JavaScript.JS.Window.Location.Replace "/"
                             |CallResult.InvalidSession -> Feedback.giveFeedback true "Érvénytelen munkamenet. Lépj ki és be újra!"
                             |CallResult.DatabaseError -> Feedback.giveFeedback true "Adatbázishiba. Keresd a (műszaki) igazgatót!"
                     } |> Async.Start
             )
-            .Reset(fun _ -> selectedType.Set {ID= -1; Name="";Price=0})
+            .Reset(
+                fun _ -> 
+                    selectedType.Set {ID= -1; Name="";Price=0}
+                    JavaScript.JS.Window.Location.Replace "/"
+                    )
             .Doc()
