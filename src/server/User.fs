@@ -42,8 +42,8 @@ type PasswordChangeResult =
 module User =
     let minimumAdmin = 11
     let getUserFromSID sessionID = 
-        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         try
+        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         let list =
             query{
                 for session in db.Camblogistics.Sessions do
@@ -60,8 +60,8 @@ module User =
         with
             _ -> None
     let getUserByID userid =
-        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         try
+        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         let list =
             query{
                 for user in db.Camblogistics.Users do
@@ -80,6 +80,7 @@ module User =
         let hash = SHA512.Create()
         (hash.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password)) |> System.Convert.ToHexString).ToLower()
     let authenticateLoggedInUser sid password =
+        try
         let dbContext = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         query{
             for user in dbContext.Camblogistics.Users do
@@ -87,6 +88,8 @@ module User =
             where (session.Id = sid && session.Expiry > System.DateTime.Now && user.Password = hashPassword password)
             select user
         } |> Seq.isEmpty |> not
+        with
+            _ -> false
     let generateSession userid =
         let dbContext = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         use rng = RandomNumberGenerator.Create()
@@ -101,8 +104,8 @@ module User =
         dbContext.SubmitUpdates()
         (sessId,expDate)
     let loginUser (name, password) =
-        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         try
+            let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
             let userList = query{
                     for user in db.Camblogistics.Users do
                     where(user.Name = name && user.Password = hashPassword password && user.Deleted = (sbyte 0))
