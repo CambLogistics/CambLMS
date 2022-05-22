@@ -93,7 +93,7 @@ module User =
         let mutable sessionRandom = Array.create 64 0uy
         rng.GetBytes sessionRandom
         let sessId = System.Convert.ToBase64String sessionRandom
-        let expDate = System.DateTime.Now + System.TimeSpan(0,1,0,0)
+        let expDate = System.DateTime.Now + System.TimeSpan(0,0,20,0)
         let newSession = dbContext.Camblogistics.Sessions.Create()
         newSession.UserId <- userid
         newSession.Id <- sessId
