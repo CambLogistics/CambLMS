@@ -5,6 +5,7 @@ open Microsoft.AspNetCore.Http
 open Microsoft.Extensions.DependencyInjection
 open WebSharper.AspNetCore
 open camblms
+open Microsoft.AspNetCore.HttpOverrides
 
 [<EntryPoint>]
 let main args =
@@ -25,7 +26,14 @@ let main args =
             .UseHsts()
         |> ignore
 
-    app.UseAuthentication()
+    app
+        //Prepare for reverse proxy
+        .UseForwardedHeaders(
+           let fho = new ForwardedHeadersOptions()
+           fho.ForwardedHeaders <- ForwardedHeaders.XForwardedFor ||| ForwardedHeaders.XForwardedProto
+           fho 
+        )
+        .UseAuthentication()
         .UseStaticFiles()
         .UseWebSharper()
     |> ignore
