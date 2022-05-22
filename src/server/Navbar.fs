@@ -40,7 +40,7 @@ module Navbar =
         Separator
         Url(EndPoint.Logout,"Kijelentkezés")
     ]
-    let MakeNavbar (ctx:Context<EndPoint>) endpoint =
+    let MakeNavbar (ctx:Context<EndPoint>) isAdmin =
         let navTemplate = NavTemplate()
         let user =
             match ctx.Request.Cookies.Item "clms_sid" with
@@ -55,8 +55,7 @@ module Navbar =
                         NavTemplate.NavbarElement().EndpointURL(ctx.Link ep).EndpointName(name).Doc()
             ) elements |> Doc.Concat
         navTemplate.NavList(
-            let (endpointMinRole,_) = Map.find endpoint EndPoints.PermissionList
-            let navbarList = if endpointMinRole >= 11 then AdminNavbar else NormalNavbar
+            let navbarList = if isAdmin then AdminNavbar else NormalNavbar
             navbarList |> List.filter (
                 fun item ->
                     match item with

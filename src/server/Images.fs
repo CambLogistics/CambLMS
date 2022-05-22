@@ -6,7 +6,7 @@ open WebSharper.UI
 module Documents =
     let MakePage ctx =
         SiteTemplates.MainTemplate()
-            .Navbar(Navbar.MakeNavbar ctx (EndPoint.Documents))
+            .Navbar(Navbar.MakeNavbar ctx false)
             .Stylesheet(SiteTemplates.NormalStyle)
             .Main(
                 SiteParts.DocumentsTemplate()
@@ -25,7 +25,7 @@ module Documents =
 module ImageUpload =
     let MakePage ctx =
         SiteTemplates.MainTemplate()
-            .Navbar(Navbar.MakeNavbar ctx (EndPoint.ImageUpload))
+            .Navbar(Navbar.MakeNavbar ctx false)
             .Stylesheet(SiteTemplates.NormalStyle)
             .Main(
                 SiteParts.ImageUploadTemplate()

@@ -34,7 +34,6 @@ module Routing =
                 |EndPoint.ServiceAdmin -> Content.Page(PageMakers.ServiceAdmin ctx)
                 |EndPoint.Taxi -> Content.Page(PageMakers.Taxi ctx)
                 |EndPoint.Towing -> Content.Page(PageMakers.Towing ctx)
-
     let LoggedOutRoute (ctx:Context<EndPoint>) endpoint =
         let neededPermission,_ = Map.find endpoint EndPoints.PermissionList
         if neededPermission > -1 then Content.RedirectPermanent(EndPoint.Login)
@@ -45,10 +44,13 @@ module Routing =
                 |EndPoint.Registration -> Content.Page(PageMakers.RegisterPage ctx)
 
     let MakeRoute (ctx:Context<EndPoint>) endpoint =
-        match ctx.Request.Cookies.Item "clms_sid" with
-            |Some sid -> 
-                let user = User.getUserFromSID sid
-                match user with
-                    |Some u -> LoggedInRoute u ctx endpoint
+        match endpoint with
+            |NotFound _ -> Content.Page(PageMakers.NotFound ctx)
+            | _ ->
+                match ctx.Request.Cookies.Item "clms_sid" with
+                    |Some sid -> 
+                        let user = User.getUserFromSID sid
+                        match user with
+                            |Some u -> LoggedInRoute u ctx endpoint
+                            |None -> LoggedOutRoute ctx endpoint
                     |None -> LoggedOutRoute ctx endpoint
-            |None -> LoggedOutRoute ctx endpoint

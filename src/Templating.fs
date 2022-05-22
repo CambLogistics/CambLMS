@@ -35,3 +35,4 @@ module SiteParts =
     type TaxiTemplate = Templating.Template<"wwwroot/templates/taxi.html">
     type TowTemplate = Templating.Template<"wwwroot/templates/tow.html">
     type ServiceTemplate = Templating.Template<"wwwroot/templates/service.html">
+    type NotFoundTemplate = Templating.Template<"wwwroot/templates/notfound.html">
