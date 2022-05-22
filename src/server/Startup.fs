@@ -25,9 +25,9 @@ let main args =
             .UseHsts()
         |> ignore
 
-        app.UseAuthentication()
-            .UseStaticFiles()
-            .UseWebSharper()
+    app.UseAuthentication()
+        .UseStaticFiles()
+        .UseWebSharper()
     |> ignore
 
     app.Run()
