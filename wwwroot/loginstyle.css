@@ -32,11 +32,9 @@ html,body{
   border-radius: 15px 15px 0 0;
   background: linear-gradient(-135deg, #ffb428, #f76c02);
 }
-.wrapper {
-  padding: 10px 30px 50px 30px;
-}
 .wrapper .field{
   height: 50px;
+  padding: 0px 30px;
   width: 100%;
   margin-top: 20px;
   position: relative;
@@ -60,6 +58,7 @@ html,body{
   top: 50%;
   left: 20px;
   color: #999999;
+  padding: 0px 30px;
   font-weight: 400;
   font-size: 17px;
   pointer-events: none;
@@ -118,6 +117,7 @@ button:active{
   color: #262626;
   margin-top: 20px;
   text-align: center;
+  padding-bottom: 30px;
 }
 .pass-link a,
 .signup-link a{
@@ -154,7 +154,7 @@ button:active{
   border: 0px;
   background: linear-gradient(-135deg, #ffb428, #f76c02);
   padding: 10px 30px;
-  margin: 10px 25px;
+  margin: 10px 52.5px;
   font-size: 15pt;
   border-radius: 15px;
   color: #fff;
