@@ -23,8 +23,8 @@ module LoginPage =
                     async{
                         let! result = UserCallable.doLogin e.Vars.Name.Value e.Vars.Password.Value
                         match result with
-                            |LoginResult.Success(id,exp) -> 
-                                JS.Document.Cookie <- "clms_sid=" + id + ";expires=" + exp.ToString()
+                            |LoginResult.Success id -> 
+                                JS.Document.Cookie <- "clms_sid=" + id
                                 if e.Vars.RememberMe.Value then
                                     JavaScript.Cookies.Set("clms_rm","true")
                                     JavaScript.Cookies.Set("clms_rm_name",e.Vars.Name.Value)

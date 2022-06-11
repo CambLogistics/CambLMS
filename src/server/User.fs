@@ -1,7 +1,6 @@
 namespace camblms
 
 open WebSharper
-open WebSharper.UI.Server
 open WebSharper.Sitelets
 open WebSharper.UI
 open System.Security.Cryptography
@@ -17,7 +16,7 @@ type LoginStatus =
 
 [<JavaScript>]
 type LoginResult =
-    |Success of string*System.DateTime
+    |Success of string
     |CredentialError
     |DatabaseError
     |NotApproved
@@ -102,7 +101,7 @@ module User =
         newSession.Id <- sessId
         newSession.Expiry <- expDate
         dbContext.SubmitUpdates()
-        (sessId,expDate)
+        sessId
     let loginUser (name, password) =
         try
             let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
