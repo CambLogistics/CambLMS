@@ -44,7 +44,7 @@ module TowPage =
                                     let! price = Tow.doCalculatePrice r.Source r.Dest
                                     let! isDouble = Calls.doGetDPStatus()
                                     if price > 0 then JavaScript.JS.Document.GetElementById("Submit").RemoveAttribute("disabled")
-                                    return (getAreaName r.Source + " - " + getGarageName r.Dest + ": " + string price + if isDouble then " (DUPLA)" else "")
+                                    return (getAreaName r.Source + " - " + getGarageName r.Dest + ": " + string price + "$" + if isDouble then " (DUPLA)" else "")
                             } 
                 )
             )

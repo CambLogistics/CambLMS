@@ -27,7 +27,7 @@ module DeliveryPage =
                             "Jelenleg nincs kiválasztva szolgáltatás."
                         else
                             JavaScript.JS.Document.GetElementById("Submit").RemoveAttribute("disabled") 
-                            "A szolgáltatás ára: " + if doublePrice.Value then string (t.Price*2) + " (DUPLA)" else string t.Price
+                            "A szolgáltatás ára: " + if doublePrice.Value then string (t.Price*2) + "$" + " (DUPLA)" else string t.Price + "$"
                 )
             )
             .DeliveryTypeList(
