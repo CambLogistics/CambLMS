@@ -6,6 +6,7 @@ open WebSharper.JavaScript
 [<JavaScript>]
 module LoginPage =
     let RenderPage() =
+        if JS.Window.Location.Href.Contains "registered" then Feedback.giveFeedback false "Regisztrációd sikeres és hamarosan jóváhagyásra kerül!"
         SiteParts.LoginPage()
             .RememberMe(
                 match JavaScript.Cookies.Get "clms_rm" |> Optional.toOption with

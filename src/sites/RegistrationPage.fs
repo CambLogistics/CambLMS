@@ -16,7 +16,7 @@ module RegistrationPage =
                                     UserCallable.doRegister e.Vars.Name.Value e.Vars.Password.Value (int e.Vars.AccID.Value) e.Vars.Email.Value
                                 match result with
                                     |RegisterResult.Success ->
-                                        Feedback.giveFeedback false "Regisztrációd sikeres és hamarosan jóváhagyásra kerül!"
+                                        JS.Window.Location.Replace "/login?registered=true"
                                     |Exists ->
                                         Feedback.giveFeedback true "Ilyen felhasználó már létezik!"
                                     |RegisterResult.DatabaseError ->
