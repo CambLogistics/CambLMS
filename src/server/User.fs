@@ -248,6 +248,17 @@ module User =
                     Success
                 with
                     _ -> PasswordChangeResult.DatabaseError
+    let lengthenSession sid =
+        try
+        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
+        (query{
+            for s in db.Camblogistics.Sessions do
+            where (s.Id = sid)
+            exactlyOne
+        }).Expiry <- System.DateTime.Now + System.TimeSpan(0,0,20,0)
+        db.SubmitUpdates()
+        with
+            _ -> ()
 
 module UserCallable =
     [<Rpc>]

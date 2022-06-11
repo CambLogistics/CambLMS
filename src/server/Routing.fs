@@ -13,6 +13,7 @@ module Routing =
             || minRole = -2 then
                 Content.RedirectTemporary(EndPoint.Information)
         else
+            User.lengthenSession sessionID
             match endpoint with
                 |EndPoint.Home -> Content.Page(PageMakers.Information ctx)
                 |EndPoint.Logout -> Content.Page(PageMakers.Logout ctx)
