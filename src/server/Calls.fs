@@ -35,8 +35,8 @@ type Area = { Id: int; Name: string }
 
 module Calls =
     let isDoublePrice () =
+        try
         let db = Database.SqlConnection.GetDataContext(Database.getConnectionString ())
-
         let convertedHolidays =
             query {
                 for h in db.Camblogistics.Holidays do
@@ -75,6 +75,8 @@ module Calls =
 
                  count
          }) > 0
+         with
+            _ -> false
 
     let transformPrice price =
         if isDoublePrice () then
