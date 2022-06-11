@@ -1,0 +1,21 @@
+<div class="main">
+    <h1>Szervízképek megjelenítése</h1><br>
+    <select class="dropdown" style="width: 300px;" ws-var="SelectedMember" required>
+       <option value="${MemberID}" ws-template="MemberItem">${MemberName}</option>
+       <option ws-replace="MemberList">${Member}</option>
+    </select><span style="padding-left: 50px;"><button class="approve">Megjelenítés</button></span>
+    <table style="padding-top: 30px;">
+          <tr class="szoveg_td">
+             <td style="padding-right: 25px;">ID</td>
+             <td style="padding-right: 25px;">Kép link</td>
+             <td style="padding-right: 25px;">Törlés</td>
+          </tr>
+          <tr><td colspan="4" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td></tr>
+          <tr ws-replace="ImageList"></tr>
+          <tr class="adat" ws-template="ImageItem">
+             <td class="adat">${ID}</td>
+             <td class="adat">${ImageLink}</td>
+             <td><button class="delete" ws-onclick="Delete">X</button></td>
+          </tr>
+       </table>
+ </div>

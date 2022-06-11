@@ -1,0 +1,19 @@
+<div class="main">
+    <h1>Iratok megjelenítése</h1>
+    <table class="uticel_taxi">
+       <tr>
+          <td>
+                <select class="dropdown" style="width: 300px;" ws-var="Member" required>
+                   <option value="${MemberID}" ws-template="MemberItem">${MemberName}</option>
+                   <option ws-replace="MemberList"></option>
+                </select>
+          </td>
+          <td><button class="approve">Megjelenítés</button></td>
+       </tr>
+       <tr ws-replace="DocDisplay"></tr>
+       <tr ws-template="DocDisplayTemplate">
+          <td style="width: 450px"><img src="${PersonalID}"></td>
+          <td style="width: 450px"><img src="${DriversLicense}"></td>
+       </tr>
+    </table>
+ </div>
