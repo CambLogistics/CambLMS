@@ -6,7 +6,7 @@ module Taxi =
     let calculatePrice source dest =
         try
         let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
-        (query{
+        Calls.transformPrice (query{
             for route in db.Camblogistics.TaxiPrices do
             where((route.Source = source && route.Destination = dest) ||
                     (route.Source = dest && route.Destination = source))

@@ -8,10 +8,13 @@ open WebSharper.UI.Client
 module DeliveryPage =
     let TypeList = ListModel.FromSeq [{ID= -1;Name="";Price=0}]
     let selectedType = Var.Create {ID= -1;Name="";Price=0}
+    let doublePrice = Var.Create false
     let updateTypeList() =
         async{
             let! list = Delivery.doGetTypeList()
             TypeList.Set list
+            let! dp = Calls.doGetDPStatus()
+            doublePrice.Set dp
         } |> Async.Start
     let RenderPage() =
         updateTypeList()
@@ -24,7 +27,7 @@ module DeliveryPage =
                             "Jelenleg nincs kiválasztva szolgáltatás."
                         else
                             JavaScript.JS.Document.GetElementById("Submit").RemoveAttribute("disabled") 
-                            "A szolgáltatás ára: " + string t.Price
+                            "A szolgáltatás ára: " + if doublePrice.Value then string (t.Price*2) + " (DUPLA)" else string t.Price
                 )
             )
             .DeliveryTypeList(

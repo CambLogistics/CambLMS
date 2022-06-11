@@ -16,20 +16,17 @@
 - [x] Logout
 - [x] Information page
 ## Alpha
+- [x] Double prices / holidays
+- [x] Config file
 - [] Access images from admin UI
 - [] Top members
-- [] GDPR compliance 
 - [] Forgot password
-- [] Profile memory usage
-- [] Client-side routing
 ## Beta
-- [] Double prices / holidays
-- [x] Config file
+- [] Client-side routing
+- [] GDPR compliance 
 ## Release 1.0
 - [] Filtered call list in admin UI
 - [] Make last *n* calls editable
-- [] Testing for two weeks
-- [] Fixing beta bugs
 ## Release 1.1
 - [] Contracts
 ## Release 1.2

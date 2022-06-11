@@ -19,7 +19,7 @@ module Delivery =
     let calculatePrice deliveryType =
         try
         let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
-        (query{
+        Calls.transformPrice (query{
             for price in db.Camblogistics.DeliveryPrices do
             where(deliveryType = price.Type)
             exactlyOne

@@ -15,7 +15,7 @@ module Tow =
     let calculatePrice source dest =
         try
         let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
-        (query{
+        Calls.transformPrice (query{
             for route in db.Camblogistics.TowPrices do
             where(route.Source = source && route.Destination = dest)
             exactlyOne
