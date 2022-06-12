@@ -1,8 +1,8 @@
--- MariaDB dump 10.19  Distrib 10.5.15-MariaDB, for Linux (x86_64)
+-- MariaDB dump 10.19  Distrib 10.5.16-MariaDB, for Linux (x86_64)
 --
 -- Host: localhost    Database: camblogistics
 -- ------------------------------------------------------
--- Server version	10.5.15-MariaDB
+-- Server version	10.5.16-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -30,16 +30,6 @@ CREATE TABLE `areas` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `areas`
---
-
-LOCK TABLES `areas` WRITE;
-/*!40000 ALTER TABLE `areas` DISABLE KEYS */;
-INSERT INTO `areas` VALUES (0,'Los Santos'),(1,'Külváros'),(2,'San Fierro'),(3,'Angel Pine és környéke'),(4,'Mt. Chilliad'),(5,'Bayside');
-/*!40000 ALTER TABLE `areas` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `calls`
 --
 
@@ -59,15 +49,6 @@ CREATE TABLE `calls` (
   CONSTRAINT `calls_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `calls`
---
-
-LOCK TABLES `calls` WRITE;
-/*!40000 ALTER TABLE `calls` DISABLE KEYS */;
-/*!40000 ALTER TABLE `calls` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `cars`
@@ -118,15 +99,6 @@ CREATE TABLE `cars` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cars`
---
-
-LOCK TABLES `cars` WRITE;
-/*!40000 ALTER TABLE `cars` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cars` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `deliveryPrices`
 --
 
@@ -140,16 +112,6 @@ CREATE TABLE `deliveryPrices` (
   CONSTRAINT `deliveryPrices_ibfk_1` FOREIGN KEY (`type`) REFERENCES `deliveryTypes` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `deliveryPrices`
---
-
-LOCK TABLES `deliveryPrices` WRITE;
-/*!40000 ALTER TABLE `deliveryPrices` DISABLE KEYS */;
-INSERT INTO `deliveryPrices` VALUES (0,3000),(1,4000),(2,4500);
-/*!40000 ALTER TABLE `deliveryPrices` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `deliveryTypes`
@@ -166,14 +128,19 @@ CREATE TABLE `deliveryTypes` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `deliveryTypes`
+-- Table structure for table `holidays`
 --
 
-LOCK TABLES `deliveryTypes` WRITE;
-/*!40000 ALTER TABLE `deliveryTypes` DISABLE KEYS */;
-INSERT INTO `deliveryTypes` VALUES (0,'Farm beszállítás'),(1,'Műhely beszállítás'),(2,'Autószállítás műhelynél');
-/*!40000 ALTER TABLE `deliveryTypes` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `holidays`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `holidays` (
+  `startDate` date NOT NULL,
+  `endDate` date NOT NULL,
+  `everyYear` tinyint(1) NOT NULL,
+  PRIMARY KEY (`startDate`,`endDate`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `images`
@@ -185,20 +152,12 @@ DROP TABLE IF EXISTS `images`;
 CREATE TABLE `images` (
   `userid` int(11) NOT NULL,
   `name` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uploadDate` datetime NOT NULL,
   PRIMARY KEY (`name`),
   KEY `userid` (`userid`),
   CONSTRAINT `images_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `images`
---
-
-LOCK TABLES `images` WRITE;
-/*!40000 ALTER TABLE `images` DISABLE KEYS */;
-/*!40000 ALTER TABLE `images` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `nameChanges`
@@ -218,13 +177,19 @@ CREATE TABLE `nameChanges` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `nameChanges`
+-- Table structure for table `operatingHours`
 --
 
-LOCK TABLES `nameChanges` WRITE;
-/*!40000 ALTER TABLE `nameChanges` DISABLE KEYS */;
-/*!40000 ALTER TABLE `nameChanges` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `operatingHours`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `operatingHours` (
+  `dayOfWeek` smallint(6) NOT NULL,
+  `opening` time NOT NULL,
+  `closing` time NOT NULL,
+  PRIMARY KEY (`dayOfWeek`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `roles`
@@ -239,16 +204,6 @@ CREATE TABLE `roles` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `roles`
---
-
-LOCK TABLES `roles` WRITE;
-/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` VALUES (0,'Beszállító'),(1,'Próbaidős sofőr'),(2,'Gyakornok sofőr'),(3,'Sofőr'),(4,'Haladó sofőr'),(5,'Profi sofőr'),(6,'Veterán sofőr'),(7,'Vontatós gyakornok'),(8,'Vontatós'),(9,'Haladó vontatós'),(10,'Telephelyvezető gyakornok'),(11,'Telephelyvezető'),(12,'Műszaki igazgató'),(13,'Igazgató-helyettes'),(14,'Igazgató');
-/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `serviceFees`
@@ -270,15 +225,6 @@ CREATE TABLE `serviceFees` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `serviceFees`
---
-
-LOCK TABLES `serviceFees` WRITE;
-/*!40000 ALTER TABLE `serviceFees` DISABLE KEYS */;
-/*!40000 ALTER TABLE `serviceFees` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `sessions`
 --
 
@@ -294,15 +240,6 @@ CREATE TABLE `sessions` (
   CONSTRAINT `sessions_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `sessions`
---
-
-LOCK TABLES `sessions` WRITE;
-/*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-/*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `taxiPrices`
@@ -323,16 +260,6 @@ CREATE TABLE `taxiPrices` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `taxiPrices`
---
-
-LOCK TABLES `taxiPrices` WRITE;
-/*!40000 ALTER TABLE `taxiPrices` DISABLE KEYS */;
-INSERT INTO `taxiPrices` VALUES (0,0,700),(0,1,1200),(0,2,1500),(0,3,1300),(0,4,2000),(0,5,2500),(1,1,800),(1,3,1100),(1,4,2000),(1,5,1100),(2,1,1200),(2,2,800),(2,4,2000),(2,5,1200),(3,2,1200),(3,3,1000),(3,4,2000),(3,5,1200),(4,4,2000),(5,4,2000);
-/*!40000 ALTER TABLE `taxiPrices` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `towGarages`
 --
 
@@ -345,16 +272,6 @@ CREATE TABLE `towGarages` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `towGarages`
---
-
-LOCK TABLES `towGarages` WRITE;
-/*!40000 ALTER TABLE `towGarages` DISABLE KEYS */;
-INSERT INTO `towGarages` VALUES (0,'BMS'),(1,'Fix'),(2,'Junkyard');
-/*!40000 ALTER TABLE `towGarages` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `towPrices`
@@ -375,16 +292,6 @@ CREATE TABLE `towPrices` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `towPrices`
---
-
-LOCK TABLES `towPrices` WRITE;
-/*!40000 ALTER TABLE `towPrices` DISABLE KEYS */;
-INSERT INTO `towPrices` VALUES (0,0,4000),(0,1,5000),(1,0,4500),(1,1,4500),(2,0,5000),(2,1,4000),(3,0,4500),(3,1,4500),(4,0,6500),(4,1,6500),(5,0,6000),(5,1,4500);
-/*!40000 ALTER TABLE `towPrices` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `tuningLevels`
 --
 
@@ -397,16 +304,6 @@ CREATE TABLE `tuningLevels` (
   PRIMARY KEY (`level`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tuningLevels`
---
-
-LOCK TABLES `tuningLevels` WRITE;
-/*!40000 ALTER TABLE `tuningLevels` DISABLE KEYS */;
-INSERT INTO `tuningLevels` VALUES (0,'Gyári'),(1,'Alap'),(2,'Profi'),(3,'Verseny'),(4,'Venom');
-/*!40000 ALTER TABLE `tuningLevels` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `users`
@@ -427,15 +324,6 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `users`
---
-
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -446,4 +334,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-22 13:03:27
+-- Dump completed on 2022-06-12 14:34:17
