@@ -11,7 +11,7 @@ module Taxi =
             where((route.Source = source && route.Destination = dest) ||
                     (route.Source = dest && route.Destination = source))
             exactlyOne
-            }).Price
+            }).Price CallType.Taxi
         with
             _ -> 0
     [<Rpc>]

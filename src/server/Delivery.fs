@@ -23,7 +23,7 @@ module Delivery =
             for price in db.Camblogistics.DeliveryPrices do
             where(deliveryType = price.Type)
             exactlyOne
-            }).Price
+            }).Price CallType.Delivery
         with
             _ -> 0
     [<Rpc>]

@@ -78,9 +78,12 @@ module Calls =
          with
             _ -> false
 
-    let transformPrice price =
+    let transformPrice (price:int) callType =
         if isDoublePrice () then
-            price * 2
+            match callType with
+                |CallType.Delivery -> int (float price * 1.25)
+                |CallType.Towing -> int (float price * 1.25)
+                |CallType.Taxi -> price * 2
         else
             price
 

@@ -19,7 +19,7 @@ module Tow =
             for route in db.Camblogistics.TowPrices do
             where(route.Source = source && route.Destination = dest)
             exactlyOne
-            }).Price
+            }).Price CallType.Towing
         with
             _ -> 0
     [<Rpc>]
