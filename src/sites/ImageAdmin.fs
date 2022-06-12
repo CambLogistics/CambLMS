@@ -20,7 +20,7 @@ module ImageAdmin =
                     join u in userlist on (uploader = u.Id)
                     select u
             } |> userList.Set
-            if selectedMember.Value = -1 && not <| List.isEmpty userlist then selectedMember.Set <| (Seq.head userList.Value).Id
+            if selectedMember.Value = -1 && not <| Seq.isEmpty userList.Value then selectedMember.Set <| (Seq.head userList.Value).Id
             imageList.Set imagelist
         } |> Async.Start
     let RenderPage() =
