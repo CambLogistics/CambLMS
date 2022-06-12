@@ -24,7 +24,7 @@ module MemberAdminPage =
 
     let updateUserList() =
         async {
-            let! list = UserCallable.doGetUserList sessionID false
+            let! list = UserCallable.doGetUserList sessionID false false
             UserList.Set list
         }
         |> Async.Start

@@ -12,7 +12,7 @@ module ServiceFeeAdmin =
     let sessionID = JavaScript.Cookies.Get("clms_sid").Value
     let updateUserList() =
         async{
-            let! list = UserCallable.doGetUserList sessionID false
+            let! list = UserCallable.doGetUserList sessionID false false
             UserList.Set list
             SelectedUserID.Set (Seq.item 0 UserList.Value).Id
         } |> Async.Start

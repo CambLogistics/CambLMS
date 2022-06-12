@@ -189,15 +189,15 @@ module User =
             db.SubmitUpdates()
         with
             _ -> ()
-    let getUserList sid pending =
+    let getUserList sid pending showDeleted =
         if verifyAdmin sid |> not then []
         else
             let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
             query{
                 for user in db.Camblogistics.Users do
-                where (user.Deleted = (sbyte 0) && user.Accepted = (sbyte (if pending then 0 else 1)))
-                select({Id = user.Id;Name = user.Name;Email = user.Email;AccountID = user.AccountId;Role = user.Role})
-            } |> Seq.toList |> List.sortBy (fun u -> u.Id)
+                where(user.Accepted = (sbyte (if pending then 0 else 1)))
+                select({Id = user.Id;Name = user.Name;Email = user.Email;AccountID = user.AccountId;Role = user.Role},user.Deleted)
+            } |> Seq.toList |> List.filter(fun (u,d) -> if showDeleted then true else (d = sbyte 0)) |> List.map(fun (u,_) -> u) |> List.sortBy (fun u -> u.Id)
     let getRankList() =
         try
         let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
@@ -277,9 +277,9 @@ module UserCallable =
             return User.getUserFromSID sid
         }
     [<Rpc>]
-    let doGetUserList sid pending =
+    let doGetUserList sid pending showDeleted =
         async{
-            return User.getUserList sid pending
+            return User.getUserList sid pending showDeleted
         }
     [<Rpc>]
     let doApproveUser sid userid =

@@ -14,7 +14,7 @@ module RegistrationAdminPage =
     let pendingUsers = ListModel.FromSeq [{Id = -1;Name="Dr.Who";AccountID=66666;Email="whoisthis@nope.no";Role = -1}]
     let updateList() =
         async{
-            let! userList = UserCallable.doGetUserList (JavaScript.Cookies.Get "clms_sid").Value  true
+            let! userList = UserCallable.doGetUserList (JavaScript.Cookies.Get "clms_sid").Value true false
             pendingUsers.Set userList
         } |> Async.Start
     let RenderPage() =
