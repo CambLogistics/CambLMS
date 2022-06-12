@@ -33,9 +33,11 @@ module Navbar =
         Url (EndPoint.CallsAdmin,"Hívások")
         Url (EndPoint.NameChangeAdmin,"Névváltoztatások")
         Url (EndPoint.RegistrationAdmin,"Regisztációk")
+        Url (EndPoint.DocAdmin,"Iratok")
         Separator
         Url(EndPoint.MembersAdmin,"Tagok")
         Url(EndPoint.CarsAdmin,"Autók")
+        Url(EndPoint.ImgAdmin,"Szervizképek")
         Url(EndPoint.ServiceAdmin,"Szervizdíjak")
         Separator
         Url(EndPoint.Logout,"Kijelentkezés")

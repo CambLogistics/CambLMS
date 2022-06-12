@@ -3,17 +3,16 @@
     <table class="uticel_taxi">
        <tr>
           <td>
-                <select class="dropdown" style="width: 300px;" ws-var="Member" required>
+                <select class="dropdown" style="width: 300px;" ws-var="Member" ws-onchange="Selection" required>
                    <option value="${MemberID}" ws-template="MemberItem">${MemberName}</option>
                    <option ws-replace="MemberList"></option>
                 </select>
           </td>
-          <td><button class="approve">Megjelenítés</button></td>
+          <td><button class="approve" ws-onclick="Show" id="show">Megjelenítés</button></td>
        </tr>
-       <tr ws-replace="DocDisplay"></tr>
-       <tr ws-template="DocDisplayTemplate">
-          <td style="width: 450px"><img src="${PersonalID}"></td>
-          <td style="width: 450px"><img src="${DriversLicense}"></td>
+       <tr style="display:none;" id="docs">
+          <td style="width: 450px"><img width="320" src="${PersonalID}"></td>
+          <td style="width: 450px"><img width="320" src="${DriversLicense}"></td>
        </tr>
     </table>
  </div>

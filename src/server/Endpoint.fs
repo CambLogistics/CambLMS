@@ -23,6 +23,8 @@ type EndPoint =
     | [<EndPoint "/admin/regadmin">] RegistrationAdmin
     | [<EndPoint "/admin/nameadmin">] NameChangeAdmin
     | [<EndPoint "/admin/service">] ServiceAdmin
+    | [<EndPoint "/admin/docview">] DocAdmin
+    | [<EndPoint "/admin/imgview">] ImgAdmin
     | [<EndPoint "POST /documentsubmit">] DocumentSubmit
     | [<EndPoint "POST /imagesubmit">] ImageSubmit
     | [<EndPoint "/changelog">] Changelog
@@ -50,6 +52,8 @@ module EndPoints =
         (EndPoint.AdminHome,(11,14));
         (EndPoint.CallsAdmin,(11,14));
         (EndPoint.CarsAdmin,(11,14));
+        (EndPoint.DocAdmin,(12,14));
+        (EndPoint.ImgAdmin,(12,14));
         (EndPoint.MembersAdmin,(12,14));
         (EndPoint.NameChangeAdmin,(12,14));
         (EndPoint.RegistrationAdmin,(12,14));

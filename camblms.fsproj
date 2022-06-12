@@ -27,6 +27,8 @@
     <Compile Include="src/sites/CallsAdmin.fs" />
     <Compile Include="src/sites/NameChangeAdmin.fs" />
     <Compile Include="src/sites/NameChangePage.fs" />
+    <Compile Include="src/sites/ImageAdmin.fs" />
+    <Compile Include="src/sites/DocAdmin.fs" />
     <Compile Include="src/sites/ServiceFeeAdmin.fs" />
     <Compile Include="src/sites/PasswordChangePage.fs" />
     <Compile Include="src/sites/LoginPage.fs" />

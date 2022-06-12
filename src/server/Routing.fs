@@ -33,6 +33,8 @@ module Routing =
                 |EndPoint.NameChangeAdmin -> Content.Page(PageMakers.NameChangeAdmin ctx)
                 |EndPoint.RegistrationAdmin -> Content.Page(PageMakers.RegistrationAdmin ctx)
                 |EndPoint.ServiceAdmin -> Content.Page(PageMakers.ServiceAdmin ctx)
+                |EndPoint.DocAdmin -> Content.Page(PageMakers.DocAdmin ctx)
+                |EndPoint.ImgAdmin -> Content.Page(PageMakers.ImgAdmin ctx)
                 |EndPoint.Taxi -> Content.Page(PageMakers.Taxi ctx)
                 |EndPoint.Towing -> Content.Page(PageMakers.Towing ctx)
     let LoggedOutRoute (ctx:Context<EndPoint>) endpoint =

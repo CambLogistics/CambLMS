@@ -18,7 +18,7 @@
 ## Alpha
 - [x] Double prices / holidays
 - [x] Config file
-- [] Access images from admin UI
+- [x] Access images from admin UI
 - [] Top members
 - [] Forgot password
 ## Beta

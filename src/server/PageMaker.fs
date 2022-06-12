@@ -98,6 +98,18 @@ module PageMakers =
             .Navbar(Navbar.MakeNavbar ctx true)
             .Main(client <@NameChangeAdmin.RenderPage()@>)
             .Doc()
+    let DocAdmin ctx =
+        SiteTemplates.MainTemplate()
+            .Stylesheet(SiteTemplates.AdminStyle)
+            .Navbar(Navbar.MakeNavbar ctx true)
+            .Main(client <@DocAdmin.RenderPage()@>)
+            .Doc()
+    let ImgAdmin ctx =
+        SiteTemplates.MainTemplate()
+            .Stylesheet(SiteTemplates.AdminStyle)
+            .Navbar(Navbar.MakeNavbar ctx true)
+            .Main(client <@ImageAdmin.RenderPage()@>)
+            .Doc()
     let Logout (ctx:Context<EndPoint>) =
         User.logoutUser ctx
         SiteTemplates.MainTemplate()

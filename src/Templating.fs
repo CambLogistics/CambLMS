@@ -13,7 +13,7 @@ module SiteTemplates =
     type MainTemplate = Templating.Template<"wwwroot/templates/main.html">
     type LoginTemplate = Templating.Template<"wwwroot/templates/loginwrapper.html">
 
-//Parts not servable on their own
+//Parts not serveable on their own
 [<JavaScript>]
 module SiteParts = 
     type LoginPage = Templating.Template<"wwwroot/templates/login.html">
@@ -22,6 +22,8 @@ module SiteParts =
     type DeliveryTemplate = Templating.Template<"wwwroot/templates/delivery.html">
     type CarTemplate = Templating.Template<"wwwroot/templates/cars.html">
     type ChangelogTemplate = Templating.Template<"wwwroot/templates/changelog.html">
+    type ImageViewingTemplate = Templating.Template<"wwwroot/templates/imgview.html">
+    type DocViewingTemplate = Templating.Template<"wwwroot/templates/docview.html">
     type CallsTemplate = Templating.Template<"wwwroot/templates/calls.html">
     type InfoTemplate = Templating.Template<"wwwroot/templates/info.html">
     type DocumentsTemplate = Templating.Template<"wwwroot/templates/docs.html">

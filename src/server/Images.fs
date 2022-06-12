@@ -1,5 +1,6 @@
 namespace camblms
 
+open WebSharper
 open WebSharper.Sitelets
 open WebSharper.UI
 
@@ -22,6 +23,17 @@ module Documents =
                     .Doc()
             )
             .Doc()
+    let getUsersWithValidDocuments sid =
+        User.getUserList sid false true |> List.filter (
+            fun u -> 
+                System.IO.File.Exists(@"wwwroot/docs/" + string u.AccountID + "_personal.png") &&
+                System.IO.File.Exists(@"wwwroot/docs/" + string u.AccountID + "_license.png")
+        )
+    [<Rpc>]
+    let doGetUsersWithDocuments sid =
+        async{
+            return getUsersWithValidDocuments sid
+        } 
 module ImageUpload =
     let MakePage ctx =
         SiteTemplates.MainTemplate()
@@ -41,6 +53,41 @@ module ImageUpload =
                     .Doc()
             )
             .Doc()
+    let DeleteImage sid filename =
+        try
+            if not <| User.verifyAdmin sid then ()
+            else
+                let db = Database.SqlConnection.GetDataContext(Database.getConnectionString())
+                if System.IO.File.Exists(@"wwwroot/img/" + filename) then System.IO.File.Delete(@"wwwroot/img/" + filename)
+                (query{
+                    for f in db.Camblogistics.Images do
+                    where(f.Name = filename)
+                    exactlyOne
+                }).Delete()
+                db.SubmitUpdates()
+        with
+            _ -> ()
+    let getImageList sid =
+        try
+            if not <| User.verifyAdmin sid then []
+            else
+            let db = Database.SqlConnection.GetDataContext(Database.getConnectionString())
+            query{
+                for i in db.Camblogistics.Images do
+                select (i.Name,i.Userid,i.UploadDate)
+            } |> Seq.toList |> List.sortByDescending (fun (_,_,date) -> date)
+        with
+         _ -> []
+    [<Rpc>]
+    let doGetImageList sid =
+        async{
+            return getImageList sid
+        }
+    [<Rpc>]
+    let doDeleteImage sid fn =
+        async{
+            return DeleteImage sid fn
+        }
 
 module ImageSubmitter =
     let getRandomString length =
@@ -77,6 +124,7 @@ module ImageSubmitter =
             let newFileEntry = db.Camblogistics.Images.Create()
             newFileEntry.Userid <- user.Id
             newFileEntry.Name <- filename
+            newFileEntry.UploadDate <- System.DateTime.Now
             db.SubmitUpdates()
             Content.RedirectTemporaryToUrl((ctx.Link EndPoint.ImageUpload) + "?success=true")
         with
