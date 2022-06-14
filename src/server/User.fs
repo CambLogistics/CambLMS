@@ -45,8 +45,8 @@ module User =
         let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         let list =
             query{
-                for session in db.Camblogistics.Sessions do
-                    join user in db.Camblogistics.Users on (session.UserId = user.Id) 
+                for session in db.Camblogistics.sessions do
+                    join user in db.Camblogistics.users on (session.UserId = user.Id) 
                     where(session.Id = sessionID && session.Expiry > System.DateTime.Now && user.Deleted = (sbyte 0))
                     select({Id = user.Id;
                             Name = user.Name;
@@ -63,7 +63,7 @@ module User =
         let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         let list =
             query{
-                for user in db.Camblogistics.Users do
+                for user in db.Camblogistics.users do
                 where(user.Id = userid)
                 select({Id = user.Id;Name =user.Name;Role = user.Role;AccountID = user.AccountId;Email = user.Email})
             } |> Seq.toList
@@ -82,8 +82,8 @@ module User =
         try
         let dbContext = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         query{
-            for user in dbContext.Camblogistics.Users do
-            join session in dbContext.Camblogistics.Sessions on (user.Id = session.UserId)
+            for user in dbContext.Camblogistics.users do
+            join session in dbContext.Camblogistics.sessions on (user.Id = session.UserId)
             where (session.Id = sid && session.Expiry > System.DateTime.Now && user.Password = hashPassword password)
             select user
         } |> Seq.isEmpty |> not
@@ -96,7 +96,7 @@ module User =
         rng.GetBytes sessionRandom
         let sessId = System.Convert.ToBase64String sessionRandom
         let expDate = System.DateTime.Now + System.TimeSpan(0,0,20,0)
-        let newSession = dbContext.Camblogistics.Sessions.Create()
+        let newSession = dbContext.Camblogistics.sessions.Create()
         newSession.UserId <- userid
         newSession.Id <- sessId
         newSession.Expiry <- expDate
@@ -106,7 +106,7 @@ module User =
         try
             let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
             let userList = query{
-                    for user in db.Camblogistics.Users do
+                    for user in db.Camblogistics.users do
                     where(user.Name = name && user.Password = hashPassword password && user.Deleted = (sbyte 0))
                     select (user.Accepted,user.Id)
                     }
@@ -126,7 +126,7 @@ module User =
             try
                 let existing = 
                     query{
-                        for user in db.Camblogistics.Users do
+                        for user in db.Camblogistics.users do
                         where(user.AccountId = accountid || user.Email = email)
                         select user
                     } |> Seq.toList
@@ -141,7 +141,7 @@ module User =
                         db.SubmitUpdates()
                         RegisterResult.Success
                 else
-                    let newUser = db.Camblogistics.Users.Create()
+                    let newUser = db.Camblogistics.users.Create()
                     newUser.Accepted <- sbyte 0
                     newUser.AccountId <- accountid
                     newUser.Role <- 0
@@ -156,7 +156,7 @@ module User =
     let logoutUser (ctx:Context<EndPoint>) =
         let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         (query{
-            for session in db.Camblogistics.Sessions do
+            for session in db.Camblogistics.sessions do
                 where(session.Id = (ctx.Request.Cookies.Item "clms_sid").Value)
                 select session
             }) |> Seq.iter(fun s -> s.Delete())
@@ -168,7 +168,7 @@ module User =
         try
             let user =
                 (query{
-                    for user in db.Camblogistics.Users do
+                    for user in db.Camblogistics.users do
                         where(user.Id = userid)
                         exactlyOne
                 })
@@ -182,7 +182,7 @@ module User =
         else
         try
             (query{
-                for user in db.Camblogistics.Users do
+                for user in db.Camblogistics.users do
                     where(user.Id = userid)
                     exactlyOne
             }).Accepted <- (sbyte 1)
@@ -194,7 +194,7 @@ module User =
         else
             let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
             query{
-                for user in db.Camblogistics.Users do
+                for user in db.Camblogistics.users do
                 where(user.Accepted = (sbyte (if pending then 0 else 1)))
                 select({Id = user.Id;Name = user.Name;Email = user.Email;AccountID = user.AccountId;Role = user.Role},user.Deleted)
             } |> Seq.toList |> List.filter(fun (u,d) -> if showDeleted then true else (d = sbyte 0)) |> List.map(fun (u,_) -> u) |> List.sortByDescending (fun u -> u.Role)
@@ -202,7 +202,7 @@ module User =
         try
         let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         query{
-            for r in db.Camblogistics.Roles do
+            for r in db.Camblogistics.roles do
             select({Level = r.Id;Name = r.Name})
         } |> Seq.toList |> List.sortBy(fun r -> r.Level)
         with
@@ -219,7 +219,7 @@ module User =
                     let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
                     let user =
                         query{
-                            for u in db.Camblogistics.Users do
+                            for u in db.Camblogistics.users do
                             where(u.Id = userID)
                             exactlyOne
                         }
@@ -239,7 +239,7 @@ module User =
                 try
                     let userEntry =
                         query{
-                            for u in db.Camblogistics.Users do
+                            for u in db.Camblogistics.users do
                             where(u.Id = user.Id)
                             exactlyOne
                         }
@@ -252,7 +252,7 @@ module User =
         try
         let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         (query{
-            for s in db.Camblogistics.Sessions do
+            for s in db.Camblogistics.sessions do
             where (s.Id = sid)
             exactlyOne
         }).Expiry <- System.DateTime.Now + System.TimeSpan(0,0,20,0)

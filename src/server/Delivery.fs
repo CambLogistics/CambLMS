@@ -10,8 +10,8 @@ module Delivery =
         try
         let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         query{
-            for t in db.Camblogistics.DeliveryTypes do
-                join p in db.Camblogistics.DeliveryPrices on (t.Id = p.Type)
+            for t in db.Camblogistics.deliverytypes do
+                join p in db.Camblogistics.deliveryprices on (t.Id = p.Type)
                 select({ID=t.Id;Name=t.Name;Price=p.Price})
         } |> Seq.toList
         with
@@ -20,7 +20,7 @@ module Delivery =
         try
         let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         Calls.transformPrice (query{
-            for price in db.Camblogistics.DeliveryPrices do
+            for price in db.Camblogistics.deliveryprices do
             where(deliveryType = price.Type)
             exactlyOne
             }).Price CallType.Delivery

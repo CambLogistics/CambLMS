@@ -60,7 +60,7 @@ module ImageUpload =
                 let db = Database.SqlConnection.GetDataContext(Database.getConnectionString())
                 if System.IO.File.Exists(@"wwwroot/img/" + filename) then System.IO.File.Delete(@"wwwroot/img/" + filename)
                 (query{
-                    for f in db.Camblogistics.Images do
+                    for f in db.Camblogistics.images do
                     where(f.Name = filename)
                     exactlyOne
                 }).Delete()
@@ -73,7 +73,7 @@ module ImageUpload =
             else
             let db = Database.SqlConnection.GetDataContext(Database.getConnectionString())
             query{
-                for i in db.Camblogistics.Images do
+                for i in db.Camblogistics.images do
                 select (i.Name,i.Userid,i.UploadDate)
             } |> Seq.toList |> List.sortByDescending (fun (_,_,date) -> date)
         with
@@ -121,7 +121,7 @@ module ImageSubmitter =
             let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
             if System.IO.Directory.Exists "wwwroot/img" |> not then System.IO.Directory.CreateDirectory "wwwroot/img" |> ignore
             file.SaveAs (@"wwwroot/img/" + filename)
-            let newFileEntry = db.Camblogistics.Images.Create()
+            let newFileEntry = db.Camblogistics.images.Create()
             newFileEntry.Userid <- user.Id
             newFileEntry.Name <- filename
             newFileEntry.UploadDate <- System.DateTime.Now

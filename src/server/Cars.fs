@@ -17,7 +17,7 @@ module Cars =
         try
             let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
             return query{
-                for tuning in db.Camblogistics.TuningLevels do
+                for tuning in db.Camblogistics.tuninglevels do
                 select (tuning.Level,tuning.Name)
             } |> Map.ofSeq
         with
@@ -29,7 +29,7 @@ module Cars =
         try
         let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         query{
-            for car in db.Camblogistics.Cars do
+            for car in db.Camblogistics.cars do
                 select(
                     {
                         Id = car.Id
@@ -67,7 +67,7 @@ module Cars =
                 try
                 let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
                 query{
-                    for car in db.Camblogistics.Cars do
+                    for car in db.Camblogistics.cars do
                     where(car.KeyHolder1 = Some u.Id || car.KeyHolder2 = Some u.Id)
                     select(
                         car.RegNum
@@ -82,12 +82,12 @@ module Cars =
             let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
             let existing =
                 query{
-                    for c in db.Camblogistics.Cars do
+                    for c in db.Camblogistics.cars do
                     where(c.Id = car.Id)
                     select c          
                 } |> Seq.toList
             let newCar = 
-                if List.isEmpty existing then db.Camblogistics.Cars.Create() else List.item 0 existing
+                if List.isEmpty existing then db.Camblogistics.cars.Create() else List.item 0 existing
             if List.isEmpty existing then newCar.Id <- car.Id
             newCar.Type <- car.CarType
             newCar.RegNum <- car.RegNum

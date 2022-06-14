@@ -7,7 +7,7 @@ module Tow =
         try
             let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
             query{
-                for g in db.Camblogistics.TowGarages do
+                for g in db.Camblogistics.towgarages do
                 select((g.Id,g.Name))
             } |> Map.ofSeq
         with
@@ -16,7 +16,7 @@ module Tow =
         try
         let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         Calls.transformPrice (query{
-            for route in db.Camblogistics.TowPrices do
+            for route in db.Camblogistics.towprices do
             where(route.Source = source && route.Destination = dest)
             exactlyOne
             }).Price CallType.Towing

@@ -12,9 +12,9 @@ module ServiceFee =
         try
             let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
             query{
-                for fee in db.Camblogistics.ServiceFees do
+                for fee in db.Camblogistics.servicefees do
                 where (fee.Paid = (sbyte 0))
-                join u in db.Camblogistics.Users on (fee.UserId = u.Id)
+                join u in db.Camblogistics.users on (fee.UserId = u.Id)
                 select({ID = fee.Id;Username = u.Name;Amount = fee.Amount})
             } |> Seq.toList
         with
@@ -24,7 +24,7 @@ module ServiceFee =
         else
         //try
             let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
-            let newFee = db.Camblogistics.ServiceFees.Create()
+            let newFee = db.Camblogistics.servicefees.Create()
             newFee.Amount <- amount
             newFee.UserId <- userid
             newFee.Date <- System.DateTime.Now
@@ -37,7 +37,7 @@ module ServiceFee =
         try
         let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         (query{
-            for f in db.Camblogistics.ServiceFees do
+            for f in db.Camblogistics.servicefees do
             where(f.Id = feeID)
             exactlyOne
         }).Paid <- (sbyte 1)

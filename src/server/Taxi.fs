@@ -7,7 +7,7 @@ module Taxi =
         try
         let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         Calls.transformPrice (query{
-            for route in db.Camblogistics.TaxiPrices do
+            for route in db.Camblogistics.taxiprices do
             where((route.Source = source && route.Destination = dest) ||
                     (route.Source = dest && route.Destination = source))
             exactlyOne

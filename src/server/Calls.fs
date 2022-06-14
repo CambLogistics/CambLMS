@@ -39,7 +39,7 @@ module Calls =
         let db = Database.SqlConnection.GetDataContext(Database.getConnectionString ())
         let convertedHolidays =
             query {
-                for h in db.Camblogistics.Holidays do
+                for h in db.Camblogistics.holidays do
                     select h
             }
             |> Seq.map (fun h ->
@@ -52,7 +52,7 @@ module Calls =
 
         let openToday =
             query {
-                for oh in db.Camblogistics.OperatingHours do
+                for oh in db.Camblogistics.operatinghours do
                     where (LanguagePrimitives.EnumToValue System.DateTime.Now.DayOfWeek = int32 oh.DayOfWeek)
                     select (oh.Opening.Hours, oh.Closing.Hours)
             }
@@ -92,7 +92,7 @@ module Calls =
             let db = Database.SqlConnection.GetDataContext(Database.getConnectionString ())
 
             query {
-                for a in db.Camblogistics.Areas do
+                for a in db.Camblogistics.areas do
                     select ((a.Id, a.Name))
             }
             |> Map.ofSeq
@@ -106,7 +106,7 @@ module Calls =
         | None -> InvalidSession
         | Some u ->
             let db = Database.SqlConnection.GetDataContext(Database.getConnectionString ())
-            let call = db.Camblogistics.Calls.Create()
+            let call = db.Camblogistics.calls.Create()
             call.Date <- System.DateTime.Now
             call.Price <- price
             call.UserId <- u.Id
@@ -124,7 +124,7 @@ module Calls =
                 let db = Database.SqlConnection.GetDataContext(Database.getConnectionString ())
 
                 query {
-                    for call in db.Camblogistics.Calls do
+                    for call in db.Camblogistics.calls do
                         where (
                             call.ThisWeek = (sbyte 1)
                             || call.PreviousWeek = (sbyte 1)
@@ -148,7 +148,7 @@ module Calls =
             let db = Database.SqlConnection.GetDataContext(Database.getConnectionString ())
 
             query {
-                for c in db.Camblogistics.Calls do
+                for c in db.Camblogistics.calls do
                     where (user.Id = c.UserId)
 
                     select

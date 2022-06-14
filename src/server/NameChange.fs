@@ -32,13 +32,13 @@ module NameChangeServer =
                 try
                     let existingChange =
                         query{
-                            for x in db.Camblogistics.NameChanges do
+                            for x in db.Camblogistics.namechanges do
                             where(x.UserId = u.Id && x.Pending = (sbyte 1))
                             count
                         }
                     if existingChange > 0 then ChangeAlreadyPending
                     else
-                    let newChange = db.Camblogistics.NameChanges.Create()
+                    let newChange = db.Camblogistics.namechanges.Create()
                     newChange.Approved <- (sbyte 0)
                     newChange.NewName <- newname
                     newChange.Pending <- sbyte 1
@@ -54,7 +54,7 @@ module NameChangeServer =
         let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         let nc = 
             query{
-                for x in db.Camblogistics.NameChanges do
+                for x in db.Camblogistics.namechanges do
                 where (x.UserId = userID && x.Pending = (sbyte 1))
                 exactlyOne
             }
@@ -63,7 +63,7 @@ module NameChangeServer =
             nc.Approved <- (sbyte 1)
             let user = 
                 query{
-                    for u in db.Camblogistics.Users do
+                    for u in db.Camblogistics.users do
                     where(u.Id = userID)
                     exactlyOne
                 }
@@ -80,8 +80,8 @@ module NameChangeServer =
         try
             let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
             query{
-                for x in db.Camblogistics.NameChanges do
-                join u in db.Camblogistics.Users on (x.UserId = u.Id)
+                for x in db.Camblogistics.namechanges do
+                join u in db.Camblogistics.users on (x.UserId = u.Id)
                 where(x.Pending = (sbyte 1))
                 select({UserID = x.UserId;OldName = u.Name;NewName = x.NewName})
             } |> Seq.toList
