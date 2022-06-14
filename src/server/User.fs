@@ -197,7 +197,7 @@ module User =
                 for user in db.Camblogistics.Users do
                 where(user.Accepted = (sbyte (if pending then 0 else 1)))
                 select({Id = user.Id;Name = user.Name;Email = user.Email;AccountID = user.AccountId;Role = user.Role},user.Deleted)
-            } |> Seq.toList |> List.filter(fun (u,d) -> if showDeleted then true else (d = sbyte 0)) |> List.map(fun (u,_) -> u) |> List.sortBy (fun u -> u.Id)
+            } |> Seq.toList |> List.filter(fun (u,d) -> if showDeleted then true else (d = sbyte 0)) |> List.map(fun (u,_) -> u) |> List.sortByDescending (fun u -> u.Role)
     let getRankList() =
         try
         let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())

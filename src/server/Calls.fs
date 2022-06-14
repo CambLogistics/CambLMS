@@ -182,7 +182,7 @@ module Calls =
                             match duration with
                             | All -> true
                             | TwoWeeks -> c.PreviousWeek || c.ThisWeek
-                            | Weekly -> c.ThisWeek) })
+                            | Weekly -> c.ThisWeek) }) |> List.sortByDescending (fun u -> List.length u.Calls)
 
         }
 

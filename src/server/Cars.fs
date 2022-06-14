@@ -56,7 +56,7 @@ module Cars =
                         WeightReduction = car.WeightReduction
                     }
             )
-        } |> Seq.toList
+        } |> Seq.toList |> List.sortBy (fun c -> c.RegNum)
         with
             _ -> []
     let getCarsOfKeyHolder sid =
