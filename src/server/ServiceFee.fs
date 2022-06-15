@@ -22,7 +22,7 @@ module ServiceFee =
     let submitPendingFee sid userid amount =
         if not (Permission.checkPermission sid Permissions.ServiceFeeAdmin) then ()
         else
-        //try
+        try
             let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
             let newFee = db.Camblogistics.servicefees.Create()
             newFee.Amount <- amount
@@ -30,8 +30,8 @@ module ServiceFee =
             newFee.Date <- System.DateTime.Now
             newFee.Paid <- (sbyte 0)
             db.SubmitUpdates()
-        (*with
-            _ -> ()*)
+        with
+            _ -> ()
     let payFee sid feeID =
         if not (Permission.checkPermission sid Permissions.ServiceFeeAdmin) then ()
         try

@@ -1,7 +1,6 @@
 namespace camblms
 
 open WebSharper
-open WebSharper.Sitelets
 
 type EndPoint =
     | [<EndPoint "/">] Home
@@ -28,4 +27,6 @@ type EndPoint =
     | [<EndPoint "POST /documentsubmit">] DocumentSubmit
     | [<EndPoint "POST /imagesubmit">] ImageSubmit
     | [<EndPoint "/changelog">] Changelog
+    | [<EndPoint "/docs/";Wildcard>] DocServe of string
+    | [<EndPoint "/img/";Wildcard>] ImgServe of string
     | [<EndPoint "/";Wildcard>] NotFound of string

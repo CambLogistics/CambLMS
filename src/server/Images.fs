@@ -38,8 +38,8 @@ module Documents =
                             Email = ""})
             } |> Seq.toList |> List.filter (
                 fun u -> 
-                    System.IO.File.Exists(@"wwwroot/docs/" + string u.AccountID + "_personal.png") &&
-                    System.IO.File.Exists(@"wwwroot/docs/" + string u.AccountID + "_license.png")
+                    System.IO.File.Exists(@"docs/" + string u.AccountID + "_personal.png") &&
+                    System.IO.File.Exists(@"docs/" + string u.AccountID + "_license.png")
             )
         with
             _ -> []
@@ -72,7 +72,7 @@ module ImageUpload =
             if not (Permission.checkPermission sid Permissions.ServiceFeeAdmin) then ()
             else
                 let db = Database.SqlConnection.GetDataContext(Database.getConnectionString())
-                if System.IO.File.Exists(@"wwwroot/img/" + filename) then System.IO.File.Delete(@"wwwroot/img/" + filename)
+                if System.IO.File.Exists(@"img/" + filename) then System.IO.File.Delete(@"img/" + filename)
                 (query{
                     for f in db.Camblogistics.images do
                     where(f.Name = filename)
@@ -121,9 +121,9 @@ module ImageSubmitter =
                         where(file.Key = "license")
                         exactlyOne 
                 })
-            if System.IO.Directory.Exists "wwwroot/docs" |> not then System.IO.Directory.CreateDirectory "wwwroot/docs" |> ignore
-            personal.SaveAs (@"wwwroot/docs/" + string user.AccountID + "_personal" + System.IO.Path.GetExtension personal.FileName)
-            license.SaveAs (@"wwwroot/docs/" + string user.AccountID + "_license" + System.IO.Path.GetExtension license.FileName)
+            if System.IO.Directory.Exists "docs" |> not then System.IO.Directory.CreateDirectory "docs" |> ignore
+            personal.SaveAs (@"docs/" + string user.AccountID + "_personal" + System.IO.Path.GetExtension personal.FileName)
+            license.SaveAs (@"docs/" + string user.AccountID + "_license" + System.IO.Path.GetExtension license.FileName)
             Content.RedirectTemporaryToUrl((ctx.Link EndPoint.Documents) + "?success=true")
             with
                 _ -> Content.RedirectTemporaryToUrl((ctx.Link EndPoint.Documents) + "?success=false")
@@ -133,8 +133,8 @@ module ImageSubmitter =
             let file = Seq.item 0 ctx.Request.Files
             let filename = getRandomString 32 + System.IO.Path.GetExtension file.FileName
             let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
-            if System.IO.Directory.Exists "wwwroot/img" |> not then System.IO.Directory.CreateDirectory "wwwroot/img" |> ignore
-            file.SaveAs (@"wwwroot/img/" + filename)
+            if System.IO.Directory.Exists "img" |> not then System.IO.Directory.CreateDirectory "img" |> ignore
+            file.SaveAs (@"img/" + filename)
             let newFileEntry = db.Camblogistics.images.Create()
             newFileEntry.Userid <- user.Id
             newFileEntry.Name <- filename
@@ -143,3 +143,20 @@ module ImageSubmitter =
             Content.RedirectTemporaryToUrl((ctx.Link EndPoint.ImageUpload) + "?success=true")
         with
             _ -> Content.RedirectTemporaryToUrl((ctx.Link EndPoint.ImageUpload) + "?success=false")
+module ImageServe =
+    let Docs (ctx:Context<EndPoint>) fn =
+        match ctx.Request.Cookies.Item "clms_sid" with
+            |None -> Content.RedirectTemporary(EndPoint.Home)
+            |Some s -> 
+                if Permission.checkPermission s Permissions.DocAdmin then
+                    if System.IO.File.Exists("docs/" + fn) then Content.File("docs/" + fn)
+                    else Content.NotFound
+                else Content.Forbidden
+    let Service (ctx:Context<EndPoint>) fn =
+        match ctx.Request.Cookies.Item "clms_sid" with
+            |None -> Content.RedirectTemporary(EndPoint.Home)
+            |Some s -> 
+                if Permission.checkPermission s Permissions.ServiceFeeAdmin then
+                    if System.IO.File.Exists("img/" + fn) then Content.File("img/" + fn)
+                    else Content.NotFound
+                else Content.Forbidden

@@ -44,6 +44,8 @@ module Routing =
     let MakeRoute (ctx:Context<EndPoint>) endpoint =
         match endpoint with
             |NotFound _ -> Content.Page(PageMakers.NotFound ctx)
+            |DocServe fn -> ImageServe.Docs ctx fn
+            |ImgServe fn -> ImageServe.Service ctx fn
             | _ ->
                 match ctx.Request.Cookies.Item "clms_sid" with
                     |Some sid -> 
