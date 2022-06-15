@@ -68,6 +68,8 @@ module MemberAdminPage =
                                     .RankList(
                                         RankList.View
                                         |> Doc.BindSeqCached (fun r ->
+                                            if (r.Level >= currentUser.Role) then Doc.Empty
+                                            else
                                             SiteParts
                                                 .MemberListTemplate
                                                 .RankListItem()

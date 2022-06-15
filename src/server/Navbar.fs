@@ -42,6 +42,16 @@ module Navbar =
         Separator
         Url(EndPoint.Logout,"Kijelentkezés")
     ]
+    let smoothNavbar nb = 
+        List.fold
+            (fun l nbi ->
+                match nbi with
+                    |Separator -> 
+                        match (List.head l) with
+                            |Separator -> l
+                            |_ -> nbi::l
+                    |_ ->  nbi::l
+            ) List.empty nb |> List.rev
     let MakeNavbar (ctx:Context<EndPoint>) isAdmin =
         let navTemplate = NavTemplate()
         let user =
@@ -66,5 +76,5 @@ module Navbar =
                             if user.IsSome then (Permission.getUserPermissions user.Value) &&& (LanguagePrimitives.EnumToValue (Map.find ep Permission.RequiredPermissions)) > 0u
                             else false
                         |Separator -> user.IsSome
-            ) |> generateItems ctx
+            ) |> smoothNavbar |> generateItems ctx
         ).Doc()

@@ -7,6 +7,7 @@ open WebSharper.UI.Client
 [<JavaScript>]
 module CarsAdmin =
     let sessionID = JavaScript.Cookies.Get("clms_sid").Value
+    let mutable canEdit = false
     let tuningList = ListModel.FromSeq <| Map.ofList [(0,"Gyári")]
     let carList = ListModel.FromSeq [{Id = "L04D1NG";RegNum="HAW-411";CarType="Fiat Panda II";
                                                             ParkTicket=false;ECU=0;GPS=false;
@@ -21,6 +22,8 @@ module CarsAdmin =
                                                             Suspension=0;WeightReduction=0;Gearbox=0;
                                                             Tyres=0;Turbo=0;KeyHolder1=None;
                                                             KeyHolder2=None}
+    let unHideEdit() = 
+        JavaScript.JS.Document.GetElementById("edit").RemoveAttribute("style")
     let updateTuningList() =
         async{
             let! list = Cars.getTuningLevels()
@@ -29,6 +32,9 @@ module CarsAdmin =
     let updateCarList() =
         async{
             let! list = Cars.doGetCars sessionID
+            let! ce = Permission.doCheckPermission sessionID Permissions.CarAdmin
+            canEdit <- ce
+            if ce then unHideEdit()
             carList.Set list
         } |> Async.Start
     let updateMemberList() =
@@ -138,6 +144,8 @@ module CarsAdmin =
             .NewGearbox(selectedCar.Lens(fun c -> string c.Gearbox) (fun c s -> {c with Gearbox = int s}))
             .Confirm(
                 fun _ ->
+                    if not canEdit then ()
+                    else
                     async{
                         let! result = Cars.doSetCar sessionID selectedCar.Value
                         let updateCar = updateCarList result
@@ -173,10 +181,10 @@ module CarsAdmin =
                                     |None -> ""
                                     |Some u -> u.Name 
                             )
-                            .Edit(
-                                fun _ ->
-                                    selectedCar.Set c
-                            )
+                           .EditButtonPlaceholder(
+                                if not canEdit then Doc.Empty
+                                else SiteParts.CarTemplate.EditButtonTemplate().Edit(fun _ -> selectedCar.Set c).Doc()
+                           )
                             .Doc()
                 )
             )

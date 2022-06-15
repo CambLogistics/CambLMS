@@ -8,6 +8,8 @@ module Routing =
     let LoggedInRoute (user:Member) (ctx:Context<EndPoint>) endpoint =
         let sessionID = (ctx.Request.Cookies.Item "clms_sid").Value
         User.lengthenSession sessionID
+        if not (Permission.checkPermission sessionID (Map.find endpoint Permission.RequiredPermissions)) then Content.RedirectTemporary(EndPoint.Home)
+        else
         match endpoint with
             |EndPoint.Home -> Content.Page(PageMakers.Information ctx)
             |EndPoint.Logout -> Content.Page(PageMakers.Logout ctx)

@@ -1,4 +1,4 @@
-      <div class="main">
+      <div class="main" style="display:none;" id="edit">
          <h2 class="szoveg_th" style="text-align: left; padding-bottom: 0px;">Autó felvétele</h2>
             <table>
                <tr>
@@ -99,7 +99,7 @@
                      </select>
                   </td>
                   <td>
-                     <button ws-onclick="Confirm" class="approve">Jóváhagy</button>
+                     <button ws-onclick="Confirm" class="approve" id="approvecar">Jóváhagy</button>
                   </td>
                </tr>
             </table>
@@ -154,7 +154,7 @@
                   <td class="adat">${Suspension}</td>
                   <td class="adat">${Key1}</td>
                   <td class="adat">${Key2}</td>
-                  <td class="adat"><button ws-onclick="Edit" class="approve">Szerkesztés</button></td>
+                  <td class="adat"><button ws-replace="EditButtonPlaceholder"></button><button ws-template="EditButtonTemplate" ws-onclick="Edit" class="approve">Szerkesztés</button></td>
                </tr>
             </table>
       </div>

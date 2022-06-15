@@ -157,7 +157,6 @@ module Calls =
 
     let getCallsBySID sid =
         let user = User.getUserFromSID sid
-
         match user with
         | None -> []
         | Some u -> getCallsOfUser u
@@ -185,7 +184,7 @@ module Calls =
     [<Rpc>]
     let doGetUserCalls sid user =
         async {
-            if User.verifyAdmin sid |> not then
+            if not (Permission.checkPermission sid Permissions.ViewCallCount) then
                 return []
             else
                 return getCallsOfUser user

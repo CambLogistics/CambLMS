@@ -9,10 +9,14 @@ module CallsAdmin =
     let userList = ListModel.FromSeq [{User = {Id= -1;Name="Loa Ding";Role=0;Email="";AccountID=0};Calls=[]}]
     let sessionID = JavaScript.Cookies.Get("clms_sid").Value
     let rankList = Var.Create [{Level = 0;Name="Beszállító"}]
+    let mutable canClose = false
     let updateUserList =
         async{
             let! list = Calls.getUserListWithCalls sessionID CallDuration.Weekly
+            let! cc = Permission.doCheckPermission sessionID Permissions.CloseWeek
+            canClose <- cc
             userList.Set list
+            if cc then JavaScript.JS.Document.GetElementById("closeweek").RemoveAttribute("style")
         }
     let updateRankList =
         async{
@@ -41,6 +45,8 @@ module CallsAdmin =
             )
             .CloseWeek(
                 fun _ ->
+                    if not canClose then ()
+                    else
                     async{
                         let! result = Calls.doRotateWeek sessionID
                         return! updateUserList

@@ -71,7 +71,10 @@ module Permission =
         match User.getUserFromSID sid with
             |None -> false
             |Some u -> ((getUserPermissions u &&& (LanguagePrimitives.EnumToValue perm)) > 0u)
-
-
+    [<Rpc>]
+    let doCheckPermission sid perm =
+        async{
+            return checkPermission sid perm
+        } 
             
 

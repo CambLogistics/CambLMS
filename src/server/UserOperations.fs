@@ -5,7 +5,7 @@ open WebSharper
 module UserOperations =
     let deleteUser sid userid =
         let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
-        if not (User.verifyAdmin sid) then ()
+        if not (Permission.checkPermission sid Permissions.MemberAdmin) then ()
         else
         try
             let user =

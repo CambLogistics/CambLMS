@@ -24,7 +24,7 @@ module Cars =
             _ -> return Map.ofList []
         }
     let getCars sid =
-        if not (Permission.checkPermission sid Permissions.ViewCars) |> not then []
+        if not (Permission.checkPermission sid Permissions.ViewCars) then []
         else
         try
         let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
