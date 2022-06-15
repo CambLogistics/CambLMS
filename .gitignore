@@ -5,3 +5,5 @@ wwwroot/Content/**/*
 wwwroot/docs/**/*
 wwwroot/img/**/*
 wwwroot/Scripts/**/*
+
+.fake

@@ -8,6 +8,8 @@
     <Compile Include="src/server/Database.fs" />
     <Compile Include="src/server/Endpoint.fs" />
     <Compile Include="src/server/User.fs" />
+    <Compile Include="src/server/Permission.fs" />
+    <Compile Include="src/server/UserOperations.fs" />
     <Compile Include="src/server/Cars.fs" />
     <Compile Include="src/server/Calls.fs" />
     <Compile Include="src/server/Delivery.fs" />

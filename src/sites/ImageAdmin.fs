@@ -13,7 +13,7 @@ module ImageAdmin =
     let currentImages = View.Map (fun il -> il |> Seq.filter (fun (_,uid,_) -> uid = selectedMember.Value)) imageList.View
     let updateLists() =
         async{
-            let! userlist = UserCallable.doGetUserList sessionID false true
+            let! userlist = UserOperations.doGetUserList sessionID false true
             let! imagelist = ImageUpload.doGetImageList sessionID
             query{
                 for (fn,uploader,_) in imagelist do

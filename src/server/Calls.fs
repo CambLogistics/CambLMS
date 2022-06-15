@@ -173,7 +173,7 @@ module Calls =
     let getUserListWithCalls sid duration =
         async {
             return
-                User.getUserList sid false false
+                UserOperations.getUserList sid false false
                 |> List.map (fun u ->
                     { User = u
                       Calls =

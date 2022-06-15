@@ -15,7 +15,7 @@ module PasswordChangePage =
                     if not (newPassword = newPasswordRepeat) then ()
                     else
                     async{
-                        let! result = UserCallable.doChangeUserPassword sessionID oldPassword newPassword
+                        let! result = UserOperations.doChangeUserPassword sessionID oldPassword newPassword
                         match result with
                             |PasswordChangeResult.Success ->
                                 Feedback.giveFeedback false "Jelszavad megváltoztatásra került!"

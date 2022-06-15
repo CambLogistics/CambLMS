@@ -24,7 +24,7 @@ module MemberAdminPage =
 
     let updateUserList() =
         async {
-            let! list = UserCallable.doGetUserList sessionID false false
+            let! list = UserOperations.doGetUserList sessionID false false
             UserList.Set list
         }
         |> Async.Start
@@ -80,7 +80,7 @@ module MemberAdminPage =
                                         fun e ->
                                             async {
                                                 let! result =
-                                                    UserCallable.doChangeUserRank sessionID u.Id (int e.Vars.Rank.Value)
+                                                    UserOperations.doChangeUserRank sessionID u.Id (int e.Vars.Rank.Value)
                                                 updateUserList result
                                             } |> Async.Start
                                     )
@@ -96,7 +96,7 @@ module MemberAdminPage =
                                     .DeleteButton()
                                     .DeleteUser(fun e ->
                                         async {
-                                            let! finished = UserCallable.doDeleteUser sessionID u.Id
+                                            let! finished = UserOperations.doDeleteUser sessionID u.Id
                                             updateUserList finished
                                         }
                                         |> Async.Start)

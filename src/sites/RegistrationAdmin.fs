@@ -14,7 +14,7 @@ module RegistrationAdminPage =
     let pendingUsers = ListModel.FromSeq [{Id = -1;Name="Dr.Who";AccountID=66666;Email="whoisthis@nope.no";Role = -1}]
     let updateList() =
         async{
-            let! userList = UserCallable.doGetUserList (JavaScript.Cookies.Get "clms_sid").Value true false
+            let! userList = UserOperations.doGetUserList (JavaScript.Cookies.Get "clms_sid").Value true false
             pendingUsers.Set userList
         } |> Async.Start
     let RenderPage() =
@@ -31,14 +31,14 @@ module RegistrationAdminPage =
                             .Approve(
                                 fun e ->
                                     async{
-                                        let! result = UserCallable.doApproveUser (JavaScript.Cookies.Get "clms_sid").Value pu.Id
+                                        let! result = UserOperations.doApproveUser (JavaScript.Cookies.Get "clms_sid").Value pu.Id
                                         return updateList result
                                     } |> Async.Start
                             )
                             .Deny(
                                 fun e ->
                                     async{
-                                        let! result = UserCallable.doDeleteUser (JavaScript.Cookies.Get "clms_sid").Value pu.Id 
+                                        let! result = UserOperations.doDeleteUser (JavaScript.Cookies.Get "clms_sid").Value pu.Id 
                                         return updateList result
                                     } |> Async.Start
                             )

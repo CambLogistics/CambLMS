@@ -33,7 +33,7 @@ module CarsAdmin =
         } |> Async.Start
     let updateMemberList() =
         async{
-            let! list = UserCallable.doGetUserList sessionID false false
+            let! list = UserOperations.doGetUserList sessionID false false
             memberList.Set list
         } |> Async.Start
     let renderTuningItem (t:System.Collections.Generic.KeyValuePair<int,string>) =
