@@ -7,7 +7,7 @@ type PendingFee = {ID: int;Username: string;Amount: int}
 
 module ServiceFee =
     let getPendingFees sid =
-        if not <| User.verifyAdmin sid then []
+        if not (Permission.checkPermission sid Permissions.ServiceFeeAdmin) then []
         else
         try
             let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
@@ -20,7 +20,7 @@ module ServiceFee =
         with
            _ -> []
     let submitPendingFee sid userid amount =
-        if not <| User.verifyAdmin sid then ()
+        if not (Permission.checkPermission sid Permissions.ServiceFeeAdmin) then ()
         else
         //try
             let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
@@ -33,7 +33,7 @@ module ServiceFee =
         (*with
             _ -> ()*)
     let payFee sid feeID =
-        if not <| User.verifyAdmin sid then ()
+        if not (Permission.checkPermission sid Permissions.ServiceFeeAdmin) then ()
         try
         let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
         (query{

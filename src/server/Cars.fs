@@ -24,7 +24,7 @@ module Cars =
             _ -> return Map.ofList []
         }
     let getCars sid =
-        if User.verifyAdmin sid |> not then []
+        if not (Permission.checkPermission sid Permissions.ViewCars) |> not then []
         else
         try
         let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
@@ -77,7 +77,7 @@ module Cars =
                     _ -> []
     let setCar sid car =
         try
-        if not (User.verifyAdmin sid) then ()
+        if not (Permission.checkPermission sid Permissions.CarAdmin) then ()
         else
             let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
             let existing =

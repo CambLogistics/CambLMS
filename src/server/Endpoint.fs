@@ -29,33 +29,3 @@ type EndPoint =
     | [<EndPoint "POST /imagesubmit">] ImageSubmit
     | [<EndPoint "/changelog">] Changelog
     | [<EndPoint "/";Wildcard>] NotFound of string
-
-module EndPoints =
-    //(endpoint,(minRole,maxRole))
-    //If minRole is -2, the page is to be accessed logged out
-    let PermissionList = Map [
-        (EndPoint.Home,(-1,14));
-        (EndPoint.Logout,(0,14));
-        (EndPoint.Login,(-2,14));
-        (EndPoint.Changelog,(0,14))
-        (EndPoint.Registration,(-2,14));
-        (EndPoint.PasswordChange,(0,14));
-        (EndPoint.NameChange,(0,14));
-        (EndPoint.Information,(0,14));
-        (EndPoint.Delivery,(0,0));
-        (EndPoint.Taxi,(1,6));
-        (EndPoint.Towing,(7,14));
-        (EndPoint.Documents,(0,14));
-        (EndPoint.ImageUpload,(0,14));
-        (EndPoint.ImageSubmit,(0,14));
-        (EndPoint.DocumentSubmit,(0,14));
-        (EndPoint.AdminHome,(11,14));
-        (EndPoint.CallsAdmin,(11,14));
-        (EndPoint.CarsAdmin,(11,14));
-        (EndPoint.DocAdmin,(12,14));
-        (EndPoint.ImgAdmin,(12,14));
-        (EndPoint.MembersAdmin,(12,14));
-        (EndPoint.NameChangeAdmin,(12,14));
-        (EndPoint.RegistrationAdmin,(12,14));
-        (EndPoint.ServiceAdmin,(12,14));
-    ]

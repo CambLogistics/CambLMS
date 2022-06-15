@@ -48,7 +48,7 @@ module NameChangeServer =
                 with
                     _ -> DatabaseError
     let decideNameChange sid userID decision =
-        if User.verifyAdmin sid |> not then ()
+        if not (Permission.checkPermission sid Permissions.MemberAdmin)then ()
         else
         try
         let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
@@ -75,7 +75,7 @@ module NameChangeServer =
         with
             _ -> ()
     let getPendingChanges sid = 
-        if User.verifyAdmin sid |> not then []
+        if not (Permission.checkPermission sid Permissions.MemberAdmin) then []
         else
         try
             let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())

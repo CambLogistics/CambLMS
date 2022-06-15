@@ -39,7 +39,6 @@ type PasswordChangeResult =
     |DatabaseError
 
 module User =
-    let minimumAdmin = 11
     let getUserFromSID sessionID = 
         try
         let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
@@ -71,10 +70,6 @@ module User =
         else List.item 0 list |> Some
         with
             _ -> None
-    let verifyAdmin sessionID =
-        match getUserFromSID sessionID with
-            |None -> false
-            |Some u -> u.Role >= minimumAdmin
     let hashPassword (password:string) = 
         let hash = SHA512.Create()
         (hash.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password)) |> System.Convert.ToHexString).ToLower()

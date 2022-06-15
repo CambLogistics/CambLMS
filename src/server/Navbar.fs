@@ -62,9 +62,8 @@ module Navbar =
                 fun item ->
                     match item with
                         |Logo -> true
-                        |Url (ep,name) ->
-                            let (minRole,maxRole) = Map.find ep EndPoints.PermissionList
-                            if user.IsSome then (user.Value.Role >= minRole && user.Value.Role <= maxRole) || (user.Value.Role >= 11 && navbarList = NormalNavbar)
+                        |Url (ep,_) ->
+                            if user.IsSome then (Permission.getUserPermissions user.Value) &&& (LanguagePrimitives.EnumToValue (Map.find ep Permission.RequiredPermissions)) > 0u
                             else false
                         |Separator -> user.IsSome
             ) |> generateItems ctx

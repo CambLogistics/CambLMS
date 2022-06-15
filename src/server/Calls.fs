@@ -90,7 +90,6 @@ module Calls =
     let getAreaList () =
         try
             let db = Database.SqlConnection.GetDataContext(Database.getConnectionString ())
-
             query {
                 for a in db.Camblogistics.areas do
                     select ((a.Id, a.Name))
@@ -101,7 +100,6 @@ module Calls =
 
     let registerCall sid price (callType: CallType) =
         let user = User.getUserFromSID sid
-
         match user with
         | None -> InvalidSession
         | Some u ->
@@ -117,19 +115,17 @@ module Calls =
             Success
 
     let rotateWeek sid =
-        if User.verifyAdmin sid |> not then
+        if not (Permission.checkPermission sid Permissions.CloseWeek) then
             ()
         else
             try
                 let db = Database.SqlConnection.GetDataContext(Database.getConnectionString ())
-
                 query {
                     for call in db.Camblogistics.calls do
                         where (
                             call.ThisWeek = (sbyte 1)
                             || call.PreviousWeek = (sbyte 1)
                         )
-
                         select call
                 }
                 |> Seq.iter (fun c ->
@@ -138,7 +134,6 @@ module Calls =
                         c.PreviousWeek <- (sbyte 1)
                     else if c.PreviousWeek = (sbyte 1) then
                         c.PreviousWeek <- (sbyte 0))
-
                 db.SubmitUpdates()
             with
             | _ -> ()
@@ -146,11 +141,9 @@ module Calls =
     let getCallsOfUser (user: Member) =
         try
             let db = Database.SqlConnection.GetDataContext(Database.getConnectionString ())
-
             query {
                 for c in db.Camblogistics.calls do
                     where (user.Id = c.UserId)
-
                     select
                         { Type = enum <| int32 c.Type
                           Price = c.Price

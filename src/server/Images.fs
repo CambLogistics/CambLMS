@@ -24,11 +24,25 @@ module Documents =
             )
             .Doc()
     let getUsersWithValidDocuments sid =
-        User.getUserList sid false true |> List.filter (
-            fun u -> 
-                System.IO.File.Exists(@"wwwroot/docs/" + string u.AccountID + "_personal.png") &&
-                System.IO.File.Exists(@"wwwroot/docs/" + string u.AccountID + "_license.png")
-        )
+        try
+            if not (Permission.checkPermission sid Permissions.DocAdmin) then []
+            else
+            let db = Database.SqlConnection.GetDataContext(Database.getConnectionString())
+            query{
+                for u in db.Camblogistics.users do
+                where(u.Accepted = (sbyte 1))
+                select({Id = u.Id;
+                            Name = u.Name;
+                            Role = -1; 
+                            AccountID = u.AccountId;
+                            Email = ""})
+            } |> Seq.toList |> List.filter (
+                fun u -> 
+                    System.IO.File.Exists(@"wwwroot/docs/" + string u.AccountID + "_personal.png") &&
+                    System.IO.File.Exists(@"wwwroot/docs/" + string u.AccountID + "_license.png")
+            )
+        with
+            _ -> []
     [<Rpc>]
     let doGetUsersWithDocuments sid =
         async{
@@ -55,7 +69,7 @@ module ImageUpload =
             .Doc()
     let DeleteImage sid filename =
         try
-            if not <| User.verifyAdmin sid then ()
+            if not (Permission.checkPermission sid Permissions.ServiceFeeAdmin) then ()
             else
                 let db = Database.SqlConnection.GetDataContext(Database.getConnectionString())
                 if System.IO.File.Exists(@"wwwroot/img/" + filename) then System.IO.File.Delete(@"wwwroot/img/" + filename)
@@ -69,7 +83,7 @@ module ImageUpload =
             _ -> ()
     let getImageList sid =
         try
-            if not <| User.verifyAdmin sid then []
+            if not (Permission.checkPermission sid Permissions.ServiceFeeAdmin)then []
             else
             let db = Database.SqlConnection.GetDataContext(Database.getConnectionString())
             query{
