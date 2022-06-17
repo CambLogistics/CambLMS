@@ -15,6 +15,11 @@ module UserOperations =
                         exactlyOne
                 })
             user.Deleted <- (sbyte 1)
+            query{
+                for s in db.Camblogistics.sessions do
+                    where(s.UserId = userid)
+                    select s
+            } |> Seq.iter(fun s -> s.Delete())
             db.SubmitUpdates()
         with
             _ -> ()

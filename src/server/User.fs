@@ -46,7 +46,7 @@ module User =
             query{
                 for session in db.Camblogistics.sessions do
                     join user in db.Camblogistics.users on (session.UserId = user.Id) 
-                    where(session.Id = sessionID && session.Expiry > System.DateTime.Now && user.Deleted = (sbyte 0))
+                    where(session.Id = sessionID && session.Expiry > System.DateTime.Now && user.Deleted = (sbyte 0) && user.Accepted = (sbyte 1))
                     select({Id = user.Id;
                             Name = user.Name;
                             Role = user.Role; 
