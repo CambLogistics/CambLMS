@@ -3,23 +3,23 @@
             Regisztráció
          </div>
             <div class="field">
-               <input type="text" ws-var="Name" required>
+               <input type="text" ws-var="Name" ws-onkeydown="Kbregister" required>
                <label>IG név (Példa_Béla)</label>
             </div>
             <div class="field">
-               <input type="text" ws-var="AccID" required>
+               <input type="text" ws-var="AccID" ws-onkeydown="Kbregister" required>
                <label>Account ID</label>
             </div>
             <div class="field">
-               <input type="text" ws-var="Email" required>
+               <input type="text" ws-var="Email" ws-onkeydown="Kbregister" required>
                <label>Email</label>
             </div>
             <div class="field">
-               <input type="password" ws-var="Password" required>
+               <input type="password" ws-var="Password" ws-onkeydown="Kbregister" required>
                <label>Jelszó</label>
             </div>
             <div class="field">
-               <input type="password" ws-var="PasswordRepeat" required>
+               <input type="password" ws-var="PasswordRepeat" ws-onkeydown="Kbregister" required>
                <label>Jelszó mégegyszer</label>
             </div>
             <button class="submit" ws-onclick="Register">Regisztráció</button>
