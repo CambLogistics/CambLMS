@@ -21,9 +21,11 @@
 - [x] Access images from admin UI
 - [] Top members
 - [] Forgot password
+- [] Inactivity
 ## Beta
 - [] Client-side routing
 - [] GDPR compliance 
+- [] Webside integration
 ## Release 1.0
 - [] Filtered call list in admin UI
 - [] Make last *n* calls editable
