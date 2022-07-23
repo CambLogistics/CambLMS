@@ -10,7 +10,7 @@ module ServiceFee =
         if not (Permission.checkPermission sid Permissions.ServiceFeeAdmin) then []
         else
         try
-            let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
+            let db = Database.getDataContext()
             query{
                 for fee in db.Camblogistics.servicefees do
                 where (fee.Paid = (sbyte 0))
@@ -23,7 +23,7 @@ module ServiceFee =
         if not (Permission.checkPermission sid Permissions.ServiceFeeAdmin) then ()
         else
         try
-            let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
+            let db = Database.getDataContext()
             let newFee = db.Camblogistics.servicefees.Create()
             newFee.Amount <- amount
             newFee.UserId <- userid
@@ -35,7 +35,7 @@ module ServiceFee =
     let payFee sid feeID =
         if not (Permission.checkPermission sid Permissions.ServiceFeeAdmin) then ()
         try
-        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
+        let db = Database.getDataContext()
         (query{
             for f in db.Camblogistics.servicefees do
             where(f.Id = feeID)

@@ -4,7 +4,7 @@ open WebSharper
 
 module UserOperations =
     let deleteUser sid userid =
-        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
+        let db = Database.getDataContext()
         if not (Permission.checkPermission sid Permissions.MemberAdmin) then ()
         else
         try
@@ -24,7 +24,7 @@ module UserOperations =
         with
             _ -> ()
     let approveUser sid userid =
-        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
+        let db = Database.getDataContext()
         if not (Permission.checkPermission sid Permissions.MemberAdmin) then ()
         else
         try
@@ -39,7 +39,7 @@ module UserOperations =
     let getUserList sid pending showDeleted =
         if not (Permission.checkPermission sid Permissions.MemberAdmin) then []
         else
-            let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
+            let db = Database.getDataContext()
             query{
                 for user in db.Camblogistics.users do
                 where(user.Accepted = (sbyte (if pending then 0 else 1)))
@@ -54,7 +54,7 @@ module UserOperations =
                 if u.Role <= (User.getUserByID userID).Value.Role || u.Id = userID then ()
                 else
                 try
-                    let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
+                    let db = Database.getDataContext()
                     let user =
                         query{
                             for u in db.Camblogistics.users do

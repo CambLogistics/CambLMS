@@ -5,7 +5,7 @@ open WebSharper
 module Tow =
     let getGarageList() =
         try
-            let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
+            let db = Database.getDataContext()
             query{
                 for g in db.Camblogistics.towgarages do
                 select((g.Id,g.Name))
@@ -14,7 +14,7 @@ module Tow =
             _ -> Map.ofList []
     let calculatePrice source dest =
         try
-        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
+        let db = Database.getDataContext()
         Calls.transformPrice (query{
             for route in db.Camblogistics.towprices do
             where(route.Source = source && route.Destination = dest)

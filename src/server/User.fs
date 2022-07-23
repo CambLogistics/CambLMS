@@ -41,7 +41,7 @@ type PasswordChangeResult =
 module User =
     let getUserFromSID sessionID = 
         try
-        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
+        let db = Database.getDataContext()
         let list =
             query{
                 for session in db.Camblogistics.sessions do
@@ -59,7 +59,7 @@ module User =
             _ -> None
     let getUserByID userid =
         try
-        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
+        let db = Database.getDataContext()
         let list =
             query{
                 for user in db.Camblogistics.users do
@@ -75,7 +75,7 @@ module User =
         (hash.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password)) |> System.Convert.ToHexString).ToLower()
     let authenticateLoggedInUser sid password =
         try
-        let dbContext = Database.SqlConnection.GetDataContext (Database.getConnectionString())
+        let dbContext = Database.getDataContext()
         query{
             for user in dbContext.Camblogistics.users do
             join session in dbContext.Camblogistics.sessions on (user.Id = session.UserId)
@@ -85,7 +85,7 @@ module User =
         with
             _ -> false
     let generateSession userid =
-        let dbContext = Database.SqlConnection.GetDataContext (Database.getConnectionString())
+        let dbContext = Database.getDataContext()
         use rng = RandomNumberGenerator.Create()
         let mutable sessionRandom = Array.create 64 0uy
         rng.GetBytes sessionRandom
@@ -99,7 +99,7 @@ module User =
         sessId
     let loginUser (name, password) =
         try
-            let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
+            let db = Database.getDataContext()
             let userList = query{
                     for user in db.Camblogistics.users do
                     where(user.Name = name && user.Password = hashPassword password && user.Deleted = (sbyte 0))
@@ -115,7 +115,7 @@ module User =
             _ -> LoginResult.DatabaseError
 
     let registerUser (name,password,accountid,email) = 
-        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
+        let db = Database.getDataContext()
         if String.length password < 5 || String.length name < 3 || String.length email < 5 then MissingData
         else
             try
@@ -149,7 +149,7 @@ module User =
             with
                 _ -> RegisterResult.DatabaseError
     let logoutUser (ctx:Context<EndPoint>) =
-        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
+        let db = Database.getDataContext()
         (query{
             for session in db.Camblogistics.sessions do
                 where(session.Id = (ctx.Request.Cookies.Item "clms_sid").Value)
@@ -159,7 +159,7 @@ module User =
     
     let getRankList() =
         try
-        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
+        let db = Database.getDataContext()
         query{
             for r in db.Camblogistics.roles do
             select({Level = r.Id;Name = r.Name})
@@ -167,7 +167,7 @@ module User =
         with
             _ -> []
     let changeUserPassword sid oldPassword newPassword =
-        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
+        let db = Database.getDataContext()
         if String.length newPassword < 3 then BadNewPassword
         else
         if authenticateLoggedInUser sid oldPassword |> not then PasswordChangeResult.WrongPassword
@@ -189,7 +189,7 @@ module User =
                     _ -> PasswordChangeResult.DatabaseError
     let lengthenSession sid =
         try
-        let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
+        let db = Database.getDataContext()
         (query{
             for s in db.Camblogistics.sessions do
             where (s.Id = sid)

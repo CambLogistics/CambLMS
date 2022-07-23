@@ -27,7 +27,7 @@ module Documents =
         try
             if not (Permission.checkPermission sid Permissions.DocAdmin) then []
             else
-            let db = Database.SqlConnection.GetDataContext(Database.getConnectionString())
+            let db = Database.getDataContext()
             query{
                 for u in db.Camblogistics.users do
                 where(u.Accepted = (sbyte 1))
@@ -132,7 +132,7 @@ module ImageSubmitter =
         try
             let file = Seq.item 0 ctx.Request.Files
             let filename = getRandomString 32 + System.IO.Path.GetExtension file.FileName
-            let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
+            let db = Database.getDataContext()
             if System.IO.Directory.Exists "img" |> not then System.IO.Directory.CreateDirectory "img" |> ignore
             file.SaveAs (@"img/" + filename)
             let newFileEntry = db.Camblogistics.images.Create()

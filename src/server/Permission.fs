@@ -48,7 +48,7 @@ module Permission =
     ]
     let getUserPermissions user =
         try
-            let db = Database.SqlConnection.GetDataContext (Database.getConnectionString())
+            let db = Database.getDataContext()
             let rolePermissions = 
                 (query{
                     for p in db.Camblogistics.permissions do

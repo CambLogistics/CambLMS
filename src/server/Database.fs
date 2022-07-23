@@ -11,3 +11,5 @@ module Database =
             ss.ReadToEnd()
         else
             "Server=localhost;Database=camblogistics;Uid=camblms;Pwd=V3l3tlen_J3lsz0;"
+    let getDataContext() =
+        SqlConnection.GetDataContext (getConnectionString())
