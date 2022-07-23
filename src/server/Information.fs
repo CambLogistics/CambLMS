@@ -15,7 +15,6 @@ module Information =
             |None -> Doc.Empty
             |Some u ->
                 let (taxiDaily,taxiWeekly,taxiBiWeekly,taxiAll) = Taxi.getInfo sessionID.Value
-                let (deliveryDaily,deliveryWeekly,deliveryBiWeekly,deliveryAll) = Delivery.getInfo sessionID.Value
                 let (towingDaily,towingWeekly,towingBiWeekly,towingAll) = Tow.getInfo sessionID.Value
                 let callsOfUser = Calls.getCallsBySID sessionID.Value
                 SiteParts.InfoTemplate()
@@ -34,9 +33,6 @@ module Information =
                     .TowDaily(string towingDaily)
                     .TowWeekly(string towingWeekly)
                     .TowSum(string towingAll)
-                    .TransDaily(string deliveryDaily)
-                    .TransWeekly(string deliveryWeekly)
-                    .TransSum(string deliveryAll)
                     .Cars(
                         List.fold (
                                 fun s rn -> (s + " " + rn)
