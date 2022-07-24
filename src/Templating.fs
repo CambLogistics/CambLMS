@@ -27,6 +27,7 @@ module SiteParts =
     type CallsTemplate = Templating.Template<"wwwroot/templates/calls.html">
     type InfoTemplate = Templating.Template<"wwwroot/templates/info.html">
     type DocumentsTemplate = Templating.Template<"wwwroot/templates/docs.html">
+    type InactivityTemplate = Templating.Template<"wwwroot/templates/inactivity.html">
     type ImageUploadTemplate = Templating.Template<"wwwroot/templates/img.html">
     type NavTemplate = Templating.Template<"wwwroot/templates/navbar.html">
     type NameAdminTemplate = Templating.Template<"wwwroot/templates/name_admin.html">

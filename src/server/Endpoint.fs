@@ -8,6 +8,7 @@ type EndPoint =
     | [<EndPoint "/login">] Login
     | [<EndPoint "/registration">] Registration
     | [<EndPoint "/passchange">] PasswordChange
+    | [<EndPoint "/inactivity">] Inactivity
     | [<EndPoint "/namechange">] NameChange
     | [<EndPoint "/info">] Information
     | [<EndPoint "/delivery">] Delivery

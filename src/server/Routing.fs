@@ -19,6 +19,7 @@ module Routing =
             |EndPoint.AdminHome -> Content.Page(PageMakers.AdminHome ctx)
             |EndPoint.CallsAdmin -> Content.Page(PageMakers.CallsAdmin ctx)
             |EndPoint.CarsAdmin -> Content.Page(PageMakers.CarsAdmin ctx)
+            |EndPoint.Inactivity -> Content.Page(PageMakers.InactivityPage ctx)
             |EndPoint.Delivery -> Content.Page(PageMakers.Delivery ctx)
             |EndPoint.Documents -> Content.Page(Documents.MakePage ctx)
             |EndPoint.DocumentSubmit -> ImageSubmitter.Documents ctx user

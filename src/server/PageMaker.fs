@@ -92,6 +92,12 @@ module PageMakers =
         SiteTemplates.LoginTemplate()
             .Main(client <@RegistrationPage.RenderPage()@>)
             .Doc()
+    let InactivityPage ctx =
+        SiteTemplates.MainTemplate()
+            .Stylesheet(SiteTemplates.NormalStyle)
+            .Navbar(Navbar.MakeNavbar ctx false)
+            .Main(client <@InactivityPage.RenderPage()@>)
+            .Doc()
     let NameChangeAdmin ctx =
         SiteTemplates.MainTemplate()   
             .Stylesheet(SiteTemplates.AdminStyle)

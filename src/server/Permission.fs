@@ -5,8 +5,8 @@ open WebSharper
 [<JavaScript>]
 [<System.Flags>]
 type Permissions =
-    |Nothing = 2047u
-    |Admin = 2040u
+    |Nothing = 8191u
+    |Admin = 8184u
     |DeliveryCall = 1u
     |TowCall = 2u
     |TaxiCall = 4u
@@ -18,13 +18,16 @@ type Permissions =
     |TriggerDoublePrice = 256u
     |DocAdmin = 512u
     |MemberAdmin = 1024u
+    |InactivityAdmin = 2048u
+    |PasswordAdmin = 4096u
 
 module Permission = 
     let RequiredPermissions = Map [
         (EndPoint.Home,Permissions.Nothing);
         (EndPoint.Logout,Permissions.Nothing);
         (EndPoint.Login,Permissions.Nothing);
-        (EndPoint.Changelog,Permissions.Nothing)
+        (EndPoint.Changelog,Permissions.Nothing);
+        (EndPoint.Inactivity,Permissions.Nothing);
         (EndPoint.Registration,Permissions.Nothing);
         (EndPoint.PasswordChange,Permissions.Nothing);
         (EndPoint.NameChange,Permissions.Nothing);
