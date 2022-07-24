@@ -412,6 +412,19 @@ CREATE TABLE `users` (
   `deleted` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS inactivity;
+CREATE TABLE inactivity(
+  userid int NOT NULL, 
+  beginning DATETIME NOT NULL, 
+  ending DATETIME NOT NULL,
+  reason VARCHAR(2048) NOT NULL,
+  accepted BOOLEAN NOT NULL, 
+  pending BOOLEAN NOT NULL,
+  PRIMARY KEY(userid,beginning,ending), 
+  FOREIGN KEY (userid) 
+  REFERENCES users(id)
+  );
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
