@@ -54,6 +54,7 @@ module CarsAdmin =
             exactlyOne
         }).Value
     let RenderPage() =
+        carList.Clear()
         updateTuningList() 
         updateMemberList()
         updateCarList()

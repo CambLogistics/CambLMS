@@ -24,6 +24,7 @@ module CallsAdmin =
             rankList.Set list
         }
     let RenderPage() =
+        userList.Clear()
         updateRankList |> Async.Start
         updateUserList |> Async.Start
         SiteParts.CallsTemplate()

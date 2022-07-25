@@ -30,6 +30,7 @@ module MemberAdminPage =
         |> Async.Start
 
     let RenderPage currentUser =
+        UserList.Clear()
         updateRankList()
         updateUserList()
         SiteParts

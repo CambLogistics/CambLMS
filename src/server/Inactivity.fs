@@ -90,7 +90,7 @@ module Inactivity =
                     query{
                         for r in db.Camblogistics.inactivity do
                         join u in db.Camblogistics.users on (r.Userid = u.Id)
-                        where r.Pending = (sbyte 1)
+                        where(r.Pending = (sbyte 1))
                         select ({UserName = u.Name;UserID = u.Id;From = r.Beginning; To = r.Ending;Reason = r.Reason})
                     } |> Seq.toList
             with

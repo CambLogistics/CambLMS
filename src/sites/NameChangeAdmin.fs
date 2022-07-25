@@ -14,6 +14,7 @@ module NameChangeAdmin =
             userList.Set pendingUsers
         } |> Async.Start
     let RenderPage() =
+        userList.Clear()
         updateList()
         SiteParts.NameAdminTemplate()
             .UserList(

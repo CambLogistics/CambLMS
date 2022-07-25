@@ -18,6 +18,7 @@ module RegistrationAdminPage =
             pendingUsers.Set userList
         } |> Async.Start
     let RenderPage() =
+        pendingUsers.Clear()
         updateList()
         SiteParts.RegistrationAdminTemplate()
             .UserList(
