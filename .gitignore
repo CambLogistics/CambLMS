@@ -8,3 +8,4 @@ wwwroot/Scripts/**/*
 docs/**/*
 img/**/*
 .fake
+coc-settings.json
