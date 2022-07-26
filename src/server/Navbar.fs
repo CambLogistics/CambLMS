@@ -21,6 +21,7 @@ module Navbar =
         Separator
         Url (EndPoint.Documents,"Iratbeküldés")
         Url (EndPoint.ImageUpload,"Képfeltöltés")
+        Url (EndPoint.Inactivity,"Inaktivítás")
         Separator
         Url (EndPoint.AdminHome,"Adminfelület")
         Url (EndPoint.Logout,"Kijelentkezés")
@@ -36,6 +37,7 @@ module Navbar =
         Url (EndPoint.DocAdmin,"Iratok")
         Separator
         Url(EndPoint.MembersAdmin,"Tagok")
+        Url(EndPoint.InactivityAdmin,"Inaktivítás")
         Url(EndPoint.CarsAdmin,"Autók")
         Url(EndPoint.ImgAdmin,"Szervizképek")
         Url(EndPoint.ServiceAdmin,"Szervizdíjak")

@@ -9,7 +9,9 @@ type EndPoint =
     | [<EndPoint "/registration">] Registration
     | [<EndPoint "/passchange">] PasswordChange
     | [<EndPoint "/inactivity">] Inactivity
+    | [<EndPoint "/inactivity_admin">] InactivityAdmin
     | [<EndPoint "/namechange">] NameChange
+    | [<EndPoint "/forgotpass">] ForgotPass
     | [<EndPoint "/info">] Information
     | [<EndPoint "/delivery">] Delivery
     | [<EndPoint "/taxi">] Taxi
