@@ -1,0 +1,38 @@
+<div class="main">
+    <div class="listak">
+        <table>
+            <th colspan="5" class="szoveg_th">Inaktivitások</th>
+            <tr class="szoveg_td">
+                <td style="padding-right: 25px;">Név</td>
+                <td style="padding-right: 25px;">Kezdet</td>
+                <td style="padding-right: 25px;">Vég</td>
+                <td style="padding-right: 25px;">Ok</td>
+                <td colspan="2" style="padding-right: 25px;">Jóváhagyás</td>
+            </tr>
+            <tr><td colspan="5" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td></tr>
+            <tr ws-replace="UserList">
+            <tr ws-template="UserListItem" class="adat">
+                <td>${Name}</td>
+                <td>${From}</td>
+                <td>${To}</td>
+                <td>${Reason}</td>
+                <td><button value="${UserID}" class="approve" ws-onclick="Approve">Jóváhagy</button></td>
+                <td><button value="${UserID}" class="deny" ws-onclick="Deny">Elutasít</button></td>
+            </tr>
+        </table>
+
+        <table>
+            <th colspan="10" class="szoveg_th">Szabisok</th>
+            <tr class="szoveg_td">
+                <td style="padding-right: 25px;">Név</td>
+                <td style="padding-right: 25px;">Szabin van-e?</td>
+            </tr>
+            <tr><td colspan="10" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td></tr>
+            <tr ws-replace="UserList"></tr>
+            <tr ws-template="UserListItem">
+                <td class="adat">${Name}</td>
+                <td class="adat">${OnHoliday}</td>
+            </tr>
+        </table>
+    </div>
+</div>
