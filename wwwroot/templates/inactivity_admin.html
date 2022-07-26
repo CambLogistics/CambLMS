@@ -10,14 +10,14 @@
                 <td colspan="2" style="padding-right: 25px;">Jóváhagyás</td>
             </tr>
             <tr><td colspan="5" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td></tr>
-            <tr ws-replace="UserList">
-            <tr ws-template="UserListItem" class="adat">
+            <tr ws-replace="InactivityList">
+            <tr ws-template="InactivityListItem" class="adat">
                 <td>${Name}</td>
                 <td>${From}</td>
                 <td>${To}</td>
                 <td>${Reason}</td>
-                <td><button value="${UserID}" class="approve" ws-onclick="Approve">Jóváhagy</button></td>
-                <td><button value="${UserID}" class="deny" ws-onclick="Deny">Elutasít</button></td>
+                <td><button class="approve" ws-onclick="Approve">Jóváhagy</button></td>
+                <td><button class="deny" ws-onclick="Deny">Elutasít</button></td>
             </tr>
         </table>
 
