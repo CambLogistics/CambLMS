@@ -6,8 +6,8 @@ open WebSharper.UI.Client
 
 [<JavaScript>]
 module InactivityAdmin =
-    let requestList = ListModel.FromSeq [{UserName = "Loa_Ding";UserID=666;From=System.DateTime.Now;To=System.DateTime.Now;Reason="Nothing"}]
-    let userList = ListModel.FromSeq [{UserName = "Loa_Ding";UserID=666;Status=false}]
+    let requestList = ListModel.Create (fun (r:InactivityRequest) -> r) []
+    let userList = ListModel.Create (fun (u:UserInactivityStatus) -> u) []
     let sessionID = JavaScript.Cookies.Get("clms_sid").Value
     let updateList() =
         async{

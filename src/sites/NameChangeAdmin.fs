@@ -6,7 +6,7 @@ open WebSharper.UI.Client
 
 [<JavaScript>]
 module NameChangeAdmin =
-    let userList= ListModel.FromSeq [{UserID = -1;OldName = "Whatever";NewName = "WhoCares"}]
+    let userList= ListModel.Create (fun (u:PendingChange) -> u) []
     let sessionID = JavaScript.Cookies.Get("clms_sid").Value
     let updateList() =
         async{
@@ -14,7 +14,6 @@ module NameChangeAdmin =
             userList.Set pendingUsers
         } |> Async.Start
     let RenderPage() =
-        userList.Clear()
         updateList()
         SiteParts.NameAdminTemplate()
             .UserList(

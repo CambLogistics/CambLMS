@@ -6,8 +6,8 @@ open WebSharper.UI.Client
 
 [<JavaScript>]
 module ServiceFeeAdmin =
-    let UserList = ListModel.FromSeq [{Id= -1;Name="Senki";AccountID = -1;Email="@";Role = -1}]
-    let PendingList = ListModel.FromSeq [{ID = -1;Amount = 0;Username = ""}]
+    let UserList = ListModel.Create (fun (u:Member) -> u) []
+    let PendingList = ListModel.Create (fun (f:PendingFee) -> f) []
     let SelectedUserID = Var.Create -1
     let sessionID = JavaScript.Cookies.Get("clms_sid").Value
     let updateUserList() =

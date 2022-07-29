@@ -11,14 +11,13 @@ open WebSharper.UI.Client
 
 [<JavaScript>]
 module RegistrationAdminPage =
-    let pendingUsers = ListModel.FromSeq [{Id = -1;Name="Dr.Who";AccountID=66666;Email="whoisthis@nope.no";Role = -1}]
+    let pendingUsers= ListModel.Create (fun (u:Member) -> u) []
     let updateList() =
         async{
             let! userList = UserOperations.doGetUserList (JavaScript.Cookies.Get "clms_sid").Value true false
             pendingUsers.Set userList
         } |> Async.Start
     let RenderPage() =
-        pendingUsers.Clear()
         updateList()
         SiteParts.RegistrationAdminTemplate()
             .UserList(

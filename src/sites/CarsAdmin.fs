@@ -9,13 +9,8 @@ module CarsAdmin =
     let sessionID = JavaScript.Cookies.Get("clms_sid").Value
     let mutable canEdit = false
     let tuningList = ListModel.FromSeq <| Map.ofList [(0,"Gyári")]
-    let carList = ListModel.FromSeq [{Id = "L04D1NG";RegNum="HAW-411";CarType="Fiat Panda II";
-                                                            ParkTicket=false;ECU=0;GPS=false;
-                                                            AirRide = false;Engine=0;Brakes=0;
-                                                            Suspension=0;WeightReduction=0;Gearbox=0;
-                                                            Tyres=0;Turbo=0;KeyHolder1=None;
-                                                            KeyHolder2=None}]
-    let memberList = ListModel.FromSeq [{Member.Id=1;Name="Loa Ding";Role=0;Email="@";AccountID=00000}]
+    let carList = ListModel.Create (fun (c:Car) -> c) []
+    let memberList = ListModel.Create (fun (m:Member) -> m) []
     let selectedCar = Var.Create {Id = "";RegNum="";CarType="";
                                                             ParkTicket=false;ECU=0;GPS=false;
                                                             AirRide = false;Engine=0;Brakes=0;
@@ -54,7 +49,6 @@ module CarsAdmin =
             exactlyOne
         }).Value
     let RenderPage() =
-        carList.Clear()
         updateTuningList() 
         updateMemberList()
         updateCarList()

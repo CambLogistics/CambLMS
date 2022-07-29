@@ -6,16 +6,9 @@ open WebSharper.UI.Client
 
 [<JavaScript>]
 module MemberAdminPage =
-    let UserList =
-        ListModel.FromSeq [ { Id = -1
-                              Role = 0
-                              AccountID = 0
-                              Name = "Whoever"
-                              Email = "what@what.no" } ]
-
+    let UserList = ListModel.Create (fun (u:Member) -> u) []
     let RankList = ListModel.FromSeq [ { Level = -1; Name = "???" } ]
     let sessionID = JavaScript.Cookies.Get("clms_sid").Value
-
     let updateRankList() =
         async {
             let! list = UserCallable.doGetRankList()
@@ -30,7 +23,6 @@ module MemberAdminPage =
         |> Async.Start
 
     let RenderPage currentUser =
-        UserList.Clear()
         updateRankList()
         updateUserList()
         SiteParts

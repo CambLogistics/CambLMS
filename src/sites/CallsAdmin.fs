@@ -6,7 +6,7 @@ open WebSharper.UI.Client
 
 [<JavaScript>]
 module CallsAdmin =
-    let userList = ListModel.FromSeq [{User = {Id= -1;Name="Loa Ding";Role=0;Email="";AccountID=0};Calls=[]}]
+    let userList = ListModel.Create (fun (u:UserWithCalls) -> u) []
     let sessionID = JavaScript.Cookies.Get("clms_sid").Value
     let rankList = Var.Create [{Level = 0;Name="Beszállító"}]
     let mutable canClose = false
@@ -24,7 +24,6 @@ module CallsAdmin =
             rankList.Set list
         }
     let RenderPage() =
-        userList.Clear()
         updateRankList |> Async.Start
         updateUserList |> Async.Start
         SiteParts.CallsTemplate()
