@@ -60,6 +60,8 @@ module ImageUpload =
                             |Some s -> 
                                 if s = "true" then 
                                     SiteParts.DocumentsTemplate.Success().Message("Sikeres képfeltöltés!").Doc()
+                                else if s = "inactivity" then
+                                    SiteParts.DocumentsTemplate.Success().Message("Szabadság alatt nem tölthetsz fel képet!").Doc()
                                 else 
                                     SiteParts.DocumentsTemplate.Error().Message("Hiba feltöltés közben! Keresd a (műszaki) igazgatót!").Doc()
                             |None -> Doc.Empty
@@ -132,6 +134,8 @@ module ImageSubmitter =
         try
             let file = Seq.item 0 ctx.Request.Files
             let filename = getRandomString 32 + System.IO.Path.GetExtension file.FileName
+            if not (Inactivity.getActiveStatus user) then Content.RedirectTemporaryToUrl((ctx.Link EndPoint.ImageUpload) + "?success=inactivity")
+            else
             let db = Database.getDataContext()
             if System.IO.Directory.Exists "img" |> not then System.IO.Directory.CreateDirectory "img" |> ignore
             file.SaveAs (@"img/" + filename)
@@ -142,7 +146,7 @@ module ImageSubmitter =
             db.SubmitUpdates()
             Content.RedirectTemporaryToUrl((ctx.Link EndPoint.ImageUpload) + "?success=true")
         with
-            _ -> Content.RedirectTemporaryToUrl((ctx.Link EndPoint.ImageUpload) + "?success=false")
+            _ -> Content.RedirectTemporaryToUrl((ctx.Link EndPoint.ImageUpload) + "?success=error")
 module ImageServe =
     let Docs (ctx:Context<EndPoint>) fn =
         match ctx.Request.Cookies.Item "clms_sid" with
