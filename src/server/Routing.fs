@@ -33,7 +33,7 @@ module Routing =
             |EndPoint.ImageUpload -> Content.Page(ImageUpload.MakePage ctx)
             |EndPoint.Information -> Content.Page(PageMakers.NormalPage ctx true needsAdmin Information.RenderPage ctx)
             |EndPoint.MembersAdmin -> Content.Page(PageMakers.NormalPage ctx false needsAdmin MemberAdminPage.RenderPage user)
-            |EndPoint.InactivityAdmin -> Content.Page(PageMakers.NormalPage ctx false needsAdmin InactivityAdminPage.RenderPage ())
+            |EndPoint.InactivityAdmin -> Content.Page(PageMakers.NormalPage ctx false needsAdmin InactivityAdmin.RenderPage ())
             |EndPoint.NameChangeAdmin -> Content.Page(PageMakers.NormalPage ctx false needsAdmin NameChangeAdmin.RenderPage ())
             |EndPoint.RegistrationAdmin -> Content.Page(PageMakers.NormalPage ctx false needsAdmin RegistrationAdminPage.RenderPage ())
             |EndPoint.ServiceAdmin -> Content.Page(PageMakers.NormalPage ctx false needsAdmin ServiceFeeAdmin.RenderPage ())
