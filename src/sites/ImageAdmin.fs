@@ -6,7 +6,7 @@ open WebSharper.UI.Client
 
 [<JavaScript>]
 module ImageAdmin =
-    let userList = ListModel.FromSeq [{AccountID = 000000;Name = "GlaDOS";Email="glados@aperture.com";Role=14;Id= -1}]
+    let userList = ListModel.Create (fun (u:Member) -> u) []
     let imageList = ListModel.FromSeq [("",-1,System.DateTime.Now)]
     let sessionID = JavaScript.Cookies.Get("clms_sid").Value
     let selectedMember = Var.Create -1
