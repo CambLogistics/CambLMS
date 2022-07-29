@@ -28,6 +28,7 @@
     <Compile Include="src/sites/TaxiPage.fs" />
     <Compile Include="src/sites/CarsAdmin.fs" />
     <Compile Include="src/sites/CallsAdmin.fs" />
+    <Compile Include="src/sites/InactivityAdmin.fs"/>
     <Compile Include="src/sites/NameChangeAdmin.fs" />
     <Compile Include="src/sites/InactivityPage.fs" />
     <Compile Include="src/sites/NameChangePage.fs" />

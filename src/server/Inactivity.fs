@@ -18,18 +18,27 @@ type InactivityRequestSuccess =
     |InvalidSession
     |DatabaseError
 
+[<JavaScript>]
+type UserInactivityStatus = {
+        UserName: string
+        UserID: int
+        Status: bool
+}
+
 module Inactivity =
-    [<Rpc>]
     let getActiveStatus (user:Member) =
-        async{
             let db = Database.getDataContext()
-            return (query{
+            (query{
                 for ir in db.Camblogistics.inactivity do
                     where(ir.Beginning < DateTime.Now && ir.Ending > DateTime.Now && ir.Accepted = (sbyte 1))
                     count
                 }) > 0 |> not
+    [<Rpc>]
+    let getUserStatusList sessionID =
+        async{
+            let (statusList,userList) = UserOperations.getUserList sessionID false false |> List.mapFold (fun l u -> (getActiveStatus u,u::l)) []
+            return List.rev userList |> List.zip statusList |> List.map (fun (s,u) -> {UserName = u.Name;UserID = u.Id; Status = s})
         }
-
     [<Rpc>]
     let requestInactivity sessionID start ending reason =
         async{
