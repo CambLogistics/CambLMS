@@ -6,6 +6,8 @@ open WebSharper
 type CallResult =
     | Success
     | InvalidSession
+    | InactiveUser
+    | NoPermission
     | DatabaseError
 
 type CallType =
@@ -99,10 +101,20 @@ module Calls =
         | _ -> Map.ofList []
 
     let registerCall sid price (callType: CallType) =
+        let permission = 
+                match callType with
+                        |CallType.Taxi -> Permissions.TaxiCall
+                        |CallType.Towing -> Permissions.TowCall
+                        |CallType.Delivery -> Permissions.DeliveryCall
+                        |_ -> Permissions.Nothing
         let user = User.getUserFromSID sid
         match user with
         | None -> InvalidSession
         | Some u ->
+            if not (Permission.checkPermission sid permission) then NoPermission
+            else
+            if not (Inactivity.getActiveStatus u) then InactiveUser
+            else
             let db = Database.SqlConnection.GetDataContext(Database.getConnectionString ())
             let call = db.Camblogistics.calls.Create()
             call.Date <- System.DateTime.Now

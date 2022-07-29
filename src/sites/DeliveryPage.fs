@@ -57,6 +57,8 @@ module DeliveryPage =
                                 selectedType.Set {ID= -1; Name="";Price=0}
                                 JavaScript.JS.Window.Location.Replace "/"
                             |CallResult.InvalidSession -> Feedback.giveFeedback true "Érvénytelen munkamenet. Lépj ki és be újra!"
+                            |CallResult.InactiveUser -> Feedback.giveFeedback true "Szabadság alatt nem adhatsz le hívást!"
+                            |CallResult.NoPermission -> Feedback.giveFeedback true "Nincs jogosultságod ehhez a hívásfajtához!"
                             |CallResult.DatabaseError -> Feedback.giveFeedback true "Adatbázishiba. Keresd a (műszaki) igazgatót!"
                     } |> Async.Start
             )
