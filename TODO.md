@@ -21,7 +21,7 @@
 - [x] Access images from admin UI
 - [] Top members
 - [] Forgot password
-- [] Inactivity
+- [x] Inactivity
 ## Beta
 - [] Client-side routing
 - [] GDPR compliance 
