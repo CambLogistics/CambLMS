@@ -4,6 +4,7 @@
     <LangVersion>6.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="src/server/Config.fs"/>
     <Compile Include="src/Templating.fs" />
     <Compile Include="src/server/Database.fs" />
     <Compile Include="src/server/Endpoint.fs" />
@@ -11,6 +12,7 @@
     <Compile Include="src/server/Permission.fs" />
     <Compile Include="src/server/UserOperations.fs" />
     <Compile Include="src/server/Inactivity.fs" />
+    <Compile Include="src/server/ForgotPass.fs"/>
     <Compile Include="src/server/Cars.fs" />
     <Compile Include="src/server/Calls.fs" />
     <Compile Include="src/server/Delivery.fs" />
@@ -39,13 +41,14 @@
     <Compile Include="src/sites/LoginPage.fs" />
     <Compile Include="src/sites/MemberAdminPage.fs" />
     <Compile Include="src/sites/RegistrationPage.fs" />
+    <Compile Include="src/sites/ForgotPassPage.fs" />
     <Compile Include="src/sites/RegistrationAdmin.fs" />
     <Compile Include="src/server/PageMaker.fs" />
     <Compile Include="src/server/Routing.fs" />
     <Compile Include="src/server/Site.fs" />
     <Compile Include="src/server/Startup.fs" />
     <None Include="wsconfig.json" />
-    <Content Include="db.conf" />
+    <Content Include="config.xml" />
     <Content Include="service/**/*" />
     <Content Include="basedb.sql" />
   </ItemGroup>
