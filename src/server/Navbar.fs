@@ -37,7 +37,6 @@ module Navbar =
         Url (EndPoint.DocAdmin,"Iratok")
         Separator
         Url(EndPoint.MembersAdmin,"Tagok")
-        Url(EndPoint.Exmembers,"Volt Tagok")
         Url(EndPoint.InactivityAdmin,"Inaktivítás")
         Url(EndPoint.CarsAdmin,"Autók")
         Url(EndPoint.ImgAdmin,"Szervizképek")
