@@ -40,6 +40,7 @@ module Routing =
             |EndPoint.Home -> Content.Page(PageMakers.LoginPage ctx)
             |EndPoint.Login -> Content.Page(PageMakers.LoginPage ctx)
             |EndPoint.Registration -> Content.Page(PageMakers.RegisterPage ctx)
+            |EndPoint.ForgotPass -> Content.Page(PageMakers.ForgotPass ctx)
             |_ -> Content.RedirectTemporary(EndPoint.Login)
 
     let MakeRoute (ctx:Context<EndPoint>) endpoint =

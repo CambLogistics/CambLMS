@@ -116,6 +116,10 @@ module PageMakers =
             .Navbar(Navbar.MakeNavbar ctx true)
             .Main(client <@ImageAdmin.RenderPage()@>)
             .Doc()
+    let ForgotPass ctx =
+        SiteTemplates.LoginTemplate()
+            .Main(client <@ForgotPassPage.RenderPage()@>)
+            .Doc()
     let Logout (ctx:Context<EndPoint>) =
         User.logoutUser ctx
         SiteTemplates.MainTemplate()
