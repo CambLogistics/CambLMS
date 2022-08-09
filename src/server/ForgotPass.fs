@@ -5,6 +5,7 @@ open System.Net.Mail
 open System.Text.RegularExpressions
 open System.IO
 
+[<JavaScript>]
 type ForgotPassStatus =
     | MailSent
     | MailError

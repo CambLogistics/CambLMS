@@ -1,5 +1,8 @@
 namespace camblms
 
+open WebSharper
+
+[<JavaScript>]
 module ForgotPassPage =
     let callForgotPassHandler email =
         async {
