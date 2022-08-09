@@ -30,7 +30,7 @@ module Inactivity =
             let db = Database.getDataContext()
             (query{
                 for ir in db.Camblogistics.inactivity do
-                    where(ir.Beginning < DateTime.Now && ir.Ending > DateTime.Now && ir.Accepted = (sbyte 1))
+                    where(ir.Userid = user.Id && ir.Beginning < DateTime.Now && ir.Ending > DateTime.Now && ir.Accepted = (sbyte 1))
                     count
                 }) > 0 |> not
     [<Rpc>]
@@ -70,7 +70,7 @@ module Inactivity =
                 _ -> return DatabaseError
         }
     [<Rpc>]
-    let decideRequest sessionID req decision =
+    let decideRequest sessionID (req:InactivityRequest) decision =
         async{
             try
             if not (Permission.checkPermission sessionID Permissions.InactivityAdmin) then ()
@@ -79,9 +79,14 @@ module Inactivity =
                 let request =
                     query{
                         for r in db.Camblogistics.inactivity do
-                        where (r.Beginning = req.From && r.Ending = req.To && r.Userid = req.UserID && r.Pending = (sbyte 1))
-                        exactlyOne
-                    }
+                        where (r.Userid = req.UserID && r.Pending = (sbyte 1))
+                        select r
+                    } |> Seq.filter 
+                            (
+                                fun r -> 
+                                    r.Beginning.Subtract(req.From.ToLocalTime()).TotalMinutes < 1.0 && r.Ending.Subtract(req.To.ToLocalTime()).TotalMinutes < 1.0
+                            ) 
+                            |> Seq.item 0
                 request.Accepted <- if decision then sbyte 1 else sbyte 0
                 request.Pending <- sbyte 0
                 return db.SubmitUpdates()

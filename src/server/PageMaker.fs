@@ -98,6 +98,12 @@ module PageMakers =
             .Navbar(Navbar.MakeNavbar ctx false)
             .Main(client <@InactivityPage.RenderPage()@>)
             .Doc()
+    let InactivityAdmin ctx =
+        SiteTemplates.MainTemplate()   
+            .Stylesheet(SiteTemplates.AdminStyle)
+            .Navbar(Navbar.MakeNavbar ctx true)
+            .Main(client <@InactivityAdmin.RenderPage()@>)
+            .Doc()
     let NameChangeAdmin ctx =
         SiteTemplates.MainTemplate()   
             .Stylesheet(SiteTemplates.AdminStyle)

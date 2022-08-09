@@ -37,6 +37,7 @@ module InactivityAdmin =
                             .Name(request.UserName)
                             .From(sprintf "%d-%02d-%02d %02d:%02d" request.From.Year request.From.Month request.From.Day request.From.Hour request.From.Minute)
                             .To(sprintf "%d-%02d-%02d %02d:%02d" request.To.Year request.To.Month request.To.Day request.To.Hour request.To.Minute)
+                            .Reason(request.Reason)
                             .Approve(
                                 fun _ ->
                                     async{
