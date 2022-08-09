@@ -11,5 +11,6 @@
                 <host>localhost</host>
                 <port>25</port>
                 <domain>localhost</domain>
+                <sender>CambLMS</sender>
         </email>
 </config>

@@ -15,6 +15,7 @@ type EmailConfig = {
         Host: string
         Port: int
         Domain: string
+        SenderName: string
 }
 module Config =
         let defaultConfig = @"
@@ -30,6 +31,7 @@ module Config =
                 <host>localhost</host>
                 <port>25</port>
                 <domain>localhost</domain>
+                <sender>CambLMS</sender>
         </email>
 </config>"
         let readDatabase() =
@@ -59,4 +61,5 @@ module Config =
                         Host = emailConfig.SelectSingleNode("host").InnerText
                         Port = int <| emailConfig.SelectSingleNode("port").InnerText
                         Domain = emailConfig.SelectSingleNode("domain").InnerText
+                        SenderName = emailConfig.SelectSingleNode("sender").InnerText
                 }
