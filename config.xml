@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
         <database>
-                <host>127.0.0.1</host>
+                <host>localhost</host>
                 <port>3306</port>
                 <user>camblms</user>
                 <password>V3l3tlen_J3lsz0</password>
