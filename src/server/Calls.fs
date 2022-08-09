@@ -86,6 +86,7 @@ module Calls =
                 |CallType.Delivery -> int (float price * 1.25)
                 |CallType.Towing -> int (float price * 1.25)
                 |CallType.Taxi -> price * 2
+                |_ -> price
         else
             price
 
