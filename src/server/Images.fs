@@ -106,10 +106,6 @@ module ImageUpload =
         }
 
 module ImageSubmitter =
-    let getRandomString length =
-        let chars = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvxyz0123456789"
-        let rnd = System.Random()
-        System.String(Array.init length (fun _ -> chars[rnd.Next chars.Length]))
     let Documents (ctx:Context<EndPoint>) user =
         try
             let (personal,license) =
@@ -133,7 +129,7 @@ module ImageSubmitter =
     let Images (ctx:Context<EndPoint>) (user:Member) =
         try
             let file = Seq.item 0 ctx.Request.Files
-            let filename = getRandomString 32 + System.IO.Path.GetExtension file.FileName
+            let filename = RandomString.getRandomString 32 + System.IO.Path.GetExtension file.FileName
             if not (Inactivity.getActiveStatus user) then Content.RedirectTemporaryToUrl((ctx.Link EndPoint.ImageUpload) + "?success=inactivity")
             else
             let db = Database.getDataContext()

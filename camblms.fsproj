@@ -4,15 +4,16 @@
     <LangVersion>6.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="src/server/Config.fs"/>
+    <Compile Include="src/server/Config.fs" />
     <Compile Include="src/Templating.fs" />
+    <Compile Include="src/server/RandomString.fs" />
     <Compile Include="src/server/Database.fs" />
     <Compile Include="src/server/Endpoint.fs" />
     <Compile Include="src/server/User.fs" />
     <Compile Include="src/server/Permission.fs" />
     <Compile Include="src/server/UserOperations.fs" />
     <Compile Include="src/server/Inactivity.fs" />
-    <Compile Include="src/server/ForgotPass.fs"/>
+    <Compile Include="src/server/ForgotPass.fs" />
     <Compile Include="src/server/Cars.fs" />
     <Compile Include="src/server/Calls.fs" />
     <Compile Include="src/server/Delivery.fs" />
@@ -30,7 +31,7 @@
     <Compile Include="src/sites/TaxiPage.fs" />
     <Compile Include="src/sites/CarsAdmin.fs" />
     <Compile Include="src/sites/CallsAdmin.fs" />
-    <Compile Include="src/sites/InactivityAdmin.fs"/>
+    <Compile Include="src/sites/InactivityAdmin.fs" />
     <Compile Include="src/sites/NameChangeAdmin.fs" />
     <Compile Include="src/sites/InactivityPage.fs" />
     <Compile Include="src/sites/NameChangePage.fs" />
