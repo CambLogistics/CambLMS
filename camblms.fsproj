@@ -50,8 +50,9 @@
     <Compile Include="src/server/Startup.fs" />
     <None Include="wsconfig.json" />
     <Content Include="config.xml" />
-    <Content Include="service/**/*" />
+    <Content Include="service/systemd/camblms.service" />
     <Content Include="basedb.sql" />
+    <Content Include="email_templates/forgotpass_email.html"/>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MySQL.Data" Version="8.0.29" />
