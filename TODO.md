@@ -20,12 +20,12 @@
 - [x] Config file
 - [x] Access images from admin UI
 - [] Top members
-- [] Forgot password
+- [x] Forgot password
 - [x] Inactivity
 ## Beta
 - [] Client-side routing
 - [] GDPR compliance 
-- [] Webside integration
+- [] Website integration
 ## Release 1.0
 - [] Filtered call list in admin UI
 - [] Make last *n* calls editable
