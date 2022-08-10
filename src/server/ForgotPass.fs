@@ -18,7 +18,7 @@ module ForgotPass =
     let generateEmail (username: string) (password: string) =
         let mailTemplate =
             try
-                File.ReadAllText("templates/email/forgotpass_email.html")
+                File.ReadAllText("templates/email/forgotpass.html")
             with
             | _ ->
                 @"<html>
