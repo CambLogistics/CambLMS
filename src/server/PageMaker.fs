@@ -94,7 +94,7 @@ module PageMakers =
             .Doc()
     let InactivityPage ctx =
         SiteTemplates.MainTemplate()
-            .Stylesheet(SiteTemplates.NormalStyle)
+            .Stylesheet(SiteTemplates.ChangeStyle)
             .Navbar(Navbar.MakeNavbar ctx false)
             .Main(client <@InactivityPage.RenderPage()@>)
             .Doc()
