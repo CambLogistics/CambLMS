@@ -52,12 +52,18 @@ module Inactivity =
                     let overlap = 
                         (query{
                             for ir in db.Camblogistics.inactivity do
-                            where(((ir.Beginning < startDate && ir.Ending > startDate) || (ir.Beginning > startDate && ir.Beginning < endDate)) && (ir.Pending = (sbyte 1) || ir.Accepted = (sbyte 1)))
+                            where(((ir.Beginning < startDate && ir.Ending > startDate) || (ir.Beginning > startDate && ir.Beginning < endDate)) && ir.Userid = u.Id && (ir.Pending = (sbyte 1) || ir.Accepted = (sbyte 1)))
                             count
                         }) > 0
+                    let existing = 
+                        query{
+                            for ir in db.Camblogistics.inactivity do
+                            where(ir.Beginning = startDate && ir.Ending = endDate && u.Id = ir.Userid)
+                            select ir
+                        }
                     if overlap then return Overlap 
                     else
-                        let newRequest = db.Camblogistics.inactivity.Create()
+                        let newRequest = if Seq.length existing > 0 then Seq.item 0 existing else db.Camblogistics.inactivity.Create()
                         newRequest.Accepted <- (sbyte 0)
                         newRequest.Pending <- (sbyte 1)
                         newRequest.Userid <- u.Id
