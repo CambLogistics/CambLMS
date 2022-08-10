@@ -20,14 +20,15 @@ body{
     padding: 0;
     color: #fff;
     height: 100vh;
-    overflow: hidden;
+    overflow-x: visible;
+    overflow-y: scroll;
     text-align: center;
     font-size: 13pt;
 }
 .main{
   flex-grow: 1;
   display: flex;
-  overflow-y: hidden;
+  overflow-y: scroll;
   flex-direction: column;
   margin: auto;
   height: 100vh;
