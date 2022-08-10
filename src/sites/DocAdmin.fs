@@ -35,25 +35,15 @@ module DocAdmin =
             .PersonalID(
                View.Map (
                 fun m ->
-                  let accID = 
-                    (query{
-                        for u in userList do
-                            where(u.Id = m)
-                            exactlyOne
-                    }).AccountID
-                  "/docs/" + string accID + "_personal.png"
+                  let userById = userList |> Seq.filter (fun u -> u.Id = m)
+                  if (Seq.length userById > 0) then "/docs/" + (string (Seq.item 0 userById).AccountID) + "_personal.png" else ""
                ) selectedMember.View
             )
             .DriversLicense(
                View.Map (
                 fun m ->
-                  let accID = 
-                    (query{
-                        for u in userList do
-                            where(u.Id = m)
-                            exactlyOne
-                    }).AccountID
-                  "/docs/" + string accID + "_license.png"
+                  let userById = userList |> Seq.filter (fun u -> u.Id = m)
+                  if Seq.length userById > 0 then "/docs/" + (string (Seq.item 0 userById).AccountID) + "_license.png" else ""
                ) selectedMember.View
             )
             .Doc()

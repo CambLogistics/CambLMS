@@ -24,10 +24,11 @@ module Documents =
             )
             .Doc()
     let getUsersWithValidDocuments sid =
-        try
+        //try
             if not (Permission.checkPermission sid Permissions.DocAdmin) then []
             else
             let db = Database.getDataContext()
+            
             query{
                 for u in db.Camblogistics.users do
                 where(u.Accepted = (sbyte 1))
@@ -37,12 +38,13 @@ module Documents =
                             AccountID = u.AccountId;
                             Email = ""})
             } |> Seq.toList |> List.filter (
-                fun u -> 
+                fun u ->
+                    System.Diagnostics.Debug.WriteLine <| string (System.IO.File.Exists(@"docs/" + string u.AccountID + "_personal.png"))
                     System.IO.File.Exists(@"docs/" + string u.AccountID + "_personal.png") &&
                     System.IO.File.Exists(@"docs/" + string u.AccountID + "_license.png")
             )
-        with
-            _ -> []
+        //with
+        //    _ -> []
     [<Rpc>]
     let doGetUsersWithDocuments sid =
         async{
@@ -149,7 +151,7 @@ module ImageServe =
             |None -> Content.RedirectTemporary(EndPoint.Home)
             |Some s -> 
                 if Permission.checkPermission s Permissions.DocAdmin then
-                    if System.IO.File.Exists("docs/" + fn) then Content.File("docs/" + fn)
+                    if System.IO.File.Exists("docs/" + fn) then Content.File("../docs/" + fn,true)
                     else Content.NotFound
                 else Content.Forbidden
     let Service (ctx:Context<EndPoint>) fn =
@@ -157,6 +159,6 @@ module ImageServe =
             |None -> Content.RedirectTemporary(EndPoint.Home)
             |Some s -> 
                 if Permission.checkPermission s Permissions.ServiceFeeAdmin then
-                    if System.IO.File.Exists("img/" + fn) then Content.File("img/" + fn)
+                    if System.IO.File.Exists("img/" + fn) then Content.File("../img/" + fn,true)
                     else Content.NotFound
                 else Content.Forbidden
