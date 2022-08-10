@@ -34,8 +34,6 @@ body{
   height: 100vh;
   padding-left: 3%;
   align-items: baseline;
-  justify-content: safe center;
-
 }
 li a {
   display: block;

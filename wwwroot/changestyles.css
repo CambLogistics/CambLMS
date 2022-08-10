@@ -4,6 +4,9 @@
 .sidenav ul{
   background-color: #262626;
 }
+.main{
+        justify-content: safe center;
+}
 h2{
   color: #fff;
 }
