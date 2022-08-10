@@ -49,10 +49,10 @@
     <Compile Include="src/server/Site.fs" />
     <Compile Include="src/server/Startup.fs" />
     <None Include="wsconfig.json" />
-    <Content Include="config.xml" />
-    <Content Include="service/systemd/camblms.service" />
-    <Content Include="basedb.sql" />
-    <Content Include="email_templates/forgotpass_email.html"/>
+    <Content Include="config.xml" CopyToPublishDirectory="Always"/>
+    <Content Include="service/**/*.*" CopyToPublishDirectory="Always"/>
+    <Content Include="basedb.sql" CopyToPublishDirectory="Always"/>
+    <Content Include="templates/**/*.*" CopyToPublishDirectory="Always"/>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MySQL.Data" Version="8.0.29" />
