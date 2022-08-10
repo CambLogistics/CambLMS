@@ -1,85 +1,18 @@
 /* Közös dolgok */
-@import url('https://fonts.googleapis.com/css?family=Aclonica');
-/* Oldal háttere */
-body{
-  background-color: #404040;
-  font-family: 'Aclonica', sans-serif;
-  margin: 0px;
-  padding: 0px;
-}
-.main{
-  margin-left: 350px;
-  padding:1px 16px;
-  padding-left: 50px;
-}
+@import url('/main.css');
 /* Sidenav */
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  width: 18%;
-  background-color: #262626;
-  color: #fff;
-  position: fixed;
-  height: 100%;
-  overflow: auto;
-  text-align: center;
-  font-size: 13pt;
-}
-li a {
-  display: block;
-  color: #fff;
-  padding: 16px 16px;
-  text-decoration: none;
-}
-li a:hover:not(.active) {
-  background-color: rgba(255, 180, 40, 0.5);
-  color: #fff;
-}
-hr{
-  width: 75%;
-  height: 2px;
-  border: 0px;
-  padding: 0px;
-  margin-left: 12.5% !important;
-  margin-right: 12.5% !important;
-  background-color: rgba(255, 180, 40, 0.9);
-}
-.sidenav{
+.sidenav ul{
   background-color: #262626;
 }
 h2{
   color: #fff;
-  padding-top: 150px;
 }
 .form{
   padding-top: 0px;
   color: #fff;
 }
-.inputbox{
-  background-color: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 15px;
-  height: 25px;
-  max-height: 25px;
-  width: 250px;
-  margin-top: 5px;
-  margin-bottom: 15px;
-  color: #fff;
-}
-.infogombok {
-  font-family: 'Aclonica', sans-serif;
-  border: 0px;
-  width: 250px;
-  background: #262626;
-  padding: 15px 30px;
-  margin: 10px 5px;
-  font-size: 15px;
-  border-radius: 15px;
-  color: #fff;
-}
-.infogombok:hover{
-  background: rgba(255, 180, 40, 0.6);
+.form input{
+  margin-bottom: 3%;
 }
 p{
   color: #fff;

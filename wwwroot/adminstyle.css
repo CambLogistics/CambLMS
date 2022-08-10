@@ -1,150 +1,16 @@
 /* Közös dolgok */
-@import url('https://fonts.googleapis.com/css?family=Aclonica');
+@import url("/main.css");
 /* Oldal háttere */
-body{
-  background-color: #404040;
-  font-family: 'Aclonica', sans-serif;
-  margin: 0px;
-  padding: 0px;
-}
-.main{
-  margin-left: 18%;
-  width: 82%;
-  padding-left: 20px;
-  padding-top: 100px;
-}
-/* Sidenav */
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  width: 18%;
-  background-color: #4f0000;
-  color: #fff;
-  position: fixed;
-  height: 100%;
-  overflow: auto;
-  text-align: center;
-  font-size: 13pt;
-}
-li a {
-  display: block;
-  color: #fff;
-  padding: 16px 16px;
-  text-decoration: none;
-}
-li a:hover:not(.active) {
-  background-color: rgba(255, 180, 40, 0.5);
-  color: #fff;
-}
-hr{
-  width: 75%;
-  height: 2px;
-  border: 0px;
-  padding: 0px;
-  margin-left: 12.5% !important;
-  margin-right: 12.5% !important;
-  background-color: rgba(255, 180, 40, 0.9);
-}
-.sidenav{
-  background-color: #fe9f0c;
-}
 
-/* Gombok */
-.infogombok {
-  font-family: 'Aclonica', sans-serif;
-  border: 0px;
-  width: 300px;
-  background: #262626;
-  padding: 15px 30px;
-  margin: 10px 25px;
-  font-size: 15px;
-  border-radius: 15px;
-  color: #fff;
-}
-.infogombok:hover{
-  background: rgba(255, 180, 40, 0.6);
-}
-.gombok{
-  padding-top: 200px;
-  padding-right: 50px;
-  padding-left: 50px;
-}
-.infohr{
-  width: 120%;
-  height: 2px;
-  border: 0px;
-  padding: 0px;
-  background-color: rgba(255, 180, 40, 0.9);
-}
-.szoveg_th{
-  color: #fff;
-  font-size: 32pt;
-  font-style: italic;
-  text-align: left;
-}
-.szoveg_td{
-  color: #fff;
-  font-size: 20px;
-  padding-top: 15px;
-  text-align: center;
+/* Sidenav */
+ul{
+  background-color: #4f0000;
 }
 .adat{
   color: #fff;
-  padding-top: 10px;
+  padding: 10px 10px 10px 10px;
 }
-.approve{
-  font-family: 'Aclonica', sans-serif;
-  border: 0px;
-  width: 150px;
-  background: #0b8503;
-  padding: 15px 30px;
-  margin: 10px 25px;
-  font-size: 13px;
-  border-radius: 15px;
-  color: #fff;
-}
-.deny{
-  font-family: 'Aclonica', sans-serif;
-  border: 0px;
-  width: 150px;
-  background: #ab1a03;
-  padding: 15px 30px;
-  margin: 10px 25px;
-  font-size: 13px;
-  border-radius: 15px;
-  color: #fff;
-}
-.delete{
-  font-family: 'Aclonica', sans-serif;
-  border: 0px;
-  width: 20px;
-  background: #ab1a03;
-  padding: 15px 30px;
-  margin: 10px 25px;
-  font-size: 13px;
-  color: #fff;
-}
-.paid{
-  font-family: 'Aclonica', sans-serif;
-  border: 0px;
-  background: #0b8503;
-  padding: 15px 30px;
-  margin: 10px 25px;
-  font-size: 13px;
-  color: #fff;
-}
-.dropdown{
-  font-family: 'Aclonica', sans-serif;
-  border: 0px;
-  width: 250px;
-  background: #262626;
-  padding: 10px 20px;
-  margin: 10px 0px;
-  font-size: 15px;
-  border-radius: 15px;
-  color: #fff;
-}
+
 .szoveg_td_also{
   color: #fff;
   font-size: 14px;
@@ -154,20 +20,16 @@ hr{
 .listak{
   align-content: center;
   margin-bottom: 2%;
+  margin-top: 3%;
 }
-.inputbox{
-  font-family: 'Aclonica', sans-serif;
-  border: 0px;
-  width: 160px;
-  background: #262626;
-  padding: 7px 15px;
-  font-size: 13px;
-  border-radius: 15px;
-  color: #fff;
+.docview button{
+  margin-left: 3%;
+}
+.service button{
+  margin-top: 3%;
 }
 h1{
   color: #fff;
-  padding-top: 125px;
 }
 a{
   color: rgba(255, 180, 40, 0.9);

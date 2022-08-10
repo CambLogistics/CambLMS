@@ -1,53 +1,15 @@
 /* Közös dolgok */
-@import url('https://fonts.googleapis.com/css?family=Aclonica');
-/* Oldal háttere */
-body{
-  background-color: #404040;
-  font-family: 'Aclonica', sans-serif;
-  margin: 0px;
-  padding: 0px;
-}
-.main{
-  margin-left: 350px;
-  padding:1px 16px;
-}
+@import url("/main.css");
 /* Sidenav */
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  width: 18%;
+.sidenav ul {
   background-color: #262626;
-  color: #fff;
-  position: fixed;
-  height: 100%;
-  overflow: auto;
-  text-align: center;
-  font-size: 13pt;
-}
-li a {
-  display: block;
-  color: #fff;
-  padding: 16px 16px;
-  text-decoration: none;
-}
-li a:hover:not(.active) {
-  background-color: rgba(255, 180, 40, 0.5);
-  color: #fff;
-}
-hr{
-  width: 75%;
-  height: 2px;
-  border: 0px;
-  padding: 0px;
-  margin-left: 12.5% !important;
-  margin-right: 12.5% !important;
-  background-color: rgba(255, 180, 40, 0.9);
 }
 .sidenav{
   background-color: #262626;
 }
-
+.info_sidebutton{
+  margin-bottom: 5%;
+}
 /* Taxis oldal */
 .terkepes_table{
   padding-top: 50px;
@@ -57,80 +19,13 @@ hr{
   padding-right: 40px;
   padding-left: 40px;
 }
-.szoveg_th{
-  color: #fff;
-  font-size: 36pt;
-  font-style: italic;
-}
-.szoveg_td{
-  color: #fff;
-  font-size: 26px;
-  padding-top: 15px;
-}
 .uticel_taxi{
-  padding-top: 100px;
   text-align: left;
 }
 .terkep_cim{
   text-align: left;
   color: #fff;
   font-size: 15px;
-}
-/* Közös gombok */
-.szamla{
-  font-family: 'Aclonica', sans-serif;
-  border: 0px;
-  width: 300px;
-  background: #0b8503;
-  padding: 15px 30px;
-  margin: 10px 25px;
-  font-size: 15px;
-  border-radius: 15px;
-  color: #fff;
-}
-.torles{
-  font-family: 'Aclonica', sans-serif;
-  border: 0px;
-  width: 300px;
-  background: #ab1a03;
-  padding: 15px 30px;
-  margin: 10px 25px;
-  font-size: 15px;
-  border-radius: 15px;
-  color: #fff;
-}
-#success{
-  font-family: 'Aclonica', sans-serif;
-  border: 0px;
-  background: rgba(11, 133, 3, 0.4);
-  padding: 10px 30px;
-  margin: 10px 25px;
-  font-size: 15px;
-  border-radius: 15px;
-  color: #fff;
-}
-#error{
-  font-family: 'Aclonica', sans-serif;
-  border: 0px;
-  background: rgba(171, 26, 3, 0.6);
-  padding: 10px 30px;
-  margin: 10px 25px;
-  font-size: 15px;
-  border-radius: 15px;
-  color: #fff;
-}
-
-/* Beszállítás */
-.arus_dropdown{
-  font-family: 'Aclonica', sans-serif;
-  border: 0px;
-  width: 500px;
-  background: #262626;
-  padding: 15px 30px;
-  margin: 10px 25px;
-  font-size: 15px;
-  border-radius: 15px;
-  color: #fff;
 }
 
 /* File feltöltés */
@@ -153,17 +48,6 @@ hr{
   color: #fff;
   font-size: 26px;
 }
-.submit{
-  font-family: 'Aclonica', sans-serif;
-  border: 0px;
-  width: 200px;
-  background: #0b8503;
-  padding: 15px 30px;
-  margin: 20px 25px;
-  font-size: 15px;
-  border-radius: 15px;
-  color: #fff;
-}
 /* Információs oldal */
 .foinfo_table{
   padding-top: 100px;
@@ -176,28 +60,6 @@ hr{
   padding-right: 30px;
   color: #fff;
   text-align: center;
-}
-.infohr{
-  height: 2px;
-  border: 0px;
-  padding: 0px;
-  margin-left: 12.5% !important;
-  margin-right: 12.5% !important;
-  background-color: rgba(255, 180, 40, 0.9);
-}
-.infogombok {
-  font-family: 'Aclonica', sans-serif;
-  border: 0px;
-  width: 300px;
-  background: #262626;
-  padding: 15px 30px;
-  margin: 10px 25px;
-  font-size: 15px;
-  border-radius: 15px;
-  color: #fff;
-}
-.infogombok:hover{
-  background: rgba(255, 180, 40, 0.6);
 }
 .gombinfo{
   width: 300px;
@@ -220,12 +82,15 @@ hr{
 .option{
   padding: 10px;
 }
-/* Changelog */
-h2{
+.changelog h2{
   color: #fff;
-  padding-top: 150px;
 }
-h4, p{
-  padding-top: 25px;
-  color: #fff;
+.changelog h4{
+  padding-top: 12px;
+}
+.changelog{
+  line-height: 1.6em;
+}
+.table_file input{
+  margin-bottom: 3%
 }
