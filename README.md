@@ -1,10 +1,16 @@
 # CambLogistics Management System
 This is the administration system for the virtual (in-game) logistics company CambLogistics
 ## Status
-We are reaching alpha stage, bugs are present.
-## Compiling and setup
-The default database can be created by running *basedb.sql* on a MySQL (compatible) database server.
+We are in alpha stage, bugs are present and some features are missing. See *TODO.md*
+## Compilation
+- Create a database in MySQL and run the contents of *basedb.sql* on it.
 
-Register an user and set its accepted column to 1 with a database client. There will be an easier way to setup this, but not for now:)
+- Change the default connection string in *Database.fs* as needed.
 
-Adjust the connection string in *Database.fs* before compiling! The runtime connection string can be set in *db.conf*
+- Run `dotnet publish --configuration Release` to build the project.
+## Runtime setup
+- Set the database connection and SMTP details in *config.xml*
+
+- Run CambLMS using the binary or the .NET runtime on your system.
+
+- Register an user and set its accepted column to 1(true) and its role ID to 14 with a database client.
