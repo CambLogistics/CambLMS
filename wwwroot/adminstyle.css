@@ -93,9 +93,6 @@ hr{
   color: #fff;
   padding-top: 10px;
 }
-.listak{
-  text-align: center;
-}
 .approve{
   font-family: 'Aclonica', sans-serif;
   border: 0px;
@@ -156,6 +153,7 @@ hr{
 }
 .listak{
   align-content: center;
+  margin-bottom: 2%;
 }
 .inputbox{
   font-family: 'Aclonica', sans-serif;
