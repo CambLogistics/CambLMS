@@ -16,6 +16,9 @@ module InactivityPage =
                             |InactivityRequestSuccess.Overlap -> Feedback.giveFeedback true "A kérvényezett időszak ütközik egy másik inaktivitási időszakkal!"
                             |InactivityRequestSuccess.InvalidSession -> Feedback.giveFeedback true "Érvénytelen munkamenet. Jelentkezz be újra!"
                             |InactivityRequestSuccess.DatabaseError -> Feedback.giveFeedback true "Adatbázishiba. Értesítsd a (műszaki) igazgatót!"
+                        e.Vars.Begin.Set ""
+                        e.Vars.End.Set ""
+                        e.Vars.Reason.Set ""
                     } |> Async.Start
             )
             .Doc()
