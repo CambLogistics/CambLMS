@@ -33,6 +33,7 @@ body{
   margin: auto;
   height: 100vh;
   padding-left: 3%;
+  padding-top: 3%;
   align-items: baseline;
 }
 li a {
