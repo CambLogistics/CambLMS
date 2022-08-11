@@ -20,6 +20,8 @@
 - [x] Config file
 - [x] Access images from admin UI
 - [] Top members
+- [] Responsive (and less glitchy) design
+- [] Deletable cars
 - [x] Forgot password
 - [x] Inactivity
 ## Beta
