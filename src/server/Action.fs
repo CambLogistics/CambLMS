@@ -5,4 +5,8 @@ open WebSharper
 [<JavaScript>]
 type ActionResult =
     |Success
-    |Error of System.Exception
+    |InvalidSession
+    |InsufficientPermissions
+    |InactiveUser
+    |DatabaseError
+    |OtherError of System.Exception

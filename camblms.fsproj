@@ -26,6 +26,7 @@
     <Compile Include="src/server/Images.fs" />
     <Compile Include="src/server/NameChange.fs" />
     <Compile Include="src/sites/Feedback.fs" />
+    <Compile Include="src/sites/ActionDispatcher.fs" />
     <Compile Include="src/sites/LogoutClient.fs" />
     <Compile Include="src/sites/DeliveryPage.fs" />
     <Compile Include="src/sites/TowPage.fs" />
