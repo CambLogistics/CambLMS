@@ -127,29 +127,34 @@ module Calls =
             db.SubmitUpdates()
             Success
 
+    [<Rpc>]
     let rotateWeek sid =
-        if not (Permission.checkPermission sid Permissions.CloseWeek) then
-            ()
-        else
-            try
-                let db = Database.SqlConnection.GetDataContext(Database.getConnectionString ())
-                query {
-                    for call in db.Camblogistics.calls do
-                        where (
-                            call.ThisWeek = (sbyte 1)
-                            || call.PreviousWeek = (sbyte 1)
+        async{
+            if not (Permission.checkPermission sid Permissions.CloseWeek) then
+                return ActionResult.InsufficientPermissions
+            else
+                try
+                    let db = Database.SqlConnection.GetDataContext(Database.getConnectionString ())
+                    query {
+                        for call in db.Camblogistics.calls do
+                            where (
+                                call.ThisWeek = (sbyte 1)
+                                || call.PreviousWeek = (sbyte 1)
+                            )
+                            select call
+                    }
+                    |> Seq.iter (fun c ->
+                        if c.ThisWeek = (sbyte 1) then
+                            c.ThisWeek <- (sbyte 0)
+                            c.PreviousWeek <- (sbyte 1)
+                        else if c.PreviousWeek = (sbyte 1) then
+                            c.PreviousWeek <- (sbyte 0)
                         )
-                        select call
-                }
-                |> Seq.iter (fun c ->
-                    if c.ThisWeek = (sbyte 1) then
-                        c.ThisWeek <- (sbyte 0)
-                        c.PreviousWeek <- (sbyte 1)
-                    else if c.PreviousWeek = (sbyte 1) then
-                        c.PreviousWeek <- (sbyte 0))
-                db.SubmitUpdates()
-            with
-            | _ -> ()
+                    db.SubmitUpdates()
+                    return ActionResult.Success
+                with
+                    | _ -> return ActionResult.DatabaseError
+        }
 
     let getCallsOfUser (user: Member) =
         try
@@ -169,10 +174,10 @@ module Calls =
         | _ -> []
 
     let getCallsBySID sid =
-        let user = User.getUserFromSID sid
-        match user with
-        | None -> []
-        | Some u -> getCallsOfUser u
+            let user = User.getUserFromSID sid
+            match user with
+            | None -> []
+            | Some u -> getCallsOfUser u
 
     [<Rpc>]
     let getUserListWithCalls sid duration =
@@ -202,9 +207,6 @@ module Calls =
             else
                 return getCallsOfUser user
         }
-
-    [<Rpc>]
-    let doRotateWeek sid = async { return rotateWeek sid }
 
     [<Rpc>]
     let doGetAreaList () = async { return getAreaList () }
