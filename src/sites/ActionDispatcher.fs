@@ -14,4 +14,4 @@ module ActionDispatcher =
                 |ActionResult.InsufficientPermissions -> return Feedback.giveFeedback true "Nincs jogosultságod ehhez a művelethez!"
                 |ActionResult.DatabaseError -> return Feedback.giveFeedback true "Adatbázishiba. Értesítsd a (műszaki) igazgatót!"
                 |ActionResult.OtherError e -> return Feedback.giveFeedback true e.Message
-        }
+        } |> Async.Start
