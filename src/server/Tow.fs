@@ -28,12 +28,12 @@ module Tow =
             return calculatePrice source dest
         }
     [<Rpc>]
-    let submitCall sid source dest=
+    let submitCall (sid, source, dest) =
         async{
         try
             return calculatePrice source dest |> Calls.registerCall sid <| CallType.Towing
         with
-            _ -> return CallResult.DatabaseError
+            _ -> return ActionResult.DatabaseError
         }
     [<Rpc>]
     let doGetGarageList() =

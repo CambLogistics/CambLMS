@@ -2,14 +2,6 @@ namespace camblms
 
 open WebSharper
 
-[<JavaScript>]
-type CallResult =
-    | Success
-    | InvalidSession
-    | InactiveUser
-    | NoPermission
-    | DatabaseError
-
 type CallType =
     | Delivery = 0
     | Taxi = 1
@@ -110,11 +102,11 @@ module Calls =
                         |_ -> Permissions.Nothing
         let user = User.getUserFromSID sid
         match user with
-        | None -> InvalidSession
+        | None -> ActionResult.InvalidSession
         | Some u ->
-            if not (Permission.checkPermission sid permission) then NoPermission
+            if not (Permission.checkPermission sid permission) then ActionResult.InsufficientPermissions
             else
-            if not (Inactivity.getActiveStatus u) then InactiveUser
+            if not (Inactivity.getActiveStatus u) then ActionResult.InactiveUser
             else
             let db = Database.SqlConnection.GetDataContext(Database.getConnectionString ())
             let call = db.Camblogistics.calls.Create()
@@ -125,7 +117,7 @@ module Calls =
             call.PreviousWeek <- (sbyte 0)
             call.Type <- int16 callType
             db.SubmitUpdates()
-            Success
+            ActionResult.Success
 
     [<Rpc>]
     let rotateWeek sid =
@@ -182,8 +174,9 @@ module Calls =
     [<Rpc>]
     let getUserListWithCalls sid duration =
         async {
+            let! users = UserOperations.getUserList sid false false
             return
-                UserOperations.getUserList sid false false
+                users
                 |> List.map (fun u ->
                     { User = u
                       Calls =

@@ -71,9 +71,11 @@ module ImageUpload =
                     .Doc()
             )
             .Doc()
-    let DeleteImage sid filename =
+    [<Rpc>]
+    let DeleteImage(sid,filename) =
+        async{
         try
-            if not (Permission.checkPermission sid Permissions.ServiceFeeAdmin) then ()
+            if not (Permission.checkPermission sid Permissions.ServiceFeeAdmin) then return InsufficientPermissions
             else
                 let db = Database.SqlConnection.GetDataContext(Database.getConnectionString())
                 if System.IO.File.Exists(@"img/" + filename) then System.IO.File.Delete(@"img/" + filename)
@@ -83,11 +85,13 @@ module ImageUpload =
                     exactlyOne
                 }).Delete()
                 db.SubmitUpdates()
+                return ActionResult.Success
         with
-            _ -> ()
+           | e -> return OtherError e.Message
+        }
     let getImageList sid =
         try
-            if not (Permission.checkPermission sid Permissions.ServiceFeeAdmin)then []
+            if not (Permission.checkPermission sid Permissions.ServiceFeeAdmin) then []
             else
             let db = Database.SqlConnection.GetDataContext(Database.getConnectionString())
             query{
@@ -100,11 +104,6 @@ module ImageUpload =
     let doGetImageList sid =
         async{
             return getImageList sid
-        }
-    [<Rpc>]
-    let doDeleteImage sid fn =
-        async{
-            return DeleteImage sid fn
         }
 
 module ImageSubmitter =

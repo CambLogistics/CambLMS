@@ -32,12 +32,12 @@ module Delivery =
             return calculatePrice dt
         }
     [<Rpc>]
-    let submitCall sid dt =
+    let submitCall (sid,dt) =
         async{
             try
                 return calculatePrice dt |> Calls.registerCall sid <| CallType.Delivery
             with
-                _ -> return CallResult.DatabaseError
+                _ -> return ActionResult.DatabaseError
         }
     [<Rpc>]
     let doGetTypeList() =

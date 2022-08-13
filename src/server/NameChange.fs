@@ -2,32 +2,23 @@ namespace camblms
 open WebSharper
 
 [<JavaScript>]
-type NameChangeSuccess =
-    |Success
-    |WrongPassword
-    |WrongOldName
-    |WrongNewName
-    |ChangeAlreadyPending
-    |InvalidSession
-    |DatabaseError
-
-[<JavaScript>]
 type PendingChange = {UserID: int;OldName: string;NewName: string}
 
 module NameChangeServer =
-
-    let proposeNameChange sid oldname newname password =
+    [<Rpc>]
+    let proposeNameChange (sid,oldname,newname,password) =
+        async{
         let db = Database.getDataContext()
         let user = User.getUserFromSID sid
         let passwordOkay = User.authenticateLoggedInUser sid password
         match user with
-            |None -> InvalidSession
+            |None -> return ActionResult.InvalidSession
             |Some u -> 
-                if u.Name = oldname |> not then WrongOldName
+                if u.Name = oldname |> not then return OtherError "Rosszul adtad meg a régi neved!"
                 else 
-                if not passwordOkay then WrongPassword
+                if not passwordOkay then return OtherError "Rossz jelszó!"
                 else
-                if String.length newname < 5 then WrongNewName
+                if String.length newname < 5 then return OtherError  "Az új név nem felel meg a követelményeknek!"
                 else
                 try
                     let existingChange =
@@ -36,7 +27,7 @@ module NameChangeServer =
                             where(x.UserId = u.Id && x.Pending = (sbyte 1))
                             count
                         }
-                    if existingChange > 0 then ChangeAlreadyPending
+                    if existingChange > 0 then return OtherError "Már van elbírálásra váró kérelmed!"
                     else
                     let newChange = db.Camblogistics.namechanges.Create()
                     newChange.Approved <- (sbyte 0)
@@ -44,11 +35,14 @@ module NameChangeServer =
                     newChange.Pending <- sbyte 1
                     newChange.UserId <- u.Id
                     db.SubmitUpdates()
-                    Success
+                    return ActionResult.Success
                 with
-                    _ -> DatabaseError
-    let decideNameChange sid userID decision =
-        if not (Permission.checkPermission sid Permissions.MemberAdmin)then ()
+                    _ -> return ActionResult.DatabaseError
+        }
+    [<Rpc>]
+    let decideNameChange (sid,userID,decision) =
+        async{
+        if not (Permission.checkPermission sid Permissions.MemberAdmin) then return InsufficientPermissions
         else
         try
         let db = Database.getDataContext()
@@ -69,37 +63,26 @@ module NameChangeServer =
                 }
             user.Name <- nc.NewName
             db.SubmitUpdates()
+            return ActionResult.Success
         else
             nc.Approved <- (sbyte 0)
-            db.SubmitUpdates()
+            return ActionResult.Success
         with
-            _ -> ()
+            e -> return OtherError e.Message
+        }
+    [<Rpc>]
     let getPendingChanges sid = 
-        if not (Permission.checkPermission sid Permissions.MemberAdmin) then []
+        async{
+        if not (Permission.checkPermission sid Permissions.MemberAdmin) then return []
         else
         try
             let db = Database.getDataContext()
-            query{
+            return query{
                 for x in db.Camblogistics.namechanges do
                 join u in db.Camblogistics.users on (x.UserId = u.Id)
                 where(x.Pending = (sbyte 1))
                 select({UserID = x.UserId;OldName = u.Name;NewName = x.NewName})
             } |> Seq.toList
         with
-            _ -> []
-
-    [<Rpc>]
-    let doProposeNameChange sid oldname newname password =
-        async{
-            return proposeNameChange sid oldname newname password
-        }
-    [<Rpc>]
-    let doDecideNameChange sid userID decision =
-        async{
-            return decideNameChange sid userID decision
-        }
-    [<Rpc>]
-    let doGetPendingChanges sid =
-        async{
-            return getPendingChanges sid
+            _ -> return []
         }

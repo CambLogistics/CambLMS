@@ -30,14 +30,6 @@ type RegisterResult =
     |BadPassword
     |DatabaseError
 
-[<JavaScript>]
-type PasswordChangeResult =
-    |Success
-    |WrongPassword
-    |BadNewPassword
-    |InvalidSession
-    |DatabaseError
-
 module User =
     let getUserFromSID sessionID = 
         try
@@ -166,14 +158,16 @@ module User =
         } |> Seq.toList |> List.sortBy(fun r -> r.Level)
         with
             _ -> []
-    let changeUserPassword sid oldPassword newPassword =
+    [<Rpc>]
+    let changeUserPassword (sid, oldPassword, newPassword) =
+        async{
         let db = Database.getDataContext()
-        if String.length newPassword < 3 then BadNewPassword
+        if String.length newPassword < 3 then return ActionResult.OtherError "Ez a jelszó nem megfelelő!"
         else
-        if authenticateLoggedInUser sid oldPassword |> not then PasswordChangeResult.WrongPassword
+        if authenticateLoggedInUser sid oldPassword |> not then return ActionResult.OtherError "A régi jelszót rosszul adtad meg!"
         else
         match getUserFromSID sid with
-            |None -> PasswordChangeResult.InvalidSession
+            |None -> return ActionResult.InvalidSession
             |Some user ->
                 try
                     let userEntry =
@@ -184,9 +178,10 @@ module User =
                         }
                     userEntry.Password <- hashPassword newPassword
                     db.SubmitUpdates()
-                    Success
+                    return ActionResult.Success
                 with
-                    _ -> PasswordChangeResult.DatabaseError
+                    _ -> return ActionResult.DatabaseError
+        }
     let lengthenSession sid =
         try
         let db = Database.getDataContext()

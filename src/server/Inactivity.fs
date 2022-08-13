@@ -12,13 +12,6 @@ type InactivityRequest = {
 }
 
 [<JavaScript>]
-type InactivityRequestSuccess =
-    |Success
-    |Overlap
-    |InvalidSession
-    |DatabaseError
-
-[<JavaScript>]
 type UserInactivityStatus = {
         UserName: string
         UserID: int
@@ -36,16 +29,17 @@ module Inactivity =
     [<Rpc>]
     let getUserStatusList sessionID =
         async{
-            let (statusList,userList) = UserOperations.getUserList sessionID false false |> List.mapFold (fun l u -> (getActiveStatus u,u::l)) []
+            let! users = UserOperations.getUserList sessionID false false
+            let (statusList,userList) = users |> List.mapFold (fun l u -> (getActiveStatus u,u::l)) []
             return List.rev userList |> List.zip statusList |> List.map (fun (s,u) -> {UserName = u.Name;UserID = u.Id; Status = s})
         }
     [<Rpc>]
-    let requestInactivity sessionID start ending reason =
+    let requestInactivity (sessionID,start,ending,reason) =
         async{
             try
             let db = Database.getDataContext()
             match User.getUserFromSID sessionID with
-                |None -> return InvalidSession
+                |None -> return ActionResult.InvalidSession
                 |Some u ->
                     let startDate = DateTime.Parse(start)
                     let endDate = DateTime.Parse(ending)
@@ -61,7 +55,7 @@ module Inactivity =
                             where(ir.Beginning = startDate && ir.Ending = endDate && u.Id = ir.Userid)
                             select ir
                         }
-                    if overlap then return Overlap 
+                    if overlap then return ActionResult.OtherError "Erre az időszakra(vagy egy részére) már van beadott kérelmed!"
                     else
                         let newRequest = if Seq.length existing > 0 then Seq.item 0 existing else db.Camblogistics.inactivity.Create()
                         newRequest.Accepted <- (sbyte 0)
@@ -71,15 +65,15 @@ module Inactivity =
                         newRequest.Ending <- endDate
                         newRequest.Reason <- reason
                         db.SubmitUpdates()
-                        return Success
+                        return ActionResult.Success
             with
-                _ -> return DatabaseError
+                _ -> return ActionResult.DatabaseError
         }
     [<Rpc>]
-    let decideRequest sessionID (req:InactivityRequest) decision =
+    let decideRequest (sessionID,(req:InactivityRequest),decision) =
         async{
             try
-            if not (Permission.checkPermission sessionID Permissions.InactivityAdmin) then ()
+            if not (Permission.checkPermission sessionID Permissions.InactivityAdmin) then return InsufficientPermissions
             else
                 let db = Database.getDataContext()
                 let request =
@@ -95,9 +89,10 @@ module Inactivity =
                             |> Seq.item 0
                 request.Accepted <- if decision then sbyte 1 else sbyte 0
                 request.Pending <- sbyte 0
-                return db.SubmitUpdates()
+                db.SubmitUpdates()
+                return ActionResult.Success
                 with
-                    _ -> ()
+                    e -> return OtherError e.Message
             }
     [<Rpc>]
     let getPendingRequests sessionID =

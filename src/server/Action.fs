@@ -9,4 +9,4 @@ type ActionResult =
     |InsufficientPermissions
     |InactiveUser
     |DatabaseError
-    |OtherError of System.Exception
+    |OtherError of string

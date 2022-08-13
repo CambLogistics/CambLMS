@@ -14,7 +14,7 @@ module RegistrationAdminPage =
     let pendingUsers= ListModel.Create (fun (u:Member) -> u) []
     let updateList() =
         async{
-            let! userList = UserOperations.doGetUserList (JavaScript.Cookies.Get "clms_sid").Value true false
+            let! userList = UserOperations.getUserList (JavaScript.Cookies.Get "clms_sid").Value true false
             pendingUsers.Set userList
         } |> Async.Start
     let RenderPage() =
@@ -30,17 +30,11 @@ module RegistrationAdminPage =
                             .UserID(string pu.Id)
                             .Approve(
                                 fun e ->
-                                    async{
-                                        let! result = UserOperations.doApproveUser (JavaScript.Cookies.Get "clms_sid").Value pu.Id
-                                        return updateList result
-                                    } |> Async.Start
+                                    ActionDispatcher.RunAction UserOperations.approveUser ((JavaScript.Cookies.Get "clms_sid").Value, pu.Id) (Some updateList)
                             )
                             .Deny(
                                 fun e ->
-                                    async{
-                                        let! result = UserOperations.doDeleteUser (JavaScript.Cookies.Get "clms_sid").Value pu.Id 
-                                        return updateList result
-                                    } |> Async.Start
+                                    ActionDispatcher.RunAction UserOperations.deleteUser ((JavaScript.Cookies.Get "clms_sid").Value, pu.Id) (Some updateList)
                             )
                             .Doc()
                 )

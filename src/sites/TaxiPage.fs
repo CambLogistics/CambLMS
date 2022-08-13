@@ -83,16 +83,7 @@ module TaxiPage =
                 fun e ->
                     async{
                         let sessionID = JavaScript.Cookies.Get("clms_sid").Value
-                        let! callResult = Taxi.submitCall sessionID selectedRoute.Value.Source selectedRoute.Value.Dest
-                        match callResult with
-                            |CallResult.Success -> 
-                                selectedRoute.Set {Source = -1; Dest = -1}
-                                Feedback.giveFeedback false "Sikeres művelet!"
-                                JavaScript.JS.Window.Location.Replace "/"
-                            |CallResult.InvalidSession -> Feedback.giveFeedback true "Érvénytelen munkamenet. Jelentkezz be és ki újra!"
-                            |CallResult.InactiveUser -> Feedback.giveFeedback true "Szabadság alatt nem adhatsz le hívást!"
-                            |CallResult.NoPermission -> Feedback.giveFeedback true "Nincs jogosultságod ehhez a hívásfajtához!"
-                            |CallResult.DatabaseError -> Feedback.giveFeedback true "Adatbázishiba. Értesítsd a (műszaki) igazgatót!"
+                        ActionDispatcher.RunAction Taxi.submitCall (sessionID,selectedRoute.Value.Source,selectedRoute.Value.Dest) None
                     } |> Async.Start
             )
             .Reset(

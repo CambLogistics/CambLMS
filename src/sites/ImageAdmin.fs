@@ -13,7 +13,7 @@ module ImageAdmin =
     let currentImages = View.Map (fun il -> il |> Seq.filter (fun (_,uid,_) -> uid = selectedMember.Value)) imageList.View
     let updateLists() =
         async{
-            let! userlist = UserOperations.doGetUserList sessionID false true
+            let! userlist = UserOperations.getUserList sessionID false true
             let! imagelist = ImageUpload.doGetImageList sessionID
             query{
                 for (fn,uploader,_) in imagelist do
@@ -47,10 +47,7 @@ module ImageAdmin =
                             .UploadDate(string date.Year + "-" + sprintf "%02d" date.Month + "-" + sprintf "%02d" date.Day + " " + sprintf "%02d" date.Hour + ":" + sprintf "%02d" date.Minute)
                             .Delete(
                                 fun e ->
-                                    async{
-                                        let! result = ImageUpload.doDeleteImage sessionID fn
-                                        updateLists result
-                                    } |> Async.Start
+                                    ActionDispatcher.RunAction ImageUpload.DeleteImage (sessionID,fn) (Some updateLists)
                             )
                             .Doc()
                 ) currentImages

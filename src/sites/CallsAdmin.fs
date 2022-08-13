@@ -10,22 +10,22 @@ module CallsAdmin =
     let sessionID = JavaScript.Cookies.Get("clms_sid").Value
     let rankList = Var.Create [{Level = 0;Name="Beszállító"}]
     let mutable canClose = false
-    let updateUserList =
+    let updateUserList() =
         async{
             let! list = Calls.getUserListWithCalls sessionID CallDuration.Weekly
             let! cc = Permission.doCheckPermission sessionID Permissions.CloseWeek
             canClose <- cc
             userList.Set list
             if cc then JavaScript.JS.Document.GetElementById("closeweek").RemoveAttribute("style")
-        }
-    let updateRankList =
+        } |> Async.Start
+    let updateRankList() =
         async{
             let! list = UserCallable.doGetRankList()
             rankList.Set list
-        }
+        } |> Async.Start
     let RenderPage() =
-        updateRankList |> Async.Start
-        updateUserList |> Async.Start
+        updateRankList()
+        updateUserList()
         SiteParts.CallsTemplate()
             .MemberList(
                 userList.View |> Doc.BindSeqCached (
@@ -47,9 +47,6 @@ module CallsAdmin =
                 fun _ ->
                     if not canClose then ()
                     else
-                    async{
-                        let! result = Calls.doRotateWeek sessionID
-                        return! updateUserList
-                    }|> Async.Start
+                        ActionDispatcher.RunAction Calls.rotateWeek sessionID (Some updateUserList)
             )
             .Doc()
