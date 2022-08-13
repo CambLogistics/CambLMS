@@ -10,7 +10,7 @@ module NameChangeAdmin =
     let sessionID = JavaScript.Cookies.Get("clms_sid").Value
     let updateList() =
         async{
-            let! pendingUsers = NameChangeServer.doGetPendingChanges sessionID
+            let! pendingUsers = NameChangeServer.getPendingChanges sessionID
             userList.Set pendingUsers
         } |> Async.Start
     let RenderPage() =
@@ -25,17 +25,11 @@ module NameChangeAdmin =
                             .NewName(item.NewName)
                             .Approve(
                                 fun e ->
-                                    async{
-                                        let! result = NameChangeServer.doDecideNameChange sessionID item.UserID true
-                                        return updateList result
-                                    } |> Async.Start
+                                    ActionDispatcher.RunAction NameChangeServer.decideNameChange (sessionID, item.UserID, true) (Some updateList)
                             )
                             .Deny(
                                 fun e ->
-                                    async{
-                                        let! result = NameChangeServer.doDecideNameChange sessionID item.UserID false 
-                                        return updateList result
-                                    } |> Async.Start
+                                    ActionDispatcher.RunAction NameChangeServer.decideNameChange (sessionID, item.UserID, false) (Some updateList)
                             )
                             .Doc()
                 )

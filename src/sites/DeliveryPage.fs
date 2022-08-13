@@ -50,16 +50,7 @@ module DeliveryPage =
                 fun e ->
                     async{
                         let sessionID = JavaScript.Cookies.Get("clms_sid").Value
-                        let! result = Delivery.submitCall sessionID selectedType.Value.ID
-                        match result with
-                            |CallResult.Success -> 
-                                Feedback.giveFeedback false "Sikeres művelet!"
-                                selectedType.Set {ID= -1; Name="";Price=0}
-                                JavaScript.JS.Window.Location.Replace "/"
-                            |CallResult.InvalidSession -> Feedback.giveFeedback true "Érvénytelen munkamenet. Lépj ki és be újra!"
-                            |CallResult.InactiveUser -> Feedback.giveFeedback true "Szabadság alatt nem adhatsz le hívást!"
-                            |CallResult.NoPermission -> Feedback.giveFeedback true "Nincs jogosultságod ehhez a hívásfajtához!"
-                            |CallResult.DatabaseError -> Feedback.giveFeedback true "Adatbázishiba. Keresd a (műszaki) igazgatót!"
+                        ActionDispatcher.RunAction Delivery.submitCall (sessionID,selectedType.Value.ID) None
                     } |> Async.Start
             )
             .Reset(

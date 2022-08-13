@@ -26,7 +26,7 @@ module CarsAdmin =
         } |> Async.Start
     let updateCarList() =
         async{
-            let! list = Cars.doGetCars sessionID
+            let! list = Cars.getCars sessionID
             let! ce = Permission.doCheckPermission sessionID Permissions.CarAdmin
             canEdit <- ce
             if ce then unHideEdit()
@@ -34,7 +34,7 @@ module CarsAdmin =
         } |> Async.Start
     let updateMemberList() =
         async{
-            let! list = UserOperations.doGetUserList sessionID false false
+            let! list = UserOperations.getUserList sessionID false false
             memberList.Set list
         } |> Async.Start
     let renderTuningItem (t:System.Collections.Generic.KeyValuePair<int,string>) =
@@ -142,10 +142,13 @@ module CarsAdmin =
                     if not canEdit then ()
                     else
                     async{
-                        let! result = Cars.doSetCar sessionID selectedCar.Value
-                        let updateCar = updateCarList result
-                        let updateTuning = updateTuningList updateCar
-                        return updateMemberList()
+                        ActionDispatcher.RunAction Cars.setCar (sessionID,selectedCar.Value) (Some 
+                            (
+                            fun () -> 
+                                updateCarList()
+                                updateTuningList()
+                                updateMemberList()
+                            ))
                     } |> Async.Start
             )
             .CarList(

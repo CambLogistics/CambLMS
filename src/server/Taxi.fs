@@ -20,12 +20,12 @@ module Taxi =
             return calculatePrice source dest
         }
     [<Rpc>]
-    let submitCall sid source dest=
+    let submitCall (sid, source, dest) =
         async{
             try
                 return calculatePrice source dest |> Calls.registerCall sid <| CallType.Taxi 
             with
-                _ -> return CallResult.DatabaseError
+                _ -> return ActionResult.DatabaseError
         }
     let getInfo sid =
         let calls = Calls.getCallsBySID sid |> List.filter (fun c -> c.Type = CallType.Taxi)

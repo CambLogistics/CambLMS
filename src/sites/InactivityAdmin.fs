@@ -40,17 +40,11 @@ module InactivityAdmin =
                             .Reason(request.Reason)
                             .Approve(
                                 fun _ ->
-                                    async{
-                                        let! result = Inactivity.decideRequest sessionID request true
-                                        updateList result
-                                    } |> Async.Start
+                                    ActionDispatcher.RunAction Inactivity.decideRequest (sessionID, request, true) (Some updateList)
                             )
                             .Deny(
                                 fun _ ->
-                                    async{
-                                        let! result = Inactivity.decideRequest sessionID request false
-                                        updateList result
-                                    } |> Async.Start
+                                    ActionDispatcher.RunAction Inactivity.decideRequest (sessionID, request, false) (Some updateList)
                             )
                             .Doc()
                 )

@@ -6,21 +6,26 @@ open WebSharper
 type PendingFee = {ID: int;Username: string;Amount: int}
 
 module ServiceFee =
+    [<Rpc>]
     let getPendingFees sid =
-        if not (Permission.checkPermission sid Permissions.ServiceFeeAdmin) then []
+        async{
+        if not (Permission.checkPermission sid Permissions.ServiceFeeAdmin) then return []
         else
         try
             let db = Database.getDataContext()
-            query{
+            return query{
                 for fee in db.Camblogistics.servicefees do
                 where (fee.Paid = (sbyte 0))
                 join u in db.Camblogistics.users on (fee.UserId = u.Id)
                 select({ID = fee.Id;Username = u.Name;Amount = fee.Amount})
             } |> Seq.toList
         with
-           _ -> []
-    let submitPendingFee sid userid amount =
-        if not (Permission.checkPermission sid Permissions.ServiceFeeAdmin) then ()
+           _ -> return []
+        }
+    [<Rpc>]
+    let submitPendingFee (sid, userid, amount) =
+        async{
+        if not (Permission.checkPermission sid Permissions.ServiceFeeAdmin) then return InsufficientPermissions
         else
         try
             let db = Database.getDataContext()
@@ -30,10 +35,15 @@ module ServiceFee =
             newFee.Date <- System.DateTime.Now
             newFee.Paid <- (sbyte 0)
             db.SubmitUpdates()
+            return ActionResult.Success
         with
-            _ -> ()
-    let payFee sid feeID =
-        if not (Permission.checkPermission sid Permissions.ServiceFeeAdmin) then ()
+            e -> return OtherError e.Message
+        }
+    [<Rpc>]
+    let payFee (sid,feeID) =
+        async{
+        if not (Permission.checkPermission sid Permissions.ServiceFeeAdmin) then return InsufficientPermissions
+        else
         try
         let db = Database.getDataContext()
         (query{
@@ -42,20 +52,7 @@ module ServiceFee =
             exactlyOne
         }).Paid <- (sbyte 1)
         db.SubmitUpdates()
+        return ActionResult.Success
         with
-            _ -> ()
-    [<Rpc>]
-    let doPayFee sid feeID =
-        async{
-            payFee sid feeID
-        }
-    [<Rpc>]
-    let doSubmitFee sid userID amount =
-        async{
-            submitPendingFee sid userID amount
-        }
-    [<Rpc>]
-    let doGetPendingFees sid =
-        async{
-            return getPendingFees sid
+            e -> return OtherError e.Message
         }

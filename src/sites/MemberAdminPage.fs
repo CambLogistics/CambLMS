@@ -17,7 +17,7 @@ module MemberAdminPage =
 
     let updateUserList() =
         async {
-            let! list = UserOperations.doGetUserList sessionID false false
+            let! list = UserOperations.getUserList sessionID false false
             UserList.Set list
         }
         |> Async.Start
@@ -73,11 +73,7 @@ module MemberAdminPage =
                                     .Rank(string u.Role)
                                     .ChangeRank(
                                         fun e ->
-                                            async {
-                                                let! result =
-                                                    UserOperations.doChangeUserRank sessionID u.Id (int e.Vars.Rank.Value)
-                                                updateUserList result
-                                            } |> Async.Start
+                                            ActionDispatcher.RunAction UserOperations.changeUserRank (sessionID,u.Id,(int e.Vars.Rank.Value)) (Some updateUserList)
                                     )
                                     .Doc()
                         )
@@ -90,11 +86,8 @@ module MemberAdminPage =
                                     .MemberListTemplate
                                     .DeleteButton()
                                     .DeleteUser(fun e ->
-                                        async {
-                                            let! finished = UserOperations.doDeleteUser sessionID u.Id
-                                            updateUserList finished
-                                        }
-                                        |> Async.Start)
+                                            ActionDispatcher.RunAction UserOperations.deleteUser (sessionID,u.Id) (Some updateUserList)
+                                    )
                                     .Doc()
                         )
                         .Doc())

@@ -12,13 +12,13 @@ module ServiceFeeAdmin =
     let sessionID = JavaScript.Cookies.Get("clms_sid").Value
     let updateUserList() =
         async{
-            let! list = UserOperations.doGetUserList sessionID false false
+            let! list = UserOperations.getUserList sessionID false false
             UserList.Set list
             SelectedUserID.Set (Seq.item 0 UserList.Value).Id
         } |> Async.Start
     let updatePendingList() =
         async{
-            let! list = ServiceFee.doGetPendingFees sessionID 
+            let! list = ServiceFee.getPendingFees sessionID 
             PendingList.Set list
         } |> Async.Start
     let RenderPage() =
@@ -43,10 +43,7 @@ module ServiceFeeAdmin =
                             .Name(p.Username)
                             .Paid(
                                 fun e ->
-                                    async{
-                                        let! result = ServiceFee.doPayFee sessionID p.ID
-                                        updatePendingList result
-                                    } |> Async.Start
+                                    ActionDispatcher.RunAction ServiceFee.payFee (sessionID, p.ID) (Some updatePendingList)
                             )
                             .ServiceFee((string p.Amount) + "$")
                             .Doc()
@@ -54,11 +51,8 @@ module ServiceFeeAdmin =
             )
             .Submit(
                 fun e ->
-                    async{
-                        if JavaScript.JS.IsNaN e.Vars.Fee.Value then JavaScript.JS.Alert "Kérlek számot adj meg árnak!"
+                        if JavaScript.JS.IsNaN e.Vars.Fee.Value then Feedback.giveFeedback true "Kérlek számot adj meg árnak!"
                         else
-                            let! result = ServiceFee.doSubmitFee sessionID (int e.Vars.MemberSelectID.Value) (int e.Vars.Fee.Value)
-                            updatePendingList result
-                    } |> Async.Start
+                            ActionDispatcher.RunAction ServiceFee.submitPendingFee (sessionID,(int e.Vars.MemberSelectID.Value), (int e.Vars.Fee.Value)) (Some updatePendingList)
             )
             .Doc()
