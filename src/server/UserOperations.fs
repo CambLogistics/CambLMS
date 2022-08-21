@@ -47,14 +47,18 @@ module UserOperations =
     [<Rpc>]
     let getUserList sid pending showDeleted =
         async{
-        if not (Permission.checkPermission sid Permissions.MemberAdmin) then return []
-        else
-            let db = Database.getDataContext()
-            return query{
-                for user in db.Camblogistics.users do
-                where(user.Accepted = (sbyte (if pending then 0 else 1)))
-                select({Id = user.Id;Name = user.Name;Email = user.Email;AccountID = user.AccountId;Role = user.Role},user.Deleted)
-            } |> Seq.toList |> List.filter(fun (u,d) -> if showDeleted then true else (d = sbyte 0)) |> List.map(fun (u,_) -> u) |> List.sortByDescending (fun u -> u.Role)
+            try
+                if not (Permission.checkPermission sid Permissions.Admin) then return Error "Nincs jogosultságod a felhasználók listáját lekérni!"
+                else
+                    let db = Database.getDataContext()
+                    return Ok(query{
+                        for user in db.Camblogistics.users do
+                        where(user.Accepted = (sbyte (if pending then 0 else 1)))
+                        select({Id = user.Id;Name = user.Name;Email = user.Email;AccountID = user.AccountId;Role = user.Role},user.Deleted)
+                    } |> Seq.toList |> List.filter(fun (u,d) -> if showDeleted then true else (d = sbyte 0)) |> List.map(fun (u,_) -> u) |> List.sortByDescending (fun u -> u.Role)
+                    )
+            with
+                e -> return Error e.Message
         }
     [<Rpc>]
     let changeUserRank (sid, userID, newRank) =

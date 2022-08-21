@@ -66,7 +66,6 @@ module User =
         let hash = SHA512.Create()
         (hash.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password)) |> System.Convert.ToHexString).ToLower()
     let authenticateLoggedInUser sid password =
-        try
         let dbContext = Database.getDataContext()
         query{
             for user in dbContext.Camblogistics.users do
@@ -74,8 +73,6 @@ module User =
             where (session.Id = sid && session.Expiry > System.DateTime.Now && user.Password = hashPassword password)
             select user
         } |> Seq.isEmpty |> not
-        with
-            _ -> false
     let generateSession userid =
         let dbContext = Database.getDataContext()
         use rng = RandomNumberGenerator.Create()
@@ -89,7 +86,9 @@ module User =
         newSession.Expiry <- expDate
         dbContext.SubmitUpdates()
         sessId
+    [<Rpc>]
     let loginUser (name, password) =
+        async{
         try
             let db = Database.getDataContext()
             let userList = query{
@@ -97,18 +96,20 @@ module User =
                     where(user.Name = name && user.Password = hashPassword password && user.Deleted = (sbyte 0))
                     select (user.Accepted,user.Id)
                     }
-            if Seq.isEmpty userList then CredentialError
+            if Seq.isEmpty userList then return CredentialError
             else
                 let (accepted,uid) = Seq.item 0 userList
-                if accepted = (sbyte 0) then NotApproved
+                if accepted = (sbyte 0) then return NotApproved
                 else
-                   (generateSession uid) |> LoginResult.Success
+                   return (generateSession uid) |> LoginResult.Success
         with
-            _ -> LoginResult.DatabaseError
-
-    let registerUser (name,password,accountid,email) = 
+            _ -> return LoginResult.DatabaseError
+        }
+    [<Rpc>]
+    let registerUser (name,password,accountid,email) =
+        async{ 
         let db = Database.getDataContext()
-        if String.length password < 5 || String.length name < 3 || String.length email < 5 then MissingData
+        if String.length password < 5 || String.length name < 3 || String.length email < 5 then return MissingData
         else
             try
                 let existing = 
@@ -121,12 +122,12 @@ module User =
                     (*If there is 2 or more accounts with the same accountID or Email, then there is huge trouble...
                     ..maybe handle it later*)
                     let user = List.item 0 existing
-                    if user.Deleted = (sbyte 0) then Exists
+                    if user.Deleted = (sbyte 0) then return Exists
                     else
                         user.Deleted <- (sbyte 0)
                         user.Accepted <- (sbyte 0)
                         db.SubmitUpdates()
-                        RegisterResult.Success
+                        return RegisterResult.Success
                 else
                     let newUser = db.Camblogistics.users.Create()
                     newUser.Accepted <- sbyte 0
@@ -137,9 +138,10 @@ module User =
                     newUser.Password <- hashPassword password
                     newUser.Deleted <- sbyte 0
                     db.SubmitUpdates()
-                    RegisterResult.Success
+                    return RegisterResult.Success
             with
-                _ -> RegisterResult.DatabaseError
+                _ -> return RegisterResult.DatabaseError
+        }
     let logoutUser (ctx:Context<EndPoint>) =
         let db = Database.getDataContext()
         (query{
@@ -149,18 +151,23 @@ module User =
             }) |> Seq.iter(fun s -> s.Delete())
         db.SubmitUpdates()
     
+    [<Rpc>]
     let getRankList() =
+        async{
         try
-        let db = Database.getDataContext()
-        query{
-            for r in db.Camblogistics.roles do
-            select({Level = r.Id;Name = r.Name})
-        } |> Seq.toList |> List.sortBy(fun r -> r.Level)
+            let db = Database.getDataContext()
+            return Ok(query{
+                for r in db.Camblogistics.roles do
+                select({Level = r.Id;Name = r.Name})
+            } |> Seq.toList |> List.sortBy(fun r -> r.Level)
+            )
         with
-            _ -> []
+            e -> return Error e.Message
+        }
     [<Rpc>]
     let changeUserPassword (sid, oldPassword, newPassword) =
         async{
+        try
         let db = Database.getDataContext()
         if String.length newPassword < 3 then return ActionResult.OtherError "Ez a jelszó nem megfelelő!"
         else
@@ -169,18 +176,17 @@ module User =
         match getUserFromSID sid with
             |None -> return ActionResult.InvalidSession
             |Some user ->
-                try
-                    let userEntry =
-                        query{
-                            for u in db.Camblogistics.users do
-                            where(u.Id = user.Id)
-                            exactlyOne
-                        }
-                    userEntry.Password <- hashPassword newPassword
-                    db.SubmitUpdates()
-                    return ActionResult.Success
-                with
-                    _ -> return ActionResult.DatabaseError
+                let userEntry =
+                    query{
+                        for u in db.Camblogistics.users do
+                        where(u.Id = user.Id)
+                        exactlyOne
+                    }
+                userEntry.Password <- hashPassword newPassword
+                db.SubmitUpdates()
+                return ActionResult.Success
+        with
+            _ -> return ActionResult.DatabaseError
         }
     let lengthenSession sid =
         try
@@ -193,25 +199,3 @@ module User =
         db.SubmitUpdates()
         with
             _ -> ()
-
-module UserCallable =
-    [<Rpc>]
-    let doLogin username password =
-        async{
-            return User.loginUser(username,password)
-        }
-    [<Rpc>]
-    let doRegister name password accountId email =
-        async{
-            return User.registerUser(name,password,accountId,email)
-        }
-    [<Rpc>]
-    let getUser sid =
-        async{
-            return User.getUserFromSID sid
-        }
-    [<Rpc>]
-    let doGetRankList() =
-        async{
-            return User.getRankList()
-        }

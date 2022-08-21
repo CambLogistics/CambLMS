@@ -13,13 +13,22 @@ module ServiceFeeAdmin =
     let updateUserList() =
         async{
             let! list = UserOperations.getUserList sessionID false false
-            UserList.Set list
-            SelectedUserID.Set (Seq.item 0 UserList.Value).Id
+            match list with
+                |Ok l ->
+                    UserList.Set l
+                    SelectedUserID.Set (Seq.item 0 UserList.Value).Id
+                |Error e ->
+                    Feedback.giveFeedback true <| "Hiba a felhasználók lekérdezésekor: " + e
         } |> Async.Start
     let updatePendingList() =
         async{
             let! list = ServiceFee.getPendingFees sessionID 
-            PendingList.Set list
+            match list with
+                |Ok l ->
+                    PendingList.Set l
+                    SelectedUserID.Set (Seq.item 0 UserList.Value).Id
+                |Error e ->
+                    Feedback.giveFeedback true <| "Hiba a szervizdíjak lekérdezésekor: " + e
         } |> Async.Start
     let RenderPage() =
         updateUserList()

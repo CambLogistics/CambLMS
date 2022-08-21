@@ -7,7 +7,7 @@ open WebSharper.JavaScript
 module LoginPage =
     let callLogin name password rememberme =
         async {
-            let! result = UserCallable.doLogin name password
+            let! result = User.loginUser(name,password)
             match result with
             | LoginResult.Success id ->
                 JS.Document.Cookie <- "clms_sid=" + id

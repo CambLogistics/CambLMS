@@ -73,16 +73,16 @@ module NameChangeServer =
     [<Rpc>]
     let getPendingChanges sid = 
         async{
-        if not (Permission.checkPermission sid Permissions.MemberAdmin) then return []
+        if not (Permission.checkPermission sid Permissions.MemberAdmin) then return Error "Nincs jogosultságod elbírálni a névváltoztatási kérelmeket!"
         else
         try
             let db = Database.getDataContext()
-            return query{
+            return Ok(query{
                 for x in db.Camblogistics.namechanges do
                 join u in db.Camblogistics.users on (x.UserId = u.Id)
                 where(x.Pending = (sbyte 1))
                 select({UserID = x.UserId;OldName = u.Name;NewName = x.NewName})
-            } |> Seq.toList
+            } |> Seq.toList)
         with
-            _ -> return []
+            e -> return Error e.Message
         }

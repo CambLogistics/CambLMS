@@ -22,7 +22,9 @@ module CarsAdmin =
     let updateTuningList() =
         async{
             let! list = Cars.getTuningLevels()
-            tuningList.Set list
+            match list with
+                |Ok l -> l |> tuningList.Set
+                |Error e -> Feedback.giveFeedback true <| "Hiba a tuningok lekérdezésekor: " + e
         } |> Async.Start
     let updateCarList() =
         async{
@@ -30,12 +32,18 @@ module CarsAdmin =
             let! ce = Permission.doCheckPermission sessionID Permissions.CarAdmin
             canEdit <- ce
             if ce then unHideEdit()
-            carList.Set list
+            match list with
+                |Ok l -> l |> carList.Set
+                |Error e -> Feedback.giveFeedback true <| "Hiba az autók lekérésekor: " + e
         } |> Async.Start
     let updateMemberList() =
         async{
             let! list = UserOperations.getUserList sessionID false false
-            memberList.Set list
+            match list with
+                |Ok l ->
+                    memberList.Set l
+                |Error e ->
+                    Feedback.giveFeedback true <| "Hiba a tagok lekérésekor: " + e
         } |> Async.Start
     let renderTuningItem (t:System.Collections.Generic.KeyValuePair<int,string>) =
         SiteParts.CarTemplate.TuningItem()

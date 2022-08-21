@@ -11,7 +11,10 @@ module NameChangeAdmin =
     let updateList() =
         async{
             let! pendingUsers = NameChangeServer.getPendingChanges sessionID
-            userList.Set pendingUsers
+            match pendingUsers with
+                |Ok l -> userList.Set l
+                |Error e -> 
+                    Feedback.giveFeedback true <| "Hiba a kérvények lekérdezésekor: " + e
         } |> Async.Start
     let RenderPage() =
         updateList()

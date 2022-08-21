@@ -14,9 +14,13 @@ module InactivityAdmin =
             requestList.Clear()
             userList.Clear()
             let! newRequestList = Inactivity.getPendingRequests sessionID
+            match newRequestList with
+                |Ok rl -> rl |> requestList.Set
+                |Error e -> Feedback.giveFeedback true <| "Hiba a kérvények lekérésekor: " + e
             let! newUserList = Inactivity.getUserStatusList sessionID
-            userList.Set newUserList
-            requestList.Set newRequestList
+            match newUserList with
+                |Ok ul -> ul |> userList.Set
+                |Error e -> Feedback.giveFeedback true <| "Hiba a felhasználók lekérésekor: " + e
         } |> Async.Start
     let RenderPage() =
         requestList.Clear()

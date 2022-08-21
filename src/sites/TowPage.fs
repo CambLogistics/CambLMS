@@ -13,8 +13,13 @@ module TowPage =
     let selectedRoute = Var.Create {Source = -1;Dest = -1}
     let updateAreaList() =
         async{
-            let! list = Calls.doGetAreaList()
-            areaList.Set list
+            let! list = Calls.getAreaList()
+            match list with
+                |Ok l ->
+                    areaList.Set l
+                |Error e ->
+                    Feedback.giveFeedback true <| "Hiba a zónák lekérdezésekor: " + e
+                    JavaScript.JS.Document.GetElementById("Submit").Remove()
         } |> Async.Start
     let updateGarageList() =
         async{
@@ -42,7 +47,7 @@ module TowPage =
                                     return "Jelenleg nincs kiválasztva útvonal."
                                 else 
                                     let! price = Tow.doCalculatePrice r.Source r.Dest
-                                    let! isDouble = Calls.doGetDPStatus()
+                                    let! isDouble = Calls.clientGetDPStatus()
                                     if price > 0 then JavaScript.JS.Document.GetElementById("Submit").RemoveAttribute("disabled")
                                     return (getAreaName r.Source + " - " + getGarageName r.Dest + ": " + string price + "$" + if isDouble then " (EMELT)" else "")
                             } 

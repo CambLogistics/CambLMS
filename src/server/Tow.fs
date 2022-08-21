@@ -41,7 +41,11 @@ module Tow =
             return getGarageList()
         }
     let getInfo sid =
-        let calls = Calls.getCallsBySID sid |> List.filter (fun c -> c.Type = CallType.Towing)
+        let calls = 
+            match Calls.getCallsBySID sid with
+                |Ok c -> 
+                    c |> List.filter (fun c -> c.Type = CallType.Towing)
+                |Error e -> failwith e
         ( 
             query{
                 for c in calls do

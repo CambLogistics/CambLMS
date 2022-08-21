@@ -23,13 +23,14 @@ module Documents =
                     .Doc()
             )
             .Doc()
+    [<Rpc>]
     let getUsersWithValidDocuments sid =
-        //try
-            if not (Permission.checkPermission sid Permissions.DocAdmin) then []
+      async{
+        try
+            if not (Permission.checkPermission sid Permissions.DocAdmin) then return Error "Nem vagy jogosult lekérni az iratokat!"
             else
             let db = Database.getDataContext()
-            
-            query{
+            return Ok(query{
                 for u in db.Camblogistics.users do
                 where(u.Accepted = (sbyte 1))
                 select({Id = u.Id;
@@ -42,14 +43,10 @@ module Documents =
                     System.Diagnostics.Debug.WriteLine <| string (System.IO.File.Exists(@"docs/" + string u.AccountID + "_personal.png"))
                     System.IO.File.Exists(@"docs/" + string u.AccountID + "_personal.png") &&
                     System.IO.File.Exists(@"docs/" + string u.AccountID + "_license.png")
-            )
-        //with
-        //    _ -> []
-    [<Rpc>]
-    let doGetUsersWithDocuments sid =
-        async{
-            return getUsersWithValidDocuments sid
-        } 
+            ))
+        with
+            e  -> return Error e.Message
+      }
 module ImageUpload =
     let MakePage ctx =
         SiteTemplates.MainTemplate()
@@ -89,22 +86,20 @@ module ImageUpload =
         with
            | e -> return OtherError e.Message
         }
+    [<Rpc>]
     let getImageList sid =
+      async{
         try
-            if not (Permission.checkPermission sid Permissions.ServiceFeeAdmin) then []
+            if not (Permission.checkPermission sid Permissions.ServiceFeeAdmin) then return Error "Nincs jogosultságod a szervízképekhez!"
             else
             let db = Database.SqlConnection.GetDataContext(Database.getConnectionString())
-            query{
+            return Ok(query{
                 for i in db.Camblogistics.images do
                 select (i.Name,i.Userid,i.UploadDate)
-            } |> Seq.toList |> List.sortByDescending (fun (_,_,date) -> date)
+            } |> Seq.toList |> List.sortByDescending (fun (_,_,date) -> date))
         with
-         _ -> []
-    [<Rpc>]
-    let doGetImageList sid =
-        async{
-            return getImageList sid
-        }
+         e -> return Error e.Message
+      }
 
 module ImageSubmitter =
     let Documents (ctx:Context<EndPoint>) user =

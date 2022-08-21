@@ -10,9 +10,14 @@ module DocAdmin =
     let selectedMember = Var.Create -1
     let updateUserList() =
         async{
-            let! list = Documents.doGetUsersWithDocuments (JavaScript.Cookies.Get("clms_sid").Value)
-            userList.Set list
-            if selectedMember.Value = -1 then selectedMember.Set <| (Seq.head userList.Value).Id
+            let! list = Documents.getUsersWithValidDocuments (JavaScript.Cookies.Get("clms_sid").Value)
+            match list with
+                |Ok l -> 
+                    userList.Set l
+                    if selectedMember.Value = -1 then selectedMember.Set <| (Seq.head userList.Value).Id
+                |Error e ->
+                    Feedback.giveFeedback true <| "Hiba az iratok lekérése közben: " + e
+                
         } |> Async.Start
     let RenderPage() =
         updateUserList()

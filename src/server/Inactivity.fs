@@ -29,9 +29,17 @@ module Inactivity =
     [<Rpc>]
     let getUserStatusList sessionID =
         async{
+            try
+            if not (Permission.checkPermission sessionID Permissions.InactivityAdmin) then return Error "Nem nézheted meg a felhasználói jogosultságokat!"
+            else
             let! users = UserOperations.getUserList sessionID false false
-            let (statusList,userList) = users |> List.mapFold (fun l u -> (getActiveStatus u,u::l)) []
-            return List.rev userList |> List.zip statusList |> List.map (fun (s,u) -> {UserName = u.Name;UserID = u.Id; Status = s})
+            match users with
+                |Ok ul ->
+                    let (statusList,userList) = ul |> List.mapFold (fun l u -> (getActiveStatus u,u::l)) []
+                    return Ok(List.rev userList |> List.zip statusList |> List.map (fun (s,u) -> {UserName = u.Name;UserID = u.Id; Status = s}))
+                |Error e -> return Error e
+            with
+              e -> return Error e.Message
         }
     [<Rpc>]
     let requestInactivity (sessionID,start,ending,reason) =
@@ -98,16 +106,16 @@ module Inactivity =
     let getPendingRequests sessionID =
         async{
             try
-            if not (Permission.checkPermission sessionID Permissions.InactivityAdmin) then return []
+            if not (Permission.checkPermission sessionID Permissions.InactivityAdmin) then return Error "Nincs jogosultságod a szabadságkérelmek kezeléséhez!"
             else
                 let db = Database.getDataContext()
                 return 
-                    query{
+                    Ok(query{
                         for r in db.Camblogistics.inactivity do
                         join u in db.Camblogistics.users on (r.Userid = u.Id)
                         where(r.Pending = (sbyte 1))
                         select ({UserName = u.Name;UserID = u.Id;From = r.Beginning; To = r.Ending;Reason = r.Reason})
-                    } |> Seq.toList
+                    } |> Seq.toList)
             with
-                _ -> return []
+                e -> return Error e.Message
         }

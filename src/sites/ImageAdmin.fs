@@ -14,14 +14,20 @@ module ImageAdmin =
     let updateLists() =
         async{
             let! userlist = UserOperations.getUserList sessionID false true
-            let! imagelist = ImageUpload.doGetImageList sessionID
-            query{
-                for (fn,uploader,_) in imagelist do
-                    join u in userlist on (uploader = u.Id)
-                    select u
-            } |> userList.Set
-            if selectedMember.Value = -1 && not <| Seq.isEmpty userList.Value then selectedMember.Set <| (Seq.head userList.Value).Id
-            imageList.Set imagelist
+            let! imagelist = ImageUpload.getImageList sessionID
+            match imagelist with
+                |Ok l ->
+                    imageList.Set l
+                    match userlist with
+                        |Ok ul ->
+                            query{
+                                for (fn,uploader,_) in l do
+                                join u in ul on (uploader = u.Id)
+                                select u
+                            } |> userList.Set
+                            if selectedMember.Value = -1 && not <| Seq.isEmpty userList.Value then selectedMember.Set <| (Seq.head userList.Value).Id
+                        |Error e ->  Feedback.giveFeedback true <| "Hiba a felhasználó lista lekérésekor: " + e
+                |Error e -> Feedback.giveFeedback true <| "Hiba a képlista lekérésekor: " + e
         } |> Async.Start
     let RenderPage() =
         updateLists()
