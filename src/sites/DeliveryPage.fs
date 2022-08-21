@@ -11,10 +11,19 @@ module DeliveryPage =
     let doublePrice = Var.Create false
     let updateTypeList() =
         async{
-            let! list = Delivery.doGetTypeList()
-            TypeList.Set list
-            let! dp = Calls.doGetDPStatus()
+        try
+            let! list = Delivery.clientGetTypeList()
+            let! dp = Calls.clientGetDPStatus()
             doublePrice.Set dp
+            match list with
+                |Ok l -> TypeList.Set l
+                |Error e -> 
+                    Feedback.giveFeedback true "Hiba az szállítási típusok lekérdezése közben! Értesítsd a(z) (műszaki) igazgatót!"
+                    JavaScript.JS.Document.GetElementById("Submit").Remove()
+        with
+            e -> 
+                Feedback.giveFeedback true "Hiba a duplaár-státusz lekérdezése közben! Értesítsd a(z) (műszaki) igazgatót!"
+                JavaScript.JS.Document.GetElementById("Submit").Remove()
         } |> Async.Start
     let RenderPage() =
         updateTypeList()

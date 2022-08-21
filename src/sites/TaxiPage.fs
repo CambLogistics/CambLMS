@@ -12,8 +12,13 @@ module TaxiPage =
     let areaList = Var.Create <| Map.ofSeq []
     let updateAreaList() =
         async{
-            let! list = Calls.doGetAreaList()
-            areaList.Set list
+            let! list = Calls.getAreaList()
+            match list with
+                |Ok l ->
+                    areaList.Set l
+                |Error e ->
+                    Feedback.giveFeedback true <| "Hiba a zónák lekérdezésekor: " + e
+                    JavaScript.JS.Document.GetElementById("Submit").Remove()
         } |> Async.Start
     let getAreaName id =
        match Map.tryFind id areaList.Value with
@@ -31,7 +36,7 @@ module TaxiPage =
                                     return "Jelenleg nincs kiválasztva útvonal."
                                 else 
                                     let! price = Taxi.doCalculatePrice r.Source r.Dest
-                                    let! isDouble = Calls.doGetDPStatus()
+                                    let! isDouble = Calls.clientGetDPStatus()
                                     if price > 0 then JavaScript.JS.Document.GetElementById("Submit").RemoveAttribute("disabled")
                                     return (getAreaName r.Source + " - " + getAreaName r.Dest + ": " + string price + "$" + if isDouble then " (DUPLA)" else "")
                             } 

@@ -15,7 +15,10 @@ module RegistrationAdminPage =
     let updateList() =
         async{
             let! userList = UserOperations.getUserList (JavaScript.Cookies.Get "clms_sid").Value true false
-            pendingUsers.Set userList
+            match userList with
+                |Ok l -> pendingUsers.Set l
+                |Error e -> 
+                    Feedback.giveFeedback true <| "Hiba a kérvények lekérdezésekor: " + e
         } |> Async.Start
     let RenderPage() =
         updateList()

@@ -14,7 +14,6 @@ type ForgotPassStatus =
 
 module ForgotPass =
     let emailConfig = Config.readEmail ()
-
     let generateEmail (username: string) (password: string) =
         let mailTemplate =
             try
@@ -40,14 +39,12 @@ module ForgotPass =
     let changePasswordByEmail email =
         async {
             let db = Database.getDataContext ()
-
             let userSeq =
                 query {
                     for u in db.Camblogistics.users do
                         where (u.Email = email && u.Accepted = (sbyte 1) && u.Deleted = (sbyte 0))
                         select u
                 }
-
             match (Seq.length userSeq > 0) with
             | true ->
                 try

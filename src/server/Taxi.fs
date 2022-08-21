@@ -28,7 +28,10 @@ module Taxi =
                 _ -> return ActionResult.DatabaseError
         }
     let getInfo sid =
-        let calls = Calls.getCallsBySID sid |> List.filter (fun c -> c.Type = CallType.Taxi)
+        let calls = 
+            match Calls.getCallsBySID sid with
+                |Ok c -> c |> List.filter (fun c -> c.Type = CallType.Taxi)
+                |Error e -> failwith e
         ( 
             query{
                 for c in calls do

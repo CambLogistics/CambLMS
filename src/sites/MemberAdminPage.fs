@@ -11,14 +11,21 @@ module MemberAdminPage =
     let sessionID = JavaScript.Cookies.Get("clms_sid").Value
     let updateRankList() =
         async {
-            let! list = UserCallable.doGetRankList()
-            RankList.Set list
+            let! list = User.getRankList()
+            match list with
+                |Ok l -> RankList.Set l
+                |Error e ->
+                    Feedback.giveFeedback true <| "Hiba a rangok lekérésekor: " + e
         } |> Async.Start
 
     let updateUserList() =
         async {
             let! list = UserOperations.getUserList sessionID false false
-            UserList.Set list
+            match list with
+                |Ok l ->
+                    UserList.Set l
+                |Error e ->
+                    Feedback.giveFeedback true <| "Hiba a felhasználók lekérésekor: " + e
         }
         |> Async.Start
 

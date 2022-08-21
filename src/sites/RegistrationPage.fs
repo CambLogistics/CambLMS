@@ -8,7 +8,7 @@ module RegistrationPage =
     let register name password passwordrepeat accid email =
         async {
             if password = passwordrepeat && not (JS.IsNaN accid) then
-                let! result = UserCallable.doRegister name password (int accid) email
+                let! result = User.registerUser(name,password,(int accid),email)
                 match result with
                 | RegisterResult.Success -> JS.Window.Location.Replace "/login?registered=true"
                 | Exists -> Feedback.giveFeedback true "Ilyen felhasználó már létezik!"

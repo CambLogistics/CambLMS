@@ -9,18 +9,18 @@ module ServiceFee =
     [<Rpc>]
     let getPendingFees sid =
         async{
-        if not (Permission.checkPermission sid Permissions.ServiceFeeAdmin) then return []
+        if not (Permission.checkPermission sid Permissions.ServiceFeeAdmin) then return Error "Nincs jogosultságod a szervizdíjak kezeléséhez!"
         else
         try
             let db = Database.getDataContext()
-            return query{
+            return Ok (query{
                 for fee in db.Camblogistics.servicefees do
                 where (fee.Paid = (sbyte 0))
                 join u in db.Camblogistics.users on (fee.UserId = u.Id)
                 select({ID = fee.Id;Username = u.Name;Amount = fee.Amount})
-            } |> Seq.toList
+            } |> Seq.toList)
         with
-           _ -> return []
+           e -> return Error e.Message
         }
     [<Rpc>]
     let submitPendingFee (sid, userid, amount) =

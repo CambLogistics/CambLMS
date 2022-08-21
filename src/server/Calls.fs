@@ -70,9 +70,10 @@ module Calls =
                  count
          }) > 0
          with
-            _ -> false
+            e -> failwith e.Message
 
     let transformPrice (price:int) callType =
+      try
         if isDoublePrice () then
             match callType with
                 |CallType.Delivery -> int (float price * 1.25)
@@ -81,17 +82,21 @@ module Calls =
                 |_ -> price
         else
             price
-
+      with
+        e -> failwith e.Message
+    [<Rpc>]
     let getAreaList () =
-        try
-            let db = Database.SqlConnection.GetDataContext(Database.getConnectionString ())
-            query {
-                for a in db.Camblogistics.areas do
-                    select ((a.Id, a.Name))
-            }
-            |> Map.ofSeq
-        with
-        | _ -> Map.ofList []
+        async{
+            try
+                let db = Database.SqlConnection.GetDataContext(Database.getConnectionString ())
+                return Ok( query {
+                    for a in db.Camblogistics.areas do
+                        select ((a.Id, a.Name))
+                }
+                |> Map.ofSeq)
+            with
+            | e -> return Error e.Message
+        }
 
     let registerCall sid price (callType: CallType) =
         let permission = 
@@ -151,7 +156,7 @@ module Calls =
     let getCallsOfUser (user: Member) =
         try
             let db = Database.SqlConnection.GetDataContext(Database.getConnectionString ())
-            query {
+            Ok (query {
                 for c in db.Camblogistics.calls do
                     where (user.Id = c.UserId)
                     select
@@ -162,44 +167,43 @@ module Calls =
                           PreviousWeek = c.PreviousWeek = (sbyte 1) }
             }
             |> Seq.toList
+          )
         with
-        | _ -> []
+        | e -> Error e.Message
 
     let getCallsBySID sid =
             let user = User.getUserFromSID sid
             match user with
-            | None -> []
+            | None -> Error "Nem létező felhasználó hívásait kérted le!"
             | Some u -> getCallsOfUser u
 
     [<Rpc>]
     let getUserListWithCalls sid duration =
         async {
+            try
             let! users = UserOperations.getUserList sid false false
-            return
-                users
-                |> List.map (fun u ->
-                    { User = u
-                      Calls =
-                        getCallsOfUser u
-                        |> List.filter (fun c ->
-                            match duration with
-                            | All -> true
-                            | TwoWeeks -> c.PreviousWeek || c.ThisWeek
-                            | Weekly -> c.ThisWeek) }) |> List.sortByDescending (fun u -> List.length u.Calls)
+            match users with
+                |Ok ul ->
+                    return
+                        Ok (ul
+                            |> List.map (fun u ->
+                            { User = u
+                              Calls =
+                                match getCallsOfUser u with
+                                |Ok c -> c
+                                        |> List.filter (fun c ->
+                                        match duration with
+                                        |All -> true
+                                        |TwoWeeks -> c.PreviousWeek || c.ThisWeek
+                                        |Weekly -> c.ThisWeek) 
+                                |Error e -> failwith e
+                            }) |> List.sortByDescending (fun u -> List.length u.Calls)
+                        )
+                |Error e -> return Error e
+            with
+            e -> return Error e.Message
 
         }
 
     [<Rpc>]
-    let doGetDPStatus () = async { return isDoublePrice () }
-
-    [<Rpc>]
-    let doGetUserCalls sid user =
-        async {
-            if not (Permission.checkPermission sid Permissions.ViewCallCount) then
-                return []
-            else
-                return getCallsOfUser user
-        }
-
-    [<Rpc>]
-    let doGetAreaList () = async { return getAreaList () }
+    let clientGetDPStatus () = async { return isDoublePrice () }

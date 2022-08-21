@@ -27,28 +27,26 @@ module Cars =
         async {
             try
                 let db = Database.getDataContext ()
-
                 return
-                    query {
+                    Ok(query {
                         for tuning in db.Camblogistics.tuninglevels do
                             select (tuning.Level, tuning.Name)
                     }
-                    |> Map.ofSeq
+                    |> Map.ofSeq)
             with
-            | _ -> return Map.ofList []
+            | e -> return Error e.Message
         }
 
     [<Rpc>]
     let getCars sid =
         async {
             if not (Permission.checkPermission sid Permissions.ViewCars) then
-                return []
+                return Error "Nincs jogosultságod az autók megtekintéséhez!"
             else
                 try
                     let db = Database.getDataContext ()
-
                     return
-                        query {
+                        Ok(query {
                             for car in db.Camblogistics.cars do
                                 select (
                                     { Id = car.Id
@@ -78,21 +76,19 @@ module Cars =
                                 )
                         }
                         |> Seq.toList
-                        |> List.sortBy (fun c -> c.RegNum)
+                        |> List.sortBy (fun c -> c.RegNum))
                 with
-                | _ -> return []
+                | e -> return Error e.Message
         }
 
     let getCarsOfKeyHolder sid =
         let user = User.getUserFromSID sid
-
         match user with
-        | None -> []
+        | None -> Error "Hiba a vezetett autók lekérése közben: nem létező felhasználó!"
         | Some u ->
             try
                 let db = Database.getDataContext ()
-
-                query {
+                Ok(query {
                     for car in db.Camblogistics.cars do
                         where (
                             car.KeyHolder1 = Some u.Id
@@ -101,9 +97,9 @@ module Cars =
 
                         select (car.RegNum)
                 }
-                |> Seq.toList
+                |> Seq.toList)
             with
-            | _ -> []
+            | e -> Error e.Message
 
     [<Rpc>]
     let setCar(sid,car) =

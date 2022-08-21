@@ -15,13 +15,17 @@ module CallsAdmin =
             let! list = Calls.getUserListWithCalls sessionID CallDuration.Weekly
             let! cc = Permission.doCheckPermission sessionID Permissions.CloseWeek
             canClose <- cc
-            userList.Set list
             if cc then JavaScript.JS.Document.GetElementById("closeweek").RemoveAttribute("style")
+            match list with
+                |Ok l -> l |> userList.Set
+                |Error e -> Feedback.giveFeedback true e
         } |> Async.Start
     let updateRankList() =
         async{
-            let! list = UserCallable.doGetRankList()
-            rankList.Set list
+            let! list = User.getRankList()
+            match list with
+                |Ok l -> l |> rankList.Set
+                |Error e -> Feedback.giveFeedback true e
         } |> Async.Start
     let RenderPage() =
         updateRankList()

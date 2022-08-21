@@ -9,25 +9,25 @@ module Delivery =
     let getTypeList() =
         try
         let db = Database.getDataContext()
-        query{
+        Ok(query{
             for t in db.Camblogistics.deliverytypes do
                 join p in db.Camblogistics.deliveryprices on (t.Id = p.Type)
                 select({ID=t.Id;Name=t.Name;Price=p.Price})
-        } |> Seq.toList
+        } |> Seq.toList)
         with
-            _ -> []
+            e -> Error e.Message
     let calculatePrice deliveryType =
         try
         let db = Database.getDataContext()
-        Calls.transformPrice (query{
+        Ok(Calls.transformPrice (query{
             for price in db.Camblogistics.deliveryprices do
             where(deliveryType = price.Type)
             exactlyOne
-            }).Price CallType.Delivery
+            }).Price CallType.Delivery)
         with
-            _ -> 0
+            e -> Error e.Message
     [<Rpc>]
-    let doCalculatePrice dt =
+    let clientCalculatePrice dt =
         async{
             return calculatePrice dt
         }
@@ -35,17 +35,22 @@ module Delivery =
     let submitCall (sid,dt) =
         async{
             try
-                return calculatePrice dt |> Calls.registerCall sid <| CallType.Delivery
+                match calculatePrice dt with
+                |Ok p -> return Calls.registerCall sid p CallType.Delivery
+                |Error e -> return ActionResult.DatabaseError
             with
                 _ -> return ActionResult.DatabaseError
         }
     [<Rpc>]
-    let doGetTypeList() =
+    let clientGetTypeList() =
         async{
             return getTypeList()
         }
     let getInfo sid =
-        let calls = Calls.getCallsBySID sid |> List.filter (fun c -> c.Type = CallType.Delivery)
+        let calls = 
+          match Calls.getCallsBySID sid with 
+            |Ok c -> List.filter (fun c -> c.Type = CallType.Delivery) c
+            |Error e -> failwith e
         ( 
             query{
                 for c in calls do
