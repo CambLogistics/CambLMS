@@ -9,18 +9,19 @@
 - [] Forgotpass
 - [x] Img
 - [] Imgview
-- [] Inactivity
+- [x] Inactivity
 - [] Inanvitity_admin
 - [x] Info
 - [] Login
 - [] Members
 - [] Name_admin
-- [] Namechange
+- [x] Namechange
 - [] Navbar (I moved to the old templates because i probably cant separate it from the main)
 - [x] Notfound (We're not changing this!)
-- [] Passchange
+- [x] Passchange
 - [] Reg_admin
 - [] Registration
 - [] Service
-- [] Taxi
-- [] Tow
+- [x] Settings
+- [x] Taxi
+- [x] Tow
