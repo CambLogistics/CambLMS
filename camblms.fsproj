@@ -17,7 +17,6 @@
     <Compile Include="src/server/ForgotPass.fs" />
     <Compile Include="src/server/Cars.fs" />
     <Compile Include="src/server/Calls.fs" />
-    <Compile Include="src/server/Delivery.fs" />
     <Compile Include="src/server/Tow.fs" />
     <Compile Include="src/server/Taxi.fs" />
     <Compile Include="src/server/ServiceFee.fs" />
@@ -28,7 +27,6 @@
     <Compile Include="src/sites/Feedback.fs" />
     <Compile Include="src/sites/ActionDispatcher.fs" />
     <Compile Include="src/sites/LogoutClient.fs" />
-    <Compile Include="src/sites/DeliveryPage.fs" />
     <Compile Include="src/sites/TowPage.fs" />
     <Compile Include="src/sites/TaxiPage.fs" />
     <Compile Include="src/sites/CarsAdmin.fs" />

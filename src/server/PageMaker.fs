@@ -60,12 +60,6 @@ module PageMakers =
             .Navbar(Navbar.MakeNavbar ctx false)
             .Main(client <@TowPage.RenderPage()@>)
             .Doc()
-    let Delivery ctx =
-        SiteTemplates.MainTemplate()
-            .Stylesheet(SiteTemplates.NormalStyle)
-            .Navbar(Navbar.MakeNavbar ctx false)
-            .Main(client <@DeliveryPage.RenderPage()@>)
-            .Doc()
     let AdminHome ctx =
         SiteTemplates.MainTemplate()
             .Stylesheet(SiteTemplates.AdminStyle)
