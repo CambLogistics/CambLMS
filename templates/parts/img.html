@@ -1,15 +1,22 @@
-     <div class="main">
-      <p style="text-align: center;"><span ws-replace="Message"></span><span id="success" ws-template="Success">${Message}</span><span id="error" ws-template="Error">${Message}</span></p>
-         <table class="uticel_taxi">
-            <th class="szoveg_th" colspan="2">Képbeküldés</th>
-            <tr>
-               <td class="table_file">
-                  <form method="post" action="/imagesubmit" enctype="multipart/form-data">
-                     <label for="kep">Válaszd ki a képet</label><br>
-                     <input class="file" type="file" name="kep" accept="image/png" required><br>
-                     <input class="approve" type="submit" value="Beküldés"></form>
-                  </form>
-               </td>
-            </tr>
-         </table>
+<!-- !PAGE CONTENT! -->
+<div class="cl-main main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+  <header class="cl-container" style="padding-top:22px">
+    <h5><b><i class="fa fa-file-image-o"></i> Szervízképek beküldése</b></h5>
+  </header>
+
+  <div class="cl-row-padding cl-margin-bottom">
+    <div class="cl-quarter">
+      <div class="cl-container cl-blue cl-padding-16">
+        <div class="cl-right">
+          <input class="cl-button" type="file" name="kep" accept="image/png" required><br>
+        </div>
+        <div class="cl-clear"></div>
+        <h4>Szervízképek feltöltése</h4>
       </div>
+    </div>
+  </div>
+
+  <!-- End page content -->
+</div>
