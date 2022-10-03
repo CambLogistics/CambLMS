@@ -58,40 +58,11 @@
       <div class="cl-twothird">
         <h5>Rögzített hívások</h5>
         <table class="cl-table cl-striped cl-white">
-          <tr>
+          <tr ws-replace="RecentCalls"></tr>
+          <tr ws-template="CallItem">
             <td><i class="fa fa-call cl-text-blue cl-large"></i></td>
-            <td>Los Santos - San Fierro</td>
-            <td><i>1 500$</i></td>
-          </tr>
-          <tr>
-            <td><i class="fa fa-call cl-text-blue cl-large"></i></td>
-            <td>Los Santos - San Fierro</td>
-            <td><i>1 500$</i></td>
-          </tr>
-          <tr>
-            <td><i class="fa fa-call cl-text-blue cl-large"></i></td>
-            <td>Los Santos - San Fierro</td>
-            <td><i>1 500$</i></td>
-          </tr>
-          <tr>
-            <td><i class="fa fa-call cl-text-blue cl-large"></i></td>
-            <td>Los Santos - San Fierro</td>
-            <td><i>1 500$</i></td>
-          </tr>
-          <tr>
-            <td><i class="fa fa-call cl-text-blue cl-large"></i></td>
-            <td>Los Santos - San Fierro</td>
-            <td><i>1 500$</i></td>
-          </tr>
-          <tr>
-            <td><i class="fa fa-call cl-text-blue cl-large"></i></td>
-            <td>Los Santos - San Fierro</td>
-            <td><i>1 500$</i></td>
-          </tr>
-          <tr>
-            <td><i class="fa fa-call cl-text-blue cl-large"></i></td>
-            <td>Los Santos - San Fierro</td>
-            <td><i>1 500$</i></td>
+            <td>${From} - ${To}</td>
+            <td><i>${Price}</i></td>
           </tr>
         </table>
       </div>
@@ -101,7 +72,7 @@
   <div class="cl-container">
     <h5>Heti hívásszám</h5>
     <div class="cl-grey">
-      <div class="cl-container cl-center cl-padding cl-orange cl-text-white" style="width:25%">25%</div>
+            <div class="cl-container cl-center cl-padding cl-orange cl-text-white" style="width:${WeeklyCallPercentage}%">${WeeklyCallPercentage}%</div>
     </div>
   </div>
   <hr>
