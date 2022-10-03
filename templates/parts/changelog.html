@@ -1,59 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>CambLogistics</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="main.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
-</style>
-</head>
-<body class="cl-white">
-
-<!-- Top container -->
-<div class="cl-bar cl-top cl-dark-grey cl-large" style="z-index:4">
-  <button class="cl-bar-item cl-button cl-hide-large cl-hover-none cl-hover-text-light-grey" onclick="cl_open();"><i class="fa fa-bars"></i>  Menü</button>
-  <span class="cl-bar-item cl-right">CambLogistics</span>
-</div>
-
-<!-- Sidebar/menu -->
-<nav class="cl-sidebar cl-collapse cl-light-grey cl-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
-  <div class="cl-container cl-row">
-    <div class="cl-col s4">
-      <img src="avatar.png" class="cl-circle cl-margin-right" style="width:46px">
-    </div>
-    <div class="cl-col s8 cl-bar">
-      <span>Üdv, <strong>${FirstName}</strong></span><br>
-    </div>
-  </div>
-  <hr>
-  <div class="cl-container">
-    <h5>Vezérlőpult</h5>
-  </div>
-  <div class="cl-bar-block">
-    <a href="#" class="cl-bar-item cl-button cl-padding-16 cl-hide-large cl-dark-grey cl-hover-red" onclick="cl_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Menü bezárás</a>
-    <a href="info.html" class="cl-bar-item cl-button cl-padding"><i class="fa fa-users fa-fw"></i>  Információ</a>
-    <a href="#" class="cl-bar-item cl-button cl-padding cl-orange cl-text-white"><i class="fa fa-bell fa-fw"></i>  Changelog</a>
-    <a href="taxi.html" class="cl-bar-item cl-button cl-padding"><i class="fa fa-taxi fa-fw"></i>  Taxizás</a>
-    <a href="tow.html" class="cl-bar-item cl-button cl-padding"><i class="fa fa-truck fa-fw"></i>  Vontatás</a>
-    <a href="docs.html" class="cl-bar-item cl-button cl-padding"><i class="fa fa-id-card fa-fw"></i>  Iratok</a>
-    <a href="img.html" class="cl-bar-item cl-button cl-padding"><i class="fa fa-file-image-o fa-fw"></i>  Szervízkép</a>
-    <a href="inactivity.html" class="cl-bar-item cl-button cl-padding"><i class="fa fa-free-code-camp fa-fw"></i>  Inaktivitás</a>
-    <a href="admin.html" class="cl-bar-item cl-button cl-padding"><i class="fa fa-shield fa-fw"></i>  Adminpanel</a>
-    <a href="settings.html" class="cl-bar-item cl-button cl-padding"><i class="fa fa-cog fa-fw"></i>  Beállítások</a>
-    <a href="login.html" class="cl-bar-item cl-button cl-padding cl-hover-red" ><i class="fa fa-sign-out fa-fw"></i>  Kijelentkezés</a><br><br>
-  </div>
-</nav>
-
-
-<!-- Overlay effect when opening sidebar on small screens -->
-<div class="cl-overlay cl-hide-large cl-animate-opacity" onclick="cl_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
-
 <!-- !PAGE CONTENT! -->
-<div class="cl-main" style="margin-left:300px;margin-top:43px;">
+<div class="cl-main main" style="margin-left:300px;margin-top:43px;">
 
     <!-- Header -->
     <header class="cl-container" style="padding-top:22px">
@@ -251,31 +197,3 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
     <!-- End page content -->
 </div>
-
-<script>
-// Get the Sidebar
-var mySidebar = document.getElementById("mySidebar");
-
-// Get the DIV with overlay effect
-var overlayBg = document.getElementById("myOverlay");
-
-// Toggle between showing and hiding the sidebar, and add overlay effect
-function cl_open() {
-  if (mySidebar.style.display === 'block') {
-    mySidebar.style.display = 'none';
-    overlayBg.style.display = "none";
-  } else {
-    mySidebar.style.display = 'block';
-    overlayBg.style.display = "block";
-  }
-}
-
-// Close the sidebar with the close button
-function cl_close() {
-  mySidebar.style.display = "none";
-  overlayBg.style.display = "none";
-}
-</script>
-
-</body>
-</html>
