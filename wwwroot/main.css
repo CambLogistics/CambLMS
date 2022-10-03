@@ -25,7 +25,7 @@ html,body{font-family:Verdana,sans-serif;font-size:15px;line-height:1.5}html{ove
 h1{font-size:36px}h2{font-size:30px}h3{font-size:24px}h4{font-size:20px}h5{font-size:18px}h6{font-size:16px}
 .cl-serif{font-family:serif}.cl-sans-serif{font-family:sans-serif}.cl-cursive{font-family:cursive}.cl-monospace{font-family:monospace}
 h1,h2,h3,h4,h5,h6{font-family:"Segoe UI",Arial,sans-serif;font-weight:400;margin:10px 0}.cl-wide{letter-spacing:4px}
-hr{border:0;border-top:1px solid #eee;margin:20px 0}
+hr{border:0;border-top:1px solid #000;margin:20px 0}
 .cl-image{max-width:100%;height:auto}img{vertical-align:middle}a{color:inherit}
 .cl-table,.cl-table-all{border-collapse:collapse;border-spacing:0;width:100%;display:table}.cl-table-all{border:1px solid #ccc}
 .cl-bordered tr,.cl-table-all tr{border-bottom:1px solid #ddd}.cl-striped tbody tr:nth-child(even){background-color:#f1f1f1}
@@ -42,8 +42,8 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
 .cl-ul{list-style-type:none;padding:0;margin:0}.cl-ul li{padding:8px 16px;border-bottom:1px solid #ddd}.cl-ul li:last-child{border-bottom:none}
 .cl-tooltip,.cl-display-container{position:relative}.cl-tooltip .cl-text{display:none}.cl-tooltip:hover .cl-text{display:inline-block}
 .cl-ripple:active{opacity:0.5}.cl-ripple{transition:opacity 0s}
-.cl-input{padding:8px;display:block;border:none;border-bottom:1px solid #ccc;width:100%}
-.cl-select{padding:9px 0;width:100%;border:none;border-bottom:1px solid #ccc}
+.cl-input{padding:8px;display:block;border:none;border-bottom:1px solid #ccc;width:25%}
+.cl-select{padding:9px 0;width:50%;border:none;border-bottom:1px solid #ccc}
 .cl-dropdown-click,.cl-dropdown-hover{position:relative;display:inline-block;cursor:pointer}
 .cl-dropdown-hover:hover .cl-dropdown-content{display:block}
 .cl-dropdown-hover:first-child,.cl-dropdown-click:hover{background-color:#ccc;color:#000}
@@ -140,7 +140,7 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
 .cl-padding-32{padding-top:32px!important;padding-bottom:32px!important}.cl-padding-48{padding-top:48px!important;padding-bottom:48px!important}
 .cl-padding-64{padding-top:64px!important;padding-bottom:64px!important}
 .cl-padding-top-64{padding-top:64px!important}.cl-padding-top-48{padding-top:48px!important}
-.cl-padding-top-32{padding-top:32px!important}.cl-padding-top-24{padding-top:24px!important}
+.cl-padding-top-32{padding-top:32px!important}.cl-padding-top-16{padding-top:16px!important}.cl-padding-top-24{padding-top:24px!important}
 .cl-left{float:left!important}.cl-right{float:right!important}
 .cl-button:hover{color:#000!important;background-color:#ccc!important}
 .cl-transparent,.cl-hover-none:hover{background-color:transparent!important}
