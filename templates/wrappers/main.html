@@ -39,17 +39,8 @@
         </div>
         <div class="cl-bar-block">
             <a href="#" class="cl-bar-item cl-button cl-padding-16 cl-hide-large cl-dark-grey cl-hover-red" onclick="cl_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Menü bezárás</a>
-            <a href="info.html" class="cl-bar-item cl-button cl-padding"><i class="fa fa-users fa-fw"></i>  Információ</a>
-            <a href="changelog.html" class="cl-bar-item cl-button cl-padding cl-orange cl-text-white"><i class="fa fa-bell fa-fw"></i>  Changelog</a> 
-            <!--Currently selected changelog, TODO:somehow make a selection | Selection indicators: cl-orange cl-text-white -->
-            <a href="taxi.html" class="cl-bar-item cl-button cl-padding"><i class="fa fa-taxi fa-fw"></i>  Taxizás</a>
-            <a href="tow.html" class="cl-bar-item cl-button cl-padding"><i class="fa fa-truck fa-fw"></i>  Vontatás</a>
-            <a href="docs.html" class="cl-bar-item cl-button cl-padding"><i class="fa fa-id-card fa-fw"></i>  Iratok</a>
-            <a href="img.html" class="cl-bar-item cl-button cl-padding"><i class="fa fa-file-image-o fa-fw"></i>  Szervízkép</a>
-            <a href="inactivity.html" class="cl-bar-item cl-button cl-padding"><i class="fa fa-free-code-camp fa-fw"></i>  Inaktivitás</a>
-            <a href="admin.html" class="cl-bar-item cl-button cl-padding"><i class="fa fa-shield fa-fw"></i>  Adminpanel</a>
-            <a href="settings.html" class="cl-bar-item cl-button cl-padding"><i class="fa fa-cog fa-fw"></i>  Beállítások</a>
-            <a href="login.html" class="cl-bar-item cl-button cl-padding cl-hover-red"><i class="fa fa-sign-out fa-fw"></i>  Kijelentkezés</a><br><br>
+            <a ws-replace="Navbar"></a>
+            <a ws-template="NavbarItem" href="${Url}" class="cl-bar-item cl-button cl-padding ${SelectedClasses}"><i class="fa fa-fw ${IconClass}">${Text}</i></a>
         </div>
     </nav>
 
