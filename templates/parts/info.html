@@ -1,75 +1,109 @@
-      <div class="main">
-         <table class="foinfo_table">
-            <th class="foinfo" colspan="2">
-               ${Name}  
-            </th>
-            <tr><td colspan="2"><hr class="infohr"></td></tr>
-            <th class="foinfo" colspan="2">Alap információk</th>
-            <tr class="tablerow">
-               <td class="foinfo">
-                  <ul class="infolista">
-                     <li class="option">Rang
-                     <li class="option">AccountID
-                     <li class="option">Kiosztott autó
-                     <li class="option">Eddigi összes kereset
-                     <li class="option">Kétheti kereset
-                  </ul>
-               </td>
-               <td class="foinfo">
-                  <ul class="infolista">
-                     <li class="option">${Rank}
-                     <li class="option">${AccID}
-                     <li class="option">${Cars}
-                     <li class="option">${MoneySum}
-                     <li class="option">${TwoWeekMoney}
-                  </ul>
-               </td>
-               <td class="gombinfo" rowspan="3">
-                   <a href="namechange"><button class="infogombok info_sidebutton">Név változtatás</button></a>
-                   <a href="passchange"><button class="infogombok info_sidebutton">Jelszó változtatás</button></a>
-                   <a href="inactivity"><button class="infogombok info_sidebutton">Inaktivitás jelzés</button></a>
-                   <!--<a href="#"><button class="infogombok">Munkaszerződés megtekintése</button></a>-->
-               </td>
-            </tr>
-            <tr><td colspan="2"><hr class="infohr"></td></tr>
-            <th class="foinfo" colspan="2">Taxis információk</th>
-            <tr>
-               <td class="foinfo">
-                  <ul class="infolista">
-                     <li class="option">Napi hívás
-                     <li class="option">Heti hívás
-                     <li class="option">Összes hívás
-                  </ul>
-               </td>
-               <td class="foinfo">
-                  <ul class="infolista">
-                     <li class="option">${TaxiDaily}
-                     <li class="option">${TaxiWeekly}
-                     <li class="option">${TaxiSum}
-                  </ul>
-               </td>
-               <td></td>
-            </tr>
-            <tr><td colspan="2"><hr class="infohr"></td></tr>
-            <tr>
-            <th class="foinfo" colspan="2">Vontis információk</th>
-            <tr>
-               <td class="foinfo">
-                  <ul class="infolista">
-                     <li class="option">Napi hívás
-                     <li class="option">Heti hívás
-                     <li class="option">Összes hívás
-                  </ul>
-               </td>
-               <td class="foinfo">
-                  <ul class="infolista">
-                     <li class="option">${TowDaily}
-                     <li class="option">${TowWeekly}
-                     <li class="option">${TowSum}
-                  </ul>
-               </td>
-               <td></td>
-            </tr>
-            <tr><td colspan="2"><hr class="infohr"></td></tr>
-         </table>
+<!-- !PAGE CONTENT! -->
+<div class="cl-main main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+  <header class="cl-container" style="padding-top:22px">
+    <h5><b><i class="fa fa-dashboard"></i> Információk</b></h5>
+  </header>
+
+  <div class="cl-row-padding cl-margin-bottom">
+    <div class="cl-quarter">
+      <div class="cl-container cl-purple cl-padding-16">
+        <div class="cl-left"><i class="fa fa-phone cl-xxxlarge"></i></div>
+        <div class="cl-right">
+          <h3>${CallSum}</h3>
+        </div>
+        <div class="cl-clear"></div>
+        <h4>Összes hívások</h4>
       </div>
+    </div>
+    <div class="cl-quarter">
+      <div class="cl-container cl-green cl-padding-16">
+        <div class="cl-left"><i class="fa fa-dollar cl-xxxlarge"></i></div>
+        <div class="cl-right">
+          <h3>${MoneySum}</h3>
+        </div>
+        <div class="cl-clear"></div>
+        <h4>Begyűjtött eddigi összeg</h4>
+      </div>
+    </div>
+    <div class="cl-quarter">
+      <div class="cl-container cl-brown cl-padding-16">
+        <div class="cl-left"><i class="fa fa-user cl-xxxlarge"></i></div>
+        <div class="cl-right">
+          <h3>${Rank}</h3>
+        </div>
+        <div class="cl-clear"></div>
+        <h4>Rang</h4>
+      </div>
+    </div>
+    <div class="cl-quarter">
+      <div class="cl-container cl-orange cl-text-white cl-padding-16">
+        <div class="cl-left"><i class="fa fa-car cl-xxxlarge"></i></div>
+        <div class="cl-right">
+          <h3>${Cars}</h3>
+        </div>
+        <div class="cl-clear"></div>
+        <h4>Kiosztott autó</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="cl-panel">
+    <div class="cl-row-padding" style="margin:0 -16px">
+      <div class="cl-third">
+        <h5>Telephelyünk</h5>
+        <img src="telephely.png" style="width:100%" alt="CambLogistics telephely">
+      </div>
+      <div class="cl-twothird">
+        <h5>Rögzített hívások</h5>
+        <table class="cl-table cl-striped cl-white">
+          <tr>
+            <td><i class="fa fa-call cl-text-blue cl-large"></i></td>
+            <td>Los Santos - San Fierro</td>
+            <td><i>1 500$</i></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-call cl-text-blue cl-large"></i></td>
+            <td>Los Santos - San Fierro</td>
+            <td><i>1 500$</i></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-call cl-text-blue cl-large"></i></td>
+            <td>Los Santos - San Fierro</td>
+            <td><i>1 500$</i></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-call cl-text-blue cl-large"></i></td>
+            <td>Los Santos - San Fierro</td>
+            <td><i>1 500$</i></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-call cl-text-blue cl-large"></i></td>
+            <td>Los Santos - San Fierro</td>
+            <td><i>1 500$</i></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-call cl-text-blue cl-large"></i></td>
+            <td>Los Santos - San Fierro</td>
+            <td><i>1 500$</i></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-call cl-text-blue cl-large"></i></td>
+            <td>Los Santos - San Fierro</td>
+            <td><i>1 500$</i></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="cl-container">
+    <h5>Heti hívásszám</h5>
+    <div class="cl-grey">
+      <div class="cl-container cl-center cl-padding cl-orange cl-text-white" style="width:25%">25%</div>
+    </div>
+  </div>
+  <hr>
+  <!-- End page content -->
+</div>
