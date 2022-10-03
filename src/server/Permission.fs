@@ -7,7 +7,7 @@ open WebSharper
 type Permissions =
     |Nothing = 4095u
     |Admin = 4088u
-    |DeliveryCall = 1u
+    |DeliveryCall = 1u //Left here for backwards-compatibility reasons
     |TowCall = 2u
     |TaxiCall = 4u
     |ViewCars = 8u

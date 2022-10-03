@@ -3,7 +3,7 @@ namespace camblms
 open WebSharper
 
 type CallType =
-    | Delivery = 0
+    | Delivery = 0 //Left here for backwards-compatibility reasons
     | Taxi = 1
     | Towing = 2
 
@@ -76,7 +76,6 @@ module Calls =
       try
         if isDoublePrice () then
             match callType with
-                |CallType.Delivery -> int (float price * 1.25)
                 |CallType.Towing -> int (float price * 1.25)
                 |CallType.Taxi -> price * 2
                 |_ -> price
@@ -103,8 +102,8 @@ module Calls =
                 match callType with
                         |CallType.Taxi -> Permissions.TaxiCall
                         |CallType.Towing -> Permissions.TowCall
-                        |CallType.Delivery -> Permissions.DeliveryCall
-                        |_ -> Permissions.Nothing
+                        |CallType.Delivery -> Permissions.Admin //Left here (disabled) for backwards-compatibility reasons
+                        |_ -> Permissions.Admin
         let user = User.getUserFromSID sid
         match user with
         | None -> ActionResult.InvalidSession
