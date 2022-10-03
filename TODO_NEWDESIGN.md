@@ -1,0 +1,26 @@
+## New design integration
+- [] Admin
+- [] Calls
+- [] Cars
+- [x] Changelog
+- [] Docview
+- [x] Docs
+- [] Exmembers
+- [] Forgotpass
+- [x] Img
+- [] Imgview
+- [] Inactivity
+- [] Inanvitity_admin
+- [x] Info
+- [] Login
+- [] Members
+- [] Name_admin
+- [] Namechange
+- [] Navbar (I moved to the old templates because i probably cant separate it from the main)
+- [x] Notfound (We're not changing this!)
+- [] Passchange
+- [] Reg_admin
+- [] Registration
+- [] Service
+- [] Taxi
+- [] Tow
