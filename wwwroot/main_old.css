@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css?family=Aclonica');
+body{
+  background-color: #404040;
+  font-family: 'Aclonica', sans-serif;
+  margin: 0px;
+  padding: 0px;
+  height: 100vh;
+}
+.container{
+  display: flex;
+  height: 100vh;
+}
+.sidenav{
+  width: 18%;
+  height: 100vh;
+}
+.sidenav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    height: 100vh;
+    overflow-x: visible;
+    overflow-y: scroll;
+    text-align: center;
+    font-size: 13pt;
+}
+.main{
+  flex-grow: 1;
+  display: flex;
+  overflow-y: scroll;
+  flex-direction: column;
+  margin: auto;
+  height: 100vh;
+  padding-left: 3%;
+  padding-top: 3%;
+  align-items: baseline;
+}
+li a {
+  display: block;
+  color: #fff;
+  padding: 16px 16px;
+  text-decoration: none;
+}
+li a:hover:not(.active) {
+  background-color: rgba(255, 180, 40, 0.5);
+  color: #fff;
+}
+hr{
+  width: 75%;
+  height: 2px;
+  border: 0px;
+  padding: 0px;
+  margin-left: 12.5% !important;
+  margin-right: 12.5% !important;
+  background-color: rgba(255, 180, 40, 0.9);
+}
+.infohr{
+  height: 2px;
+  border: 0px;
+  padding: 0px;
+  margin-left: 12.5% !important;
+  margin-right: 12.5% !important;
+  background-color: rgba(255, 180, 40, 0.9);
+}
+.dropdown{
+  font-family: 'Aclonica', sans-serif;
+  border: 0px;
+  width: 250px;
+  background: #262626;
+  padding: 10px 20px;
+  font-size: 15px;
+  border-radius: 15px;
+  color: #fff;
+}
+.sidenav{
+  background-color: #fe9f0c;
+}
+.inputbox{
+  font-family: 'Aclonica', sans-serif;
+  border: 0px;
+  width: 160px;
+  background: #262626;
+  padding: 7px 15px;
+  font-size: 13px;
+  border-radius: 15px;
+  color: #fff;
+}
+.uticel_taxi button{
+  margin-right: 10px;
+  margin-top: 10px;
+}
+.uticel_taxi .szoveg_td{
+  text-align: left;
+}
+/* Gombok */
+.infogombok {
+  font-family: 'Aclonica', sans-serif;
+  border: 0px;
+  width: 300px;
+  background: #262626;
+  padding: 15px 30px;
+  font-size: 15px;
+  border-radius: 15px;
+  color: #fff;
+}
+.infogombok:hover{
+  background: rgba(255, 180, 40, 0.6);
+}
+.gombok{
+  padding-top: 200px;
+  padding-right: 50px;
+  padding-left: 50px;
+}
+.approve{
+  font-family: 'Aclonica', sans-serif;
+  border: 0px;
+  width: fit-content;
+  background: #0b8503;
+  padding: 15px 30px;
+  font-size: 13px;
+  border-radius: 15px;
+  color: #fff;
+}
+.deny{
+  font-family: 'Aclonica', sans-serif;
+  border: 0px;
+  width: fit-content;
+  background: #ab1a03;
+  padding: 15px 30px;
+  font-size: 13px;
+  border-radius: 15px;
+  color: #fff;
+}
+#success{
+  font-family: 'Aclonica', sans-serif;
+  border: 0px;
+  background: rgba(11, 133, 3, 0.4);
+  padding: 10px 30px;
+  margin: 10px 25px;
+  font-size: 15px;
+  border-radius: 15px;
+  color: #fff;
+}
+#error{
+  font-family: 'Aclonica', sans-serif;
+  border: 0px;
+  background: rgba(171, 26, 3, 0.6);
+  padding: 10px 30px;
+  margin: 10px 25px;
+  font-size: 15px;
+  border-radius: 15px;
+  color: #fff;
+}
+.szoveg_th{
+  color: #fff;
+  font-size: 32pt;
+  font-style: italic;
+  text-align: left;
+  margin-top: 10px;
+}
+.szoveg_td{
+  color: #fff;
+  font-size: 20px;
+  padding-top: 15px;
+  text-align: center;
+}
