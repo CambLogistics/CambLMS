@@ -1,57 +1,281 @@
-<div class="main changelog">
-	<h2>Changelog</h2>
-	<div style="color: white;">
-		<h4>v0.4.1 (Alpha) | 2022.??.??</h4>
-			Már az [ADMIN] oldalakon is vannak hibajelzések<br>
-			Egységesített műveleti- és visszajelzési rendszer [DEV]<br>
-			Nem frissülnek a listák a művelet befejeződése előtt [ADMIN] [BUGFIX]<br>
-	</div>
-	<div style="color: white;">
-		<h4>v0.4.0 (Alpha) | 2022.08.10.</h4>
-			Bejelentkező- és regisztrációs oldalon az "Enter" gomb lenyomásával is be lehet lépni/regisztrálni<br>
-			Inaktivitás jelentés mostmár a programon belül fog történni<br>
-			Elfelejtett jelszós rendszer implementálása<br>
-			Beszállítós információk eltávolítva a főoldalról<br>
-			Kevesebb villódzás az [ADMIN] oldalakon<br>
-			Új konfigurációs fájl formátum[DEV]<br>
-			Kisebb változtatások a felületen<br>
-			Favicon minden oldalon megjelenik<br>
-	</div>
-	<div style="color: white;">
-		<h4>v0.3.2 (Alpha) | 2022.06.17.</h4>
-			Az érvényes munkamenettel rendelkező, de elfogadásra váró felhasználók kijelentkeztetésre kerülnek<br>
-			Felhasználó törlésekor érvénytelenedik annak összes munkamenete<br> 
-			A szervizképek külön ablakban jelennek meg[ADMIN]<br>
-	</div>
-	<div style="color: white;">
-		<h4>v0.3.1 (Alpha) | 2022.06.15.</h4>
-			Jelszóváltoztatás javítva<br>
-			A képekhez csak megfelelő jogosultsággal lehet hozzáférni<br>
-	</div>
-	<div style="color: white;">
-		<h4>v0.3.0 (Alpha) | 2022.06.15.</h4>
-			Felhasználók rendezése rang szerint[ADMIN]<br>
-			Híváskezelésnél felhasználók rendezése hívások szerint csökkenő sorrendben[ADMIN]<br>
-			Emelt ár megjelenítése a beszállításnál dupla helyett<br>
-			Nem jelennek meg a felhasználóénál magasabb rangok a rangmódosításnál[ADMIN]<br>
-			A navbarban nincs dupla elválasztó<br>
-			Rugalmasabb jogosultságrendszer<br>
-	</div>
-	<div style="color: white;">
-		<h4>v0.2.0 (Alpha) | 2022.06.12.</h4>
-			Munkamenet meghosszabbításra kerül minden oldalbetöltéskor<br>
-			Szervizképek és iratok megjelenítése[ADMIN]<br>
-			Beszállításnál és vontatásnál csak 1.25 szorzó munkaidőn kívül<br>
-	</div>
-	<div style="color: white;">
-       		<h4>v0.1.0 (Alpha) | 2022.06.11.</h4>
-             	Bejelentkezés és regisztráció kinézete javítva<br>
-             	Sikeres regisztációkor átirányít a bejelentkező oldalra<br>
-             	Nincs fix lejárati ideje a sütinek<br>
-             	Nyitvatartás/dupla árak kezelése<br>
-	</div>
-	<div style="color: white;">
-       		<h4>v0.0.1 (Pre-Alpha) | 2022.05.22.</h4>
-				Első működő verzió
-	<div>
- </div>
+<!DOCTYPE html>
+<html>
+<head>
+<title>CambLogistics</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="main.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+</style>
+</head>
+<body class="cl-white">
+
+<!-- Top container -->
+<div class="cl-bar cl-top cl-dark-grey cl-large" style="z-index:4">
+  <button class="cl-bar-item cl-button cl-hide-large cl-hover-none cl-hover-text-light-grey" onclick="cl_open();"><i class="fa fa-bars"></i>  Menü</button>
+  <span class="cl-bar-item cl-right">CambLogistics</span>
+</div>
+
+<!-- Sidebar/menu -->
+<nav class="cl-sidebar cl-collapse cl-light-grey cl-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+  <div class="cl-container cl-row">
+    <div class="cl-col s4">
+      <img src="avatar.png" class="cl-circle cl-margin-right" style="width:46px">
+    </div>
+    <div class="cl-col s8 cl-bar">
+      <span>Üdv, <strong>${FirstName}</strong></span><br>
+    </div>
+  </div>
+  <hr>
+  <div class="cl-container">
+    <h5>Vezérlőpult</h5>
+  </div>
+  <div class="cl-bar-block">
+    <a href="#" class="cl-bar-item cl-button cl-padding-16 cl-hide-large cl-dark-grey cl-hover-red" onclick="cl_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Menü bezárás</a>
+    <a href="info.html" class="cl-bar-item cl-button cl-padding"><i class="fa fa-users fa-fw"></i>  Információ</a>
+    <a href="#" class="cl-bar-item cl-button cl-padding cl-orange cl-text-white"><i class="fa fa-bell fa-fw"></i>  Changelog</a>
+    <a href="taxi.html" class="cl-bar-item cl-button cl-padding"><i class="fa fa-taxi fa-fw"></i>  Taxizás</a>
+    <a href="tow.html" class="cl-bar-item cl-button cl-padding"><i class="fa fa-truck fa-fw"></i>  Vontatás</a>
+    <a href="docs.html" class="cl-bar-item cl-button cl-padding"><i class="fa fa-id-card fa-fw"></i>  Iratok</a>
+    <a href="img.html" class="cl-bar-item cl-button cl-padding"><i class="fa fa-file-image-o fa-fw"></i>  Szervízkép</a>
+    <a href="inactivity.html" class="cl-bar-item cl-button cl-padding"><i class="fa fa-free-code-camp fa-fw"></i>  Inaktivitás</a>
+    <a href="admin.html" class="cl-bar-item cl-button cl-padding"><i class="fa fa-shield fa-fw"></i>  Adminpanel</a>
+    <a href="settings.html" class="cl-bar-item cl-button cl-padding"><i class="fa fa-cog fa-fw"></i>  Beállítások</a>
+    <a href="login.html" class="cl-bar-item cl-button cl-padding cl-hover-red" ><i class="fa fa-sign-out fa-fw"></i>  Kijelentkezés</a><br><br>
+  </div>
+</nav>
+
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="cl-overlay cl-hide-large cl-animate-opacity" onclick="cl_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="cl-main" style="margin-left:300px;margin-top:43px;">
+
+    <!-- Header -->
+    <header class="cl-container" style="padding-top:22px">
+        <h5><b><i class="fa fa-bell"></i> Changelog</b></h5>
+    </header>
+
+    <!-- Body -->
+    <div class="cl-row-padding cl-margin-bottom">
+        <div class="cl-quarter">
+            <div class="cl-container cl-light-red cl-padding-small">
+                <div class="cl-left"><i class="fa fa-calendar cl-xxlarge"></i></div>
+                <div class="cl-right">
+                    <h3>v0.4.1</h3>
+                </div>
+            </div>
+        </div>
+        <div class="cl-panel">
+            <div class="cl-row-padding" style="margin:0 -16px">
+                <div class="cl-twothird">
+                    <h4>2022.??.??. </h4>
+                    <h6>
+                        Már az [ADMIN] oldalakon is vannak hibajelzések<br>
+                        Egységesített műveleti- és visszajelzési rendszer [DEV]<br>
+                        Nem frissülnek a listák a művelet befejeződése előtt [ADMIN] [BUGFIX]
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cl-row-padding cl-margin-bottom">
+        <div class="cl-quarter">
+            <div class="cl-container cl-green cl-padding-small">
+                <div class="cl-left"><i class="fa fa-calendar cl-xxlarge"></i></div>
+                <div class="cl-right">
+                    <h3>v0.4.0</h3>
+                </div>
+            </div>
+        </div>
+        <div class="cl-panel">
+            <div class="cl-row-padding" style="margin:0 -16px">
+                <div class="cl-twothird">
+                    <h4>2022.08.10. </h4>
+                    <h6>
+                        Bejelentkező- és regisztrációs oldalon az "Enter" gomb lenyomásával is be lehet lépni/regisztrálni<br>
+                        Inaktivitás jelentés mostmár a programon belül fog történni<br>
+                        Elfelejtett jelszós rendszer implementálása<br>
+                        Beszállítós információk eltávolítva a főoldalról<br>
+                        Kevesebb villódzás az [ADMIN] oldalakon<br>
+                        Új konfigurációs fájl formátum[DEV]<br>
+                        Kisebb változtatások a felületen<br>
+                        Favicon minden oldalon megjelenik
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cl-row-padding cl-margin-bottom">
+        <div class="cl-quarter">
+            <div class="cl-container cl-green cl-padding-small">
+                <div class="cl-left"><i class="fa fa-calendar cl-xxlarge"></i></div>
+                <div class="cl-right">
+                    <h3>v0.3.2</h3>
+                </div>
+            </div>
+        </div>
+        <div class="cl-panel">
+            <div class="cl-row-padding" style="margin:0 -16px">
+                <div class="cl-twothird">
+                    <h4>2022.06.17. </h4>
+                    <h6>
+                        Az érvényes munkamenettel rendelkező, de elfogadásra váró felhasználók kijelentkeztetésre kerülnek<br>
+                        Felhasználó törlésekor érvénytelenedik annak összes munkamenete<br>
+                        A szervizképek külön ablakban jelennek meg[ADMIN]
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cl-row-padding cl-margin-bottom">
+        <div class="cl-quarter">
+            <div class="cl-container cl-green cl-padding-small">
+                <div class="cl-left"><i class="fa fa-calendar cl-xxlarge"></i></div>
+                <div class="cl-right">
+                    <h3>v0.3.1</h3>
+                </div>
+            </div>
+        </div>
+        <div class="cl-panel">
+            <div class="cl-row-padding" style="margin:0 -16px">
+                <div class="cl-twothird">
+                    <h4>2022.06.15. </h4>
+                    <h6>
+                        Jelszóváltoztatás javítva<br>
+                        A képekhez csak megfelelő jogosultsággal lehet hozzáférni<br>
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cl-row-padding cl-margin-bottom">
+        <div class="cl-quarter">
+            <div class="cl-container cl-green cl-padding-small">
+                <div class="cl-left"><i class="fa fa-calendar cl-xxlarge"></i></div>
+                <div class="cl-right">
+                    <h3>v0.3.0</h3>
+                </div>
+            </div>
+        </div>
+        <div class="cl-panel">
+            <div class="cl-row-padding" style="margin:0 -16px">
+                <div class="cl-twothird">
+                    <h4>2022.06.15. </h4>
+                    <h6>
+                        Felhasználók rendezése rang szerint[ADMIN]<br>
+                        Híváskezelésnél felhasználók rendezése hívások szerint csökkenő sorrendben[ADMIN]<br>
+                        Emelt ár megjelenítése a beszállításnál dupla helyett<br>
+                        Nem jelennek meg a felhasználóénál magasabb rangok a rangmódosításnál[ADMIN]<br>
+                        A navbarban nincs dupla elválasztó<br>
+                        Rugalmasabb jogosultságrendszer
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cl-row-padding cl-margin-bottom">
+        <div class="cl-quarter">
+            <div class="cl-container cl-green cl-padding-small">
+                <div class="cl-left"><i class="fa fa-calendar cl-xxlarge"></i></div>
+                <div class="cl-right">
+                    <h3>v0.2.0</h3>
+                </div>
+            </div>
+        </div>
+        <div class="cl-panel">
+            <div class="cl-row-padding" style="margin:0 -16px">
+                <div class="cl-twothird">
+                    <h4>2022.06.12. </h4>
+                    <h6>
+                        Munkamenet meghosszabbításra kerül minden oldalbetöltéskor<br>
+                        Szervizképek és iratok megjelenítése[ADMIN]<br>
+                        Beszállításnál és vontatásnál csak 1.25 szorzó munkaidőn kívül
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cl-row-padding cl-margin-bottom">
+        <div class="cl-quarter">
+            <div class="cl-container cl-green cl-padding-small">
+                <div class="cl-left"><i class="fa fa-calendar cl-xxlarge"></i></div>
+                <div class="cl-right">
+                    <h3>v0.1.0</h3>
+                </div>
+            </div>
+        </div>
+        <div class="cl-panel">
+            <div class="cl-row-padding" style="margin:0 -16px">
+                <div class="cl-twothird">
+                    <h4>2022.06.11. </h4>
+                    <h6>
+                        Bejelentkezés és regisztráció kinézete javítva<br>
+                        Sikeres regisztációkor átirányít a bejelentkező oldalra<br>
+                        Nincs fix lejárati ideje a sütinek<br>
+                        Nyitvatartás/dupla árak kezelése
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cl-row-padding cl-margin-bottom">
+        <div class="cl-quarter">
+            <div class="cl-container cl-green cl-padding-small">
+                <div class="cl-left"><i class="fa fa-calendar cl-xxlarge"></i></div>
+                <div class="cl-right">
+                    <h3>v0.0.1</h3>
+                </div>
+            </div>
+        </div>
+        <div class="cl-panel">
+            <div class="cl-row-padding" style="margin:0 -16px">
+                <div class="cl-twothird">
+                    <h4>2022.05.22. </h4>
+                    <h6>Első működő verzió</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- End page content -->
+</div>
+
+<script>
+// Get the Sidebar
+var mySidebar = document.getElementById("mySidebar");
+
+// Get the DIV with overlay effect
+var overlayBg = document.getElementById("myOverlay");
+
+// Toggle between showing and hiding the sidebar, and add overlay effect
+function cl_open() {
+  if (mySidebar.style.display === 'block') {
+    mySidebar.style.display = 'none';
+    overlayBg.style.display = "none";
+  } else {
+    mySidebar.style.display = 'block';
+    overlayBg.style.display = "block";
+  }
+}
+
+// Close the sidebar with the close button
+function cl_close() {
+  mySidebar.style.display = "none";
+  overlayBg.style.display = "none";
+}
+</script>
+
+</body>
+</html>
