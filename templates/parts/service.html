@@ -1,52 +1,76 @@
-<div class="main service">
-   <p style="text-align: center;"><span id="success" style="display: none;"></span><span id="error" style="display: none;"></span></p>
-   <div>
-      <h2 class="szoveg_th" style="text-align: left; padding-bottom: 0px;">SzervÃ­z dÃ­jak felvÃ©tele</h2>
-         <table>
-            <tr>
-               <td style="padding-right: 30px;padding-top: 10px;">
-                  <label class="szoveg_td_also">NÃ©v</label><br>
-                  <select class="dropdown" ws-var="MemberSelectID" style="width: 300px">
-                     <option ws-replace="MemberList"></option>
-                     <option ws-template="MemberItem" value="${UserID}">${Member}</option>
-                  </select>
-               </td>
-               <td style="padding-right: 30px;padding-top: 10px;">
-                  <label class="szoveg_td_also">KÃ©pekbÅ‘l Ã¶sszeg</label><br>
-                  <input class="inputbox" type="text" ws-var="Fee" name="ServiceFee">
-               </td>
-            </tr>
-            <tr>
-               <td>
-                  <button ws-onclick="Submit" name="submit" class="approve">HozzÃ¡ad</button>
-               </td>
-            </tr>
-         </table>
-   </div>
-   <div class="listak">
-      <table>
-         <th colspan="4" class="szoveg_th">SzervÃ­z dÃ­jak</th>
-         <tr>
-            <td colspan="4">
-         <tr class="szoveg_td">
-            <td style="padding-right: 25px;">ID</td>
-            <td style="padding-right: 25px;">NÃ©v</td>
-            <td style="padding-right: 25px;">KÃ©pekbÅ‘l Ã¶sszeg</td>
-            <td style="padding-right: 25px;">Fizetve</td>
-         </tr>
-         <tr>
-            <td colspan="4" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td>
-         </tr>
-         <tr ws-replace="ServiceList"></div>
-         <tr ws-template="ServiceListItem" class="adat">
-            <td class="adat">${ID}</td>
-            <td class="adat">${Name}</td>
-            <td class="adat">${ServiceFee}</td>
-            <td><button class="approve" ws-onclick="Paid">Fizetve</button></td>
-         </tr>
-      </table>
-   </div>
-</div>
-</body>
+<!-- !PAGE CONTENT! -->
+<div class="cl-main" style="margin-left:300px;margin-top:43px;">
 
-</html>
+    <!-- Header -->
+    <header class="cl-container" style="padding-top:22px">
+        <h5><b><i class="fa fa-wrench"></i> Szervíz</b></h5>
+    </header>
+
+    <div class="cl-panel">
+        <div class="cl-row-padding" style="margin:0 -16px">
+            <div class="cl-half">
+                <select class="cl-select" style="width: 300px;" ws-var="SelectedMember" ws-onchange="OnSelection">
+                    <option value="${MemberID}" ws-template="MemberItem">${MemberName}</option>
+                    <option ws-replace="MemberList">${Member}</option>
+                </select>
+                <table style="padding-top: 30px;">
+                    <tr class="szoveg_td">
+                        <td class="cl-large" style="padding-right: 25px;">Kép link</td>
+                        <td class="cl-large" style="padding-right: 25px;">Feltöltési idõ</td>
+                        <td class="cl-large" style="padding-right: 25px;">Törlés</td>
+                    </tr>
+                    <tr><td colspan="4" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td></tr>
+                    <tr ws-replace="ImageList"></tr>
+                    <tr class="adat" ws-template="ImageItem">
+                        <td class="cl-large"><a href="${ImageLink}" target="_blank">Megtekintés</a></td>
+                        <td class="cl-large">${UploadDate}</td>
+                        <td><button class="cl-button cl-large cl-red" ws-onclick="Delete">X</button></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="cl-half">
+                <table>
+                    <tr>
+                        <td style="padding-right: 30px;padding-top: 10px;">
+                            <label class="cl-large">Név</label><br>
+                            <select class="cl-select" ws-var="MemberSelectID" style="width: 300px">
+                                <option ws-replace="MemberList"></option>
+                                <option ws-template="MemberItem" value="${UserID}">${Member}</option>
+                            </select>
+                        </td>
+                        <td style="padding-right: 30px;padding-top: 10px;">
+                            <label class="cl-large">Képekbõl összeg</label><br>
+                            <input class="cl-input" type="text" ws-var="Fee" name="ServiceFee">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><button ws-onclick="Submit" name="submit" class="cl-button cl-large cl-green">Hozzáad</button></td>
+                    </tr>
+                </table>
+
+                <table class="cl-padding-top-64">
+                    <tr>
+                        <td colspan="4">
+                    <tr class="szoveg_td">
+                        <td class="cl-large" style="padding-right: 25px;">ID</td>
+                        <td class="cl-large" style="padding-right: 25px;">Név</td>
+                        <td class="cl-large" style="padding-right: 25px;">Képekbõl összeg</td>
+                        <td class="cl-large" style="padding-right: 25px;">Fizetve</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td>
+                    </tr>
+                    <tr ws-replace="ServiceList">
+            </div>
+            <tr ws-template="ServiceListItem" class="adat">
+                <td class="cl-large">${ID}</td>
+                <td class="cl-large">${Name}</td>
+                <td class="cl-large">${ServiceFee}</td>
+                <td><button class="cl-button cl-large cl-green" ws-onclick="Paid">Fizetve</button></td>
+            </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- End page content -->
+</div>

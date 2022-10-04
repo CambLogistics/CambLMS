@@ -1,0 +1,52 @@
+<div class="main service">
+   <p style="text-align: center;"><span id="success" style="display: none;"></span><span id="error" style="display: none;"></span></p>
+   <div>
+      <h2 class="szoveg_th" style="text-align: left; padding-bottom: 0px;">Szervíz díjak felvétele</h2>
+         <table>
+            <tr>
+               <td style="padding-right: 30px;padding-top: 10px;">
+                  <label class="szoveg_td_also">Név</label><br>
+                  <select class="dropdown" ws-var="MemberSelectID" style="width: 300px">
+                     <option ws-replace="MemberList"></option>
+                     <option ws-template="MemberItem" value="${UserID}">${Member}</option>
+                  </select>
+               </td>
+               <td style="padding-right: 30px;padding-top: 10px;">
+                  <label class="szoveg_td_also">Képekből összeg</label><br>
+                  <input class="inputbox" type="text" ws-var="Fee" name="ServiceFee">
+               </td>
+            </tr>
+            <tr>
+               <td>
+                  <button ws-onclick="Submit" name="submit" class="approve">Hozzáad</button>
+               </td>
+            </tr>
+         </table>
+   </div>
+   <div class="listak">
+      <table>
+         <th colspan="4" class="szoveg_th">Szervíz díjak</th>
+         <tr>
+            <td colspan="4">
+         <tr class="szoveg_td">
+            <td style="padding-right: 25px;">ID</td>
+            <td style="padding-right: 25px;">Név</td>
+            <td style="padding-right: 25px;">Képekből összeg</td>
+            <td style="padding-right: 25px;">Fizetve</td>
+         </tr>
+         <tr>
+            <td colspan="4" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td>
+         </tr>
+         <tr ws-replace="ServiceList"></div>
+         <tr ws-template="ServiceListItem" class="adat">
+            <td class="adat">${ID}</td>
+            <td class="adat">${Name}</td>
+            <td class="adat">${ServiceFee}</td>
+            <td><button class="approve" ws-onclick="Paid">Fizetve</button></td>
+         </tr>
+      </table>
+   </div>
+</div>
+</body>
+
+</html>
