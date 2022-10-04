@@ -13,14 +13,14 @@
                     <th colspan="10" class="cl-large">Tagok</th>
                     <tr class="szoveg_td">
                         <td class="cl-large">ID</td>
-                        <td class="cl-large">Név</td>
+                        <td class="cl-large">NÃ©v</td>
                         <td class="cl-large">Account ID</td>
                         <td class="cl-large">Rang</td>
-                        <td class="cl-large">Törlés</td>
+                        <td class="cl-large">TÃ¶rlÃ©s</td>
                     </tr>
                     <tr><td colspan="10" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td></tr>
-                    <tr ws-replace="UserList"></tr>
-                    <tr ws-template="UserListItem">
+                    <tr ws-replace="ActiveUserList"></tr>
+                    <tr ws-template="ActiveUserListItem">
                         <td class="cl-large">${ID}</td>
                         <td class="cl-large">${Name}</td>
                         <td class="cl-large">${AccID}</td>
@@ -43,7 +43,7 @@
                     <th colspan="10" class="cl-large">Fekete lista</th>
                     <tr>
                         <td style="padding-right: 30px;padding-top: 10px;">
-                            <label class="cl-large">Név</label><br>
+                            <label class="cl-large">NÃ©v</label><br>
                             <input class="cl-input" ws-var="Name" type="text" name="Name" disabled>
                         </td>
                         <td style="padding-right: 30px;padding-top: 10px;">
@@ -61,31 +61,31 @@
                             <input class="cl-input" ws-var="Reason" type="text" name="Reason">
                         </td>
                         <td style="padding-right: 30px;padding-top: 25px;">
-                            <label class="cl-large">Visszajöhet-e?</label><br>
+                            <label class="cl-large">VisszajÃ¶het-e?</label><br>
                             <input type="checkbox" ws-var="ComeBack" name="ComeBack" class="cl-checkbox">
                         </td>
                         <td>
-                            <button ws-onclick="Confirm" class="cl-button cl-large cl-green" id="approveexmember">Jóváhagy</button>
+                            <button ws-onclick="Confirm" class="cl-button cl-large cl-green" id="approveexmember">JÃ³vÃ¡hagy</button>
                         </td>
                     </tr>
                 </table>
                 <table>
                     <tr class="szoveg_td">
-                        <td class="cl-large" style="padding-right: 25px;">Név</td>
+                        <td class="cl-large" style="padding-right: 25px;">NÃ©v</td>
                         <td class="cl-large" style="padding-right: 25px;">Account ID</td>
                         <td class="cl-large" style="padding-right: 25px;">Rang</td>
-                        <td class="cl-large" style="padding-right: 25px;">Kirúgás indoka</td>
-                        <td class="cl-large" style="padding-right: 25px;">Visszajöhet-e</td>
+                        <td class="cl-large" style="padding-right: 25px;">KirÃºgÃ¡s indoka</td>
+                        <td class="cl-large" style="padding-right: 25px;">VisszajÃ¶het-e</td>
                     </tr>
                     <tr><td colspan="10" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td></tr>
-                    <tr ws-replace="UserList"></tr>
-                    <tr ws-template="UserListItem">
+                    <tr ws-replace="RemovedUserList"></tr>
+                    <tr ws-template="RemovedUserListItem">
                         <td class="cl-large">${Name}</td>
                         <td class="cl-large">${AccID}</td>
                         <td class="cl-large">${Rank}</td>
                         <td class="cl-large">${Reason}</td>
                         <td class="cl-large">${ComeBack}</td>
-                        <td class="cl-large"><button ws-replace="EditButtonPlaceholder"></button><button ws-template="EditButtonTemplate" ws-onclick="Edit" class="cl-button cl-green">Szerkesztés</button></td>
+                        <td class="cl-large"><button ws-replace="EditButtonPlaceholder"></button><button ws-template="EditButtonTemplate" ws-onclick="Edit" class="cl-button cl-green">SzerkesztÃ©s</button></td>
                     </tr>
                 </table>
             </div>
