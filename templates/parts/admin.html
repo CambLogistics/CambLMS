@@ -1,12 +1,81 @@
-   <body>
-      <div class="main">
-         <div class="gombok">
-            <a href="hivas.html"><button class="infogombok">HÃ­vÃ¡sok</button></a>
-            <a href="nev.html"><button class="infogombok">NÃ©v vÃ¡ltoztatÃ¡s</button></a>
-            <a href="regi.html"><button class="infogombok">RegisztrÃ¡ciÃ³</button></a>
-            <a href="tagok.html"><button class="infogombok">Tagok</button></a>
-            <a href="szerviz.html"><button class="infogombok">SzervÃ­z dÃ­jak</button></a>
-         </div>
-      </div>
-   </body>
-</html>
+<!-- !PAGE CONTENT! -->
+<div class="cl-main main" style="margin-left:300px;margin-top:43px;">
+
+    <!-- Header -->
+    <header class="cl-container" style="padding-top:22px">
+        <h5><b><i class="fa fa-shield"></i> Adminpanel</b></h5>
+    </header>
+
+    <div class="cl-row-padding cl-margin-bottom">
+        <div class="cl-quarter">
+            <div class="cl-container cl-orange cl-text-white cl-padding-8">
+                <div class="cl-left"><i class="fa fa-taxi cl-xxlarge cl-padding-16"></i></div>
+                <div class="cl-right">
+                    <h3>${TaxiCar} / 16</h3>
+                </div>
+            </div>
+        </div>
+        <div class="cl-half">
+            <div class="cl-container cl-green cl-padding-8">
+                <div class="cl-left"><i class="fa fa-dollar cl-xxlarge cl-padding-16"></i></div>
+                <div class="cl-right">
+                    <h3>${CashSum} $</h3>
+                </div>
+            </div>
+        </div>
+        <div class="cl-quarter">
+            <div class="cl-container cl-light-red cl-text-white cl-padding-8">
+                <div class="cl-left"><i class="fa fa-truck cl-xxlarge cl-padding-16"></i></div>
+                <div class="cl-right">
+                    <h3>${TowTruck} / 1</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cl-panel">
+        <div class="cl-row-padding" style="margin:0 -16px">
+            <div class="cl-half">
+                <h3>Heti hívások</h3>
+                <button class="cl-button cl-padding-16 cl-red" ws-onclick="CloseWeek" id="closeweek">Hét zárás</button>
+                <table class="cl-padding-top-16">
+                    <tr class="szoveg_td">
+                        <td class="cl-large" style="padding-right: 25px;">Név</td>
+                        <td class="cl-large" style="padding-right: 25px;">Rang</td>
+                        <td class="cl-large" style="padding-right: 25px;">Hívásszám</td>
+                    </tr>
+                    <tr><td colspan="3" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td></tr>
+                    <tr ws-replace="MemberList">
+            </div>
+            <tr ws-template="Member">
+                <td class="cl-large">${Name}</td>
+                <td class="cl-large">${Rank}</td>
+                <td class="cl-large">${CallNum}</td>
+            </tr>
+            </table>
+        </div>
+        <div class="cl-half">
+            <h3>TOP1 viewer</h3>
+            <button class="cl-button cl-padding-16 cl-red" ws-onclick="CloseMonth" id="closemonth">TOP1 zárás</button>
+            <table class="cl-padding-top-16">
+                <tr class="szoveg_td">
+                    <td class="cl-large" style="padding-right: 25px;">Név</td>
+                    <td class="cl-large" style="padding-right: 25px;">Rang</td>
+                    <td class="cl-large" style="padding-right: 25px;">Hívásszám</td>
+                    <td class="cl-large" style="padding-right: 25px;">Havi kereset</td>
+                </tr>
+                <tr><td colspan="4" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td></tr>
+                <tr ws-replace="MemberList">
+        </div>
+        <tr ws-template="Member">
+            <td class="cl-large">${Name}</td>
+            <td class="cl-large">${Rank}</td>
+            <td class="cl-large">${CallMonth}</td>
+            <td class="cl-large">${MonthMoney}</td>
+        </tr>
+        </table>
+    </div>
+</div>
+  </div>
+<!-- End page content -->
+</div>
