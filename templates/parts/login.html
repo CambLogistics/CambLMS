@@ -13,11 +13,11 @@
                                     <div class="section text-center">
                                         <h4 class="mb-4 pb-3">Bejelentkezés</h4>
                                         <div class="form-group">
-                                            <input type="text" ws-var="Name" ws-onkeydown="Kblogin" name="logname" class="form-style" placeholder="IG neved" id="logname" autocomplete="off">
+                                            <input type="text" ws-var="Name" ws-onkeydown="Kblogin" name="logname" class="form-style" placeholder="IG neved" id="logname" autocomplete="off" required>
                                             <i class="input-icon uil uil-user"></i>
                                         </div>
                                         <div class="form-group mt-2">
-                                            <input type="password" ws-var="Password" ws-onkeydown="Kblogin" name="logpass" class="form-style" placeholder="Jelszó" id="logpass" autocomplete="off">
+                                            <input type="password" ws-var="Password" ws-onkeydown="Kblogin" name="logpass" class="form-style" placeholder="Jelszó" id="logpass" autocomplete="off" required>
                                             <i class="input-icon uil uil-lock-alt"></i>
                                         </div>
                                         <button class="btn mt-4" ws-onclick="Login">Bejelentkezés</button>
@@ -30,19 +30,19 @@
                                     <div class="section text-center">
                                         <h4 class="mb-4 pb-3">Regisztráció</h4>
                                         <div class="form-group">
-                                            <input type="text" ws-var="Name" ws-onkeydown="Kbregister" name="logname" class="form-style" placeholder="IG neved" id="logname" autocomplete="off">
+                                            <input type="text" ws-var="Name" ws-onkeydown="Kbregister" name="logname" class="form-style" placeholder="IG neved" id="logname" autocomplete="off" required>
                                             <i class="input-icon uil uil-user"></i>
                                         </div>
                                         <div class="form-group mt-2">
-                                            <input type="text" ws-var="AccID" ws-onkeydown="Kbregister" name="logaccid" class="form-style" placeholder="Account ID" id="logaccid" autocomplete="off">
+                                            <input type="text" ws-var="AccID" ws-onkeydown="Kbregister" name="logaccid" class="form-style" placeholder="Account ID" id="logaccid" autocomplete="off" required>
                                             <i class="input-icon uil uil-invoice"></i>
                                         </div>
                                         <div class="form-group mt-2">
-                                            <input type="email" ws-var="Email" ws-onkeydown="Kbregister" name="logemail" class="form-style" placeholder="Email" id="logemail" autocomplete="off">
+                                            <input type="email" ws-var="Email" ws-onkeydown="Kbregister" name="logemail" class="form-style" placeholder="Email" id="logemail" autocomplete="off" required>
                                             <i class="input-icon uil uil-at"></i>
                                         </div>
                                         <div class="form-group mt-2">
-                                            <input type="password" ws-var="Password" ws-onkeydown="Kbregister" name="logpass" class="form-style" placeholder="Jelszó" id="logpass" autocomplete="off">
+                                            <input type="password" ws-var="Password" ws-onkeydown="Kbregister" name="logpass" class="form-style" placeholder="Jelszó" id="logpass" autocomplete="off" required>
                                             <i class="input-icon uil uil-lock-alt"></i>
                                         </div>
                                         <button class="btn mt-4" ws-onclick="Register">Regisztráció</button>
