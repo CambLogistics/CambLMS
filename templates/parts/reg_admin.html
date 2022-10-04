@@ -1,23 +1,51 @@
-      <div class="main">
-         <p style="text-align: center;"><span id="success" style="display: none;"></span><span id="error" style="display: none;"></span></p>
-         <div class="listak">
-            <table>
-               <th colspan="5" class="szoveg_th">RegisztrÃ¡ciÃ³k</th>
-               <tr class="szoveg_td">
-                  <td style="padding-right: 25px;">NÃ©v</td>
-                  <td style="padding-right: 25px;">Account ID</td>
-                  <td style="padding-right: 25px;">E-mail</td>
-                  <td colspan="2" style="padding-right: 25px;">JÃ³vÃ¡hagyÃ¡s</td>
-               </tr>
-               <tr><td colspan="5" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td></tr>
-               <tr ws-replace="UserList"></div>
-               <tr ws-template="UserListItem" class="adat">
-                  <td>${Name}</td>
-                  <td>${AccID}</td>
-                  <td>${Email}</td>
-                  <td><button value="${UserID}" class="approve" ws-onclick="Approve">JÃ³vÃ¡hagy</button></td>
-                  <td><button value="${UserID}" class="deny" ws-onclick="Deny">ElutasÃ­t</button></td>
-               </tr>
-            </table>
-         </div>
-      </div>
+<!-- !PAGE CONTENT! -->
+<div class="cl-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+  <header class="cl-container" style="padding-top:22px">
+    <h5><b><i class="fa fa-user-plus"></i> Regisztráció / Névváltások</b></h5>
+  </header>
+
+  <div class="cl-panel">
+    <div class="cl-row-padding" style="margin:0 -16px">
+        <table>
+          <th colspan="5" class="szoveg_th">Regisztrációk</th>
+          <tr class="szoveg_td">
+            <td style="padding-right: 25px;">Név</td>
+            <td style="padding-right: 25px;">Account ID</td>
+            <td style="padding-right: 25px;">E-mail</td>
+            <td colspan="2" style="padding-right: 25px;">Jóváhagyás</td>
+          </tr>
+          <tr><td colspan="5" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td></tr>
+          <tr ws-replace="UserList"></div>
+          <tr ws-template="UserListItem" class="adat">
+            <td>${Name}</td>
+            <td>${AccID}</td>
+            <td>${Email}</td>
+            <td><button value="${UserID}" class="cl-button cl-green" ws-onclick="Approve">Jóváhagy</button></td>
+            <td><button value="${UserID}" class="cl-button cl-red" ws-onclick="Deny">Elutasít</button></td>
+          </tr>
+        </table>
+
+        <table class="cl-padding-top-128">
+          <th colspan="5" class="szoveg_th">Név változtatások</th>
+          <tr class="szoveg_td">
+            <td style="padding-right: 25px;">ID</td>
+            <td style="padding-right: 25px;">Régi név</td>
+            <td style="padding-right: 25px;">Új név</td>
+            <td colspan="2" style="padding-right: 25px;">Jóváhagyás</td>
+          </tr>
+          <tr><td colspan="5" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td></tr>
+          <tr ws-replace="UserList"></div>
+          <tr ws-template="NameChangeUser">
+            <td class="adat">${ID}</td>
+            <td class="adat">${OldName}</td>
+            <td class="adat">${NewName}</td>
+            <td><button class="cl-button cl-green" value="${ID}" ws-onclick="Approve">Jóváhagyás</button></td>
+            <td><button class="cl-button cl-red" value="${ID}" ws-onclick="Deny">Elutasít</button></td>
+          </tr>
+        </table>
+    </div>
+  </div>
+  <!-- End page content -->
+</div>
