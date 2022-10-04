@@ -1,0 +1,26 @@
+       <div class="wrapper">
+         <div class="title">
+            Bejelentkezés
+         </div>
+            <div class="field">
+               <input type="text" ws-var="Name" ws-onkeydown="Kblogin" required>
+               <label>IG név</label>
+            </div>
+            <div class="field">
+               <input type="password" ws-var="Password" ws-onkeydown="Kblogin" required>
+               <label>Jelszó</label>
+            </div>
+            <div class="content">
+               <div class="checkbox">
+                  <input type="checkbox" ws-var="RememberMe" id="remember-me">
+                  <label for="remember-me">Jegyezz meg</label>
+               </div>
+               <div class="pass-link">
+                  <a href="/forgotpass">Elfelejtetted <br>a jelszavad?</a>
+               </div>
+            </div>
+            <button class="submit" ws-onclick="Login">Bejelentkezés</button>
+            <div class="signup-link">
+               Nem vagy tag? <a href="/registration">Regizz itt</a>
+            </div>
+      </div>

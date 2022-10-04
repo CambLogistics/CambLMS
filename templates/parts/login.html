@@ -1,26 +1,58 @@
-       <div class="wrapper">
-         <div class="title">
-            BejelentkezÃ©s
-         </div>
-            <div class="field">
-               <input type="text" ws-var="Name" ws-onkeydown="Kblogin" required>
-               <label>IG nÃ©v</label>
+<div class="section">
+    <div class="container">
+        <div class="row full-height justify-content-center">
+            <div class="col-12 text-center align-self-center py-5">
+                <div class="section pb-5 pt-5 pt-sm-2 text-center">
+                    <h6 class="mb-0 pb-3"><span>Bejelentkezés </span><span>Regisztráció</span></h6>
+                    <input class="checkbox" type="checkbox" id="reg-log" name="reg-log" />
+                    <label for="reg-log"></label>
+                    <div class="card-3d-wrap mx-auto">
+                        <div class="card-3d-wrapper">
+                            <div class="card-front">
+                                <div class="center-wrap">
+                                    <div class="section text-center">
+                                        <h4 class="mb-4 pb-3">Bejelentkezés</h4>
+                                        <div class="form-group">
+                                            <input type="text" ws-var="Name" ws-onkeydown="Kblogin" name="logname" class="form-style" placeholder="IG neved" id="logname" autocomplete="off">
+                                            <i class="input-icon uil uil-user"></i>
+                                        </div>
+                                        <div class="form-group mt-2">
+                                            <input type="password" ws-var="Password" ws-onkeydown="Kblogin" name="logpass" class="form-style" placeholder="Jelszó" id="logpass" autocomplete="off">
+                                            <i class="input-icon uil uil-lock-alt"></i>
+                                        </div>
+                                        <button class="btn mt-4" ws-onclick="Login">Bejelentkezés</button>
+                                        <p class="mb-0 mt-4 text-center"><a href="/forgotpass" class="link">Elfelejtetted a jelszavad?</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-back">
+                                <div class="center-wrap">
+                                    <div class="section text-center">
+                                        <h4 class="mb-4 pb-3">Regisztráció</h4>
+                                        <div class="form-group">
+                                            <input type="text" ws-var="Name" ws-onkeydown="Kbregister" name="logname" class="form-style" placeholder="IG neved" id="logname" autocomplete="off">
+                                            <i class="input-icon uil uil-user"></i>
+                                        </div>
+                                        <div class="form-group mt-2">
+                                            <input type="text" ws-var="AccID" ws-onkeydown="Kbregister" name="logaccid" class="form-style" placeholder="Account ID" id="logaccid" autocomplete="off">
+                                            <i class="input-icon uil uil-invoice"></i>
+                                        </div>
+                                        <div class="form-group mt-2">
+                                            <input type="email" ws-var="Email" ws-onkeydown="Kbregister" name="logemail" class="form-style" placeholder="Email" id="logemail" autocomplete="off">
+                                            <i class="input-icon uil uil-at"></i>
+                                        </div>
+                                        <div class="form-group mt-2">
+                                            <input type="password" ws-var="Password" ws-onkeydown="Kbregister" name="logpass" class="form-style" placeholder="Jelszó" id="logpass" autocomplete="off">
+                                            <i class="input-icon uil uil-lock-alt"></i>
+                                        </div>
+                                        <button class="btn mt-4" ws-onclick="Register">Regisztráció</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="field">
-               <input type="password" ws-var="Password" ws-onkeydown="Kblogin" required>
-               <label>JelszÃ³</label>
-            </div>
-            <div class="content">
-               <div class="checkbox">
-                  <input type="checkbox" ws-var="RememberMe" id="remember-me">
-                  <label for="remember-me">Jegyezz meg</label>
-               </div>
-               <div class="pass-link">
-                  <a href="/forgotpass">Elfelejtetted <br>a jelszavad?</a>
-               </div>
-            </div>
-            <button class="submit" ws-onclick="Login">BejelentkezÃ©s</button>
-            <div class="signup-link">
-               Nem vagy tag? <a href="/registration">Regizz itt</a>
-            </div>
-      </div>
+        </div>
+    </div>
+</div>
