@@ -9,9 +9,9 @@
     <div class="cl-panel">
         <div class="cl-row-padding" style="margin:0 -16px">
             <div class="cl-half">
-                <select class="cl-select" style="width: 300px;" ws-var="SelectedMember" ws-onchange="OnSelection">
-                    <option value="${MemberID}" ws-template="MemberItem">${MemberName}</option>
-                    <option ws-replace="MemberList">${Member}</option>
+                <select class="cl-select" style="width: 300px;" ws-var="SelectedUploader" ws-onchange="OnSelection">
+                    <option value="${MemberID}" ws-template="UploaderItem">${MemberName}</option>
+                    <option ws-replace="UploaderList"></option>
                 </select>
                 <table style="padding-top: 30px;">
                     <tr class="szoveg_td">
@@ -34,8 +34,8 @@
                         <td style="padding-right: 30px;padding-top: 10px;">
                             <label class="cl-large">Név</label><br>
                             <select class="cl-select" ws-var="MemberSelectID" style="width: 300px">
-                                <option ws-replace="MemberList"></option>
-                                <option ws-template="MemberItem" value="${UserID}">${Member}</option>
+                                <option ws-replace="OwedMemberList"></option>
+                                <option ws-template="OwedMemberItem" value="${UserID}">${Member}</option>
                             </select>
                         </td>
                         <td style="padding-right: 30px;padding-top: 10px;">

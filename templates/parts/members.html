@@ -19,8 +19,8 @@
                         <td class="cl-large">Törlés</td>
                     </tr>
                     <tr><td colspan="10" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td></tr>
-                    <tr ws-replace="UserList"></tr>
-                    <tr ws-template="UserListItem">
+                    <tr ws-replace="ActiveUserList"></tr>
+                    <tr ws-template="ActiveUserListItem">
                         <td class="cl-large">${ID}</td>
                         <td class="cl-large">${Name}</td>
                         <td class="cl-large">${AccID}</td>
@@ -78,8 +78,8 @@
                         <td class="cl-large" style="padding-right: 25px;">Visszajöhet-e</td>
                     </tr>
                     <tr><td colspan="10" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td></tr>
-                    <tr ws-replace="UserList"></tr>
-                    <tr ws-template="UserListItem">
+                    <tr ws-replace="RemovedUserList"></tr>
+                    <tr ws-template="RemovedUserListItem">
                         <td class="cl-large">${Name}</td>
                         <td class="cl-large">${AccID}</td>
                         <td class="cl-large">${Rank}</td>
