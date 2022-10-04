@@ -1,27 +1,27 @@
 ## New design integration
-- [] Admin
-- [] Calls
-- [] Cars
+- [x] Admin
+- [x] Calls
+- [x] Cars
 - [x] Changelog
-- [] Docview
+- [x] Docview
 - [x] Docs
-- [] Exmembers
-- [] Forgotpass
+- [x] Exmembers
+- [x] Forgotpass
 - [x] Img
-- [] Imgview
+- [x] Imgview
 - [x] Inactivity
-- [] Inanvitity_admin
+- [x] Inactivity_admin
 - [x] Info
-- [] Login
-- [] Members
-- [] Name_admin
+- [x] Login
+- [x] Members
+- [x] Name_admin
 - [x] Namechange
 - [] Navbar (I moved to the old templates because i probably cant separate it from the main)
 - [x] Notfound (We're not changing this!)
 - [x] Passchange
-- [] Reg_admin
-- [] Registration
-- [] Service
+- [x] Reg_admin
+- [x] Registration
+- [x] Service
 - [x] Settings
 - [x] Taxi
 - [x] Tow
