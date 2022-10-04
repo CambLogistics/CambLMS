@@ -3,7 +3,7 @@
 
     <!-- Header -->
     <header class="cl-container" style="padding-top:22px">
-        <h5><b><i class="fa fa-wrench"></i> Szervíz</b></h5>
+        <h5><b><i class="fa fa-wrench"></i> SzervÃ­z</b></h5>
     </header>
 
     <div class="cl-panel">
@@ -15,14 +15,14 @@
                 </select>
                 <table style="padding-top: 30px;">
                     <tr class="szoveg_td">
-                        <td class="cl-large" style="padding-right: 25px;">Kép link</td>
-                        <td class="cl-large" style="padding-right: 25px;">Feltöltési idõ</td>
-                        <td class="cl-large" style="padding-right: 25px;">Törlés</td>
+                        <td class="cl-large" style="padding-right: 25px;">KÃ©p link</td>
+                        <td class="cl-large" style="padding-right: 25px;">FeltÃ¶ltÃ©si idÅ‘</td>
+                        <td class="cl-large" style="padding-right: 25px;">TÃ¶rlÃ©s</td>
                     </tr>
                     <tr><td colspan="4" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td></tr>
                     <tr ws-replace="ImageList"></tr>
                     <tr class="adat" ws-template="ImageItem">
-                        <td class="cl-large"><a href="${ImageLink}" target="_blank">Megtekintés</a></td>
+                        <td class="cl-large"><a href="${ImageLink}" target="_blank">MegtekintÃ©s</a></td>
                         <td class="cl-large">${UploadDate}</td>
                         <td><button class="cl-button cl-large cl-red" ws-onclick="Delete">X</button></td>
                     </tr>
@@ -32,19 +32,19 @@
                 <table>
                     <tr>
                         <td style="padding-right: 30px;padding-top: 10px;">
-                            <label class="cl-large">Név</label><br>
+                            <label class="cl-large">NÃ©v</label><br>
                             <select class="cl-select" ws-var="MemberSelectID" style="width: 300px">
                                 <option ws-replace="MemberList"></option>
                                 <option ws-template="MemberItem" value="${UserID}">${Member}</option>
                             </select>
                         </td>
                         <td style="padding-right: 30px;padding-top: 10px;">
-                            <label class="cl-large">Képekbõl összeg</label><br>
+                            <label class="cl-large">KÃ©pekbÅ‘l Ã¶sszeg</label><br>
                             <input class="cl-input" type="text" ws-var="Fee" name="ServiceFee">
                         </td>
                     </tr>
                     <tr>
-                        <td><button ws-onclick="Submit" name="submit" class="cl-button cl-large cl-green">Hozzáad</button></td>
+                        <td><button ws-onclick="Submit" name="submit" class="cl-button cl-large cl-green">HozzÃ¡ad</button></td>
                     </tr>
                 </table>
 
@@ -53,8 +53,8 @@
                         <td colspan="4">
                     <tr class="szoveg_td">
                         <td class="cl-large" style="padding-right: 25px;">ID</td>
-                        <td class="cl-large" style="padding-right: 25px;">Név</td>
-                        <td class="cl-large" style="padding-right: 25px;">Képekbõl összeg</td>
+                        <td class="cl-large" style="padding-right: 25px;">NÃ©v</td>
+                        <td class="cl-large" style="padding-right: 25px;">KÃ©pekbÅ‘l Ã¶sszeg</td>
                         <td class="cl-large" style="padding-right: 25px;">Fizetve</td>
                     </tr>
                     <tr>

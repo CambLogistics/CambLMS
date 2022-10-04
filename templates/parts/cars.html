@@ -3,7 +3,7 @@
 
   <!-- Header -->
   <header class="cl-container" style="padding-top:22px">
-    <h5><b><i class="fa fa-car"></i> Autó nyílvántartás</b></h5>
+    <h5><b><i class="fa fa-car"></i> AutÃ³ nyÃ­lvÃ¡ntartÃ¡s</b></h5>
   </header>
 
   <div class="cl-panel">
@@ -15,7 +15,7 @@
                <input class="cl-input" ws-var="NewID" type="text" name="ID">
             </td>
             <td style="padding-right: 30px;padding-top: 10px;">
-               <label class="cl-large">Típus</label><br>
+               <label class="cl-large">TÃ­pus</label><br>
                <input class="cl-input" ws-var="NewType" type="text" name="Type">
             </td>
             <td style="padding-right: 30px;padding-top: 10px;">
@@ -50,19 +50,19 @@
                </select>
             </td>
             <td style="padding-right: 30px;padding-top: 25px;">
-               <label class="cl-large">Turbó</label><br>
+               <label class="cl-large">TurbÃ³</label><br>
                <select class="cl-select" ws-var="NewTurbo" style="width: 150px">
                   <option ws-replace="TurboTuningList"></option>
                </select>
             </td>
             <td style="padding-right: 30px;padding-top: 25px;">
-               <label class="cl-large">Váltó</label><br>
+               <label class="cl-large">VÃ¡ltÃ³</label><br>
                <select class="cl-select" ws-var="NewGearbox" style="width: 150px">
                   <option ws-replace="GearboxTuningList"></option>
                </select>
             </td>
             <td style="padding-right: 30px;padding-top: 25px;">
-               <label class="cl-large">Fék</label><br>
+               <label class="cl-large">FÃ©k</label><br>
                <select class="cl-select" ws-var="NewBrakes" style="width: 150px">
                   <option ws-replace="BrakeTuningList"></option>
                </select>
@@ -76,13 +76,13 @@
                </select>
             </td>
             <td style="padding-right: 30px;padding-top: 25px;">
-               <label class="cl-large">Felfüggesztés</label><br>
+               <label class="cl-large">FelfÃ¼ggesztÃ©s</label><br>
                <select class="cl-select" ws-var="NewSuspension" style="width: 150px">
                   <option ws-replace="SuspensionTuningList"></option>
                </select>
             </td>
             <td style="padding-right: 30px;padding-top: 25px;">
-               <label class="cl-large">Súlycsökkentés</label><br>
+               <label class="cl-large">SÃºlycsÃ¶kkentÃ©s</label><br>
                <select class="cl-select" ws-var="NewWeightReduction" style="width: 150px">
                   <option ws-replace="WeightReductionTuningList"></option>
                </select>
@@ -95,32 +95,32 @@
                   <option ws-template="KHListMember" value="${UserID}">${Name}</option>
                </select>
             </td>
-            <td><button ws-onclick="Confirm" class="cl-button cl-large cl-green" id="approvecar">Jóváhagy</button></td>
+            <td><button ws-onclick="Confirm" class="cl-button cl-large cl-green" id="approvecar">JÃ³vÃ¡hagy</button></td>
          </tr>
       </table>
 
       <table class="cl-padding-top-64">
-      <th colspan="11" class="szoveg_th">Autók</th>
+      <th colspan="11" class="szoveg_th">AutÃ³k</th>
       <tr class="cl-large" style="text-align: center;">
          <td rowspan="2">ID</td>
-         <td rowspan="2">Típus</td>
-         <td rowspan="2">Rendszám</td>
+         <td rowspan="2">TÃ­pus</td>
+         <td rowspan="2">RendszÃ¡m</td>
          <td rowspan="2">Park</td>
          <td rowspan="2">Air</td>
          <td rowspan="2">GPS</td>
          <td colspan="8">Tuning</td>
          <td rowspan="2">Key1</td>
-         <td rowspan="2">Szerkesztés</td>
+         <td rowspan="2">SzerkesztÃ©s</td>
       </tr>
       <tr class="cl-large">
          <td>Motor</td>
          <td>ECU</td>
-         <td>Turbó</td>
-         <td>Váltó</td>
-         <td>Fék</td>
+         <td>TurbÃ³</td>
+         <td>VÃ¡ltÃ³</td>
+         <td>FÃ©k</td>
          <td>Gumi</td>
-         <td>Súlycsöki</td>
-         <td>Felfügi</td>
+         <td>SÃºlycsÃ¶ki</td>
+         <td>FelfÃ¼gi</td>
       </tr>
       <tr>
          <td colspan="16" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td>
@@ -149,7 +149,7 @@
          <td class="adat">${Suspension}</td>
          <td class="adat">${Key1}</td>
          <td class="adat"><button ws-replace="EditButtonPlaceholder"></button><button ws-template="EditButtonTemplate"
-               ws-onclick="Edit" class="cl-button cl-large cl-green">Szerkesztés</button></td>
+               ws-onclick="Edit" class="cl-button cl-large cl-green">SzerkesztÃ©s</button></td>
       </tr>
    </table>
     </div>

@@ -3,18 +3,18 @@
 
   <!-- Header -->
   <header class="cl-container" style="padding-top:22px">
-    <h5><b><i class="fa fa-user-plus"></i> Regisztr·ciÛ / NÈvv·lt·sok</b></h5>
+    <h5><b><i class="fa fa-user-plus"></i> Regisztr√°ci√≥ / N√©vv√°lt√°sok</b></h5>
   </header>
 
   <div class="cl-panel">
     <div class="cl-row-padding" style="margin:0 -16px">
         <table>
-          <th colspan="5" class="szoveg_th">Regisztr·ciÛk</th>
+          <th colspan="5" class="szoveg_th">Regisztr√°ci√≥k</th>
           <tr class="szoveg_td">
-            <td class="cl-large" style="padding-right: 25px;">NÈv</td>
+            <td class="cl-large" style="padding-right: 25px;">N√©v</td>
             <td class="cl-large" style="padding-right: 25px;">Account ID</tdclass="cl-large">
             <td class="cl-large" style="padding-right: 25px;">E-mail</td>
-            <td class="cl-large" colspan="2" style="padding-right: 25px;">JÛv·hagy·s</td>
+            <td class="cl-large" colspan="2" style="padding-right: 25px;">J√≥v√°hagy√°s</td>
           </tr>
           <tr><td colspan="5" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td></tr>
           <tr ws-replace="UserList"></div>
@@ -22,18 +22,18 @@
             <td class="cl-large" >${Name}</td>
             <td class="cl-large" >${AccID}</td>
             <td class="cl-large" >${Email}</td>
-            <td class="cl-large" ><button value="${UserID}" class="cl-button cl-green" ws-onclick="Approve">JÛv·hagy</button></td>
-            <td class="cl-large" ><button value="${UserID}" class="cl-button cl-red" ws-onclick="Deny">ElutasÌt</button></td>
+            <td class="cl-large" ><button value="${UserID}" class="cl-button cl-green" ws-onclick="Approve">J√≥v√°hagy</button></td>
+            <td class="cl-large" ><button value="${UserID}" class="cl-button cl-red" ws-onclick="Deny">Elutas√≠t</button></td>
           </tr>
         </table>
 
         <table class="cl-padding-top-128">
-          <th colspan="5" class="szoveg_th">NÈv v·ltoztat·sok</th>
+          <th colspan="5" class="szoveg_th">N√©v v√°ltoztat√°sok</th>
           <tr class="szoveg_td">
             <td class="cl-large" style="padding-right: 25px;">ID</td>
-            <td class="cl-large" style="padding-right: 25px;">RÈgi nÈv</td>
-            <td class="cl-large" style="padding-right: 25px;">⁄j nÈv</td>
-            <td class="cl-large" colspan="2" style="padding-right: 25px;">JÛv·hagy·s</td>
+            <td class="cl-large" style="padding-right: 25px;">R√©gi n√©v</td>
+            <td class="cl-large" style="padding-right: 25px;">√öj n√©v</td>
+            <td class="cl-large" colspan="2" style="padding-right: 25px;">J√≥v√°hagy√°s</td>
           </tr>
           <tr><td colspan="5" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td></tr>
           <tr ws-replace="UserList"></div>
@@ -41,8 +41,8 @@
             <td class="cl-large" >${ID}</td>
             <td class="cl-large" >${OldName}</td>
             <td class="cl-large" >${NewName}</td>
-            <td class="cl-large" ><button class="cl-button cl-green" value="${ID}" ws-onclick="Approve">JÛv·hagy·s</button></td>
-            <td class="cl-large" ><button class="cl-button cl-red" value="${ID}" ws-onclick="Deny">ElutasÌt</button></td>
+            <td class="cl-large" ><button class="cl-button cl-green" value="${ID}" ws-onclick="Approve">J√≥v√°hagy√°s</button></td>
+            <td class="cl-large" ><button class="cl-button cl-red" value="${ID}" ws-onclick="Deny">Elutas√≠t</button></td>
           </tr>
         </table>
     </div>
