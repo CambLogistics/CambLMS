@@ -1,0 +1,29 @@
+<!-- !PAGE CONTENT! -->
+<div class="cl-main" style="margin-left:300px;margin-top:43px;">
+
+    <!-- Header -->
+    <header class="cl-container" style="padding-top:22px">
+        <h5><b><i class="fa fa-id-card"></i> Iratok</b></h5>
+    </header>
+
+    <div class="cl-panel">
+        <div class="cl-row-padding" style="margin:0 -16px">
+            <table class="uticel_taxi">
+                <tr>
+                    <td>
+                        <select class="cl-select" style="width: 300px;" ws-var="Member" ws-onchange="Selection" required>
+                            <option value="${MemberID}" ws-template="MemberItem">${MemberName}</option>
+                            <option ws-replace="MemberList"></option>
+                        </select>
+                    </td>
+                    <td><button class="cl-button cl-large cl-green" ws-onclick="Show" id="show">Megjelenítés</button></td>
+                </tr>
+                <tr style="display:none;" id="docs">
+                    <td style="width: 450px"><img width="320" src="${PersonalID}"></td>
+                    <td style="width: 450px"><img width="320" src="${DriversLicense}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- End page content -->
+</div>
