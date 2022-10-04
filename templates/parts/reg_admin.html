@@ -11,38 +11,38 @@
         <table>
           <th colspan="5" class="szoveg_th">Regisztrációk</th>
           <tr class="szoveg_td">
-            <td style="padding-right: 25px;">Név</td>
-            <td style="padding-right: 25px;">Account ID</td>
-            <td style="padding-right: 25px;">E-mail</td>
-            <td colspan="2" style="padding-right: 25px;">Jóváhagyás</td>
+            <td class="cl-large" style="padding-right: 25px;">Név</td>
+            <td class="cl-large" style="padding-right: 25px;">Account ID</tdclass="cl-large">
+            <td class="cl-large" style="padding-right: 25px;">E-mail</td>
+            <td class="cl-large" colspan="2" style="padding-right: 25px;">Jóváhagyás</td>
           </tr>
           <tr><td colspan="5" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td></tr>
           <tr ws-replace="UserList"></div>
           <tr ws-template="UserListItem" class="adat">
-            <td>${Name}</td>
-            <td>${AccID}</td>
-            <td>${Email}</td>
-            <td><button value="${UserID}" class="cl-button cl-green" ws-onclick="Approve">Jóváhagy</button></td>
-            <td><button value="${UserID}" class="cl-button cl-red" ws-onclick="Deny">Elutasít</button></td>
+            <td class="cl-large" >${Name}</td>
+            <td class="cl-large" >${AccID}</td>
+            <td class="cl-large" >${Email}</td>
+            <td class="cl-large" ><button value="${UserID}" class="cl-button cl-green" ws-onclick="Approve">Jóváhagy</button></td>
+            <td class="cl-large" ><button value="${UserID}" class="cl-button cl-red" ws-onclick="Deny">Elutasít</button></td>
           </tr>
         </table>
 
         <table class="cl-padding-top-128">
           <th colspan="5" class="szoveg_th">Név változtatások</th>
           <tr class="szoveg_td">
-            <td style="padding-right: 25px;">ID</td>
-            <td style="padding-right: 25px;">Régi név</td>
-            <td style="padding-right: 25px;">Új név</td>
-            <td colspan="2" style="padding-right: 25px;">Jóváhagyás</td>
+            <td class="cl-large" style="padding-right: 25px;">ID</td>
+            <td class="cl-large" style="padding-right: 25px;">Régi név</td>
+            <td class="cl-large" style="padding-right: 25px;">Új név</td>
+            <td class="cl-large" colspan="2" style="padding-right: 25px;">Jóváhagyás</td>
           </tr>
           <tr><td colspan="5" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td></tr>
           <tr ws-replace="UserList"></div>
           <tr ws-template="NameChangeUser">
-            <td class="adat">${ID}</td>
-            <td class="adat">${OldName}</td>
-            <td class="adat">${NewName}</td>
-            <td><button class="cl-button cl-green" value="${ID}" ws-onclick="Approve">Jóváhagyás</button></td>
-            <td><button class="cl-button cl-red" value="${ID}" ws-onclick="Deny">Elutasít</button></td>
+            <td class="cl-large" >${ID}</td>
+            <td class="cl-large" >${OldName}</td>
+            <td class="cl-large" >${NewName}</td>
+            <td class="cl-large" ><button class="cl-button cl-green" value="${ID}" ws-onclick="Approve">Jóváhagyás</button></td>
+            <td class="cl-large" ><button class="cl-button cl-red" value="${ID}" ws-onclick="Deny">Elutasít</button></td>
           </tr>
         </table>
     </div>
