@@ -16,23 +16,18 @@
             <div class="cl-row-padding" style="margin:0 -16px">
                 <div class="cl-quarter">
                     <label>Honnan</label>
-                    <select class="cl-select">
-                        <option></option>
-                        <option>Los Santos</option>
-                        <option>Külváros</option>
-                        <option>San Fierro</option>
-                        <option>Angel Pine és környéke</option>
-                        <option>Mt. Chilliad</option>
-                        <option>Bayside</option>
+                    <select class="cl-select" ws-var="From">
+                        <option value="-1"></option>
+                        <option ws-replace="LocationList"></option>
+                        <option ws-template="LocationItem" value="${LocationID}">${LocationName}</option>
                     </select><br>
                 </div>
                 <div class="cl-quarter">
                     <label>Hova</label>
-                    <select class="cl-select">
-                        <option></option>
-                        <option>Fix</option>
-                        <option>Junk Yard</option>
-                        <option>BMS</option>
+                    <select class="cl-select" ws-var="To">
+                        <option value="-1"></option>
+                        <option ws-replace="LocationList"></option>
+                        <option ws-template="LocationItem" value="${LocationID}">${LocationName}</option>
                     </select>
                 </div>
             </div>
