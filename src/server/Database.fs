@@ -8,5 +8,4 @@ module Database =
             let config = Config.readDatabase()
             sprintf "Server=%s;Port=%i;Database=%s;Uid=%s;Pwd=%s" config.Host config.Port config.DatabaseName config.Username config.Password
     let getDataContext() =
-        let debugString = getConnectionString()
         SqlConnection.GetDataContext (getConnectionString())
