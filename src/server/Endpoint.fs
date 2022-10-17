@@ -13,7 +13,6 @@ type EndPoint =
     | [<EndPoint "/namechange">] NameChange
     | [<EndPoint "/forgotpass">] ForgotPass
     | [<EndPoint "/info">] Information
-    | [<EndPoint "/delivery">] Delivery
     | [<EndPoint "/taxi">] Taxi
     | [<EndPoint "/tow">] Towing
     | [<EndPoint "/docs">] Documents

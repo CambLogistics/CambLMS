@@ -32,7 +32,6 @@ module Permission =
         (EndPoint.PasswordChange,Permissions.Nothing);
         (EndPoint.NameChange,Permissions.Nothing);
         (EndPoint.Information,Permissions.Nothing);
-        (EndPoint.Delivery,Permissions.DeliveryCall);
         (EndPoint.Taxi,Permissions.TaxiCall);
         (EndPoint.Towing,Permissions.TowCall);
         (EndPoint.Documents,Permissions.Nothing);
