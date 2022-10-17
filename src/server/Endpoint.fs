@@ -9,7 +9,7 @@ type EndPoint =
     | [<EndPoint "/registration">] Registration
     | [<EndPoint "/passchange">] PasswordChange
     | [<EndPoint "/inactivity">] Inactivity
-    | [<EndPoint "/inactivity_admin">] InactivityAdmin
+    | [<EndPoint "/settings">] Settings
     | [<EndPoint "/namechange">] NameChange
     | [<EndPoint "/forgotpass">] ForgotPass
     | [<EndPoint "/info">] Information
@@ -26,6 +26,7 @@ type EndPoint =
     | [<EndPoint "/admin/service">] ServiceAdmin
     | [<EndPoint "/admin/docview">] DocAdmin
     | [<EndPoint "/admin/imgview">] ImgAdmin
+    | [<EndPoint "/admin/inactivity">] InactivityAdmin
     | [<EndPoint "POST /documentsubmit">] DocumentSubmit
     | [<EndPoint "POST /imagesubmit">] ImageSubmit
     | [<EndPoint "/changelog">] Changelog
