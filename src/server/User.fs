@@ -86,6 +86,9 @@ module User =
         newSession.Expiry <- expDate
         dbContext.SubmitUpdates()
         sessId
+    let getFirstName (user:Member) =
+        let name = System.String(user.Name)
+        (((name.Split ' ')[0]).Split '_')[0]
     [<Rpc>]
     let loginUser (name, password) =
         async{
