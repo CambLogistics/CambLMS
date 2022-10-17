@@ -2,6 +2,8 @@ namespace camblms
 
 open WebSharper
 open WebSharper.UI
+open WebSharper.UI.Client
+open System.Collections.Generic
 
 [<JavaScript>]
 type TaxiRoute = {Source:int; Dest:int}
@@ -42,47 +44,29 @@ module TaxiPage =
                             } 
                 )
             )
-            .SelectAP(
-                fun e ->
-                    if e.Target.ParentElement.GetAttribute("name") = "image-map-source" then
-                        selectedRoute.Set {selectedRoute.Value with Source = 3}
-                    else
-                        selectedRoute.Set {selectedRoute.Value with Dest = 3}
+            .SourceList(
+                Doc.BindSeqCached (
+                    fun (kvp:KeyValuePair<int,string>) ->
+                        SiteParts.TaxiTemplate.LocationItem()
+                            .LocationID(string kvp.Key)
+                            .LocationName(kvp.Value)
+                            .Doc()
+                ) areaList.View
             )
-            .SelectLS(
-                fun e ->
-                    if e.Target.ParentElement.GetAttribute("name") = "image-map-source" then
-                        selectedRoute.Set {selectedRoute.Value with Source = 0}
-                    else
-                        selectedRoute.Set {selectedRoute.Value with Dest = 0}
+            .DestinationList(
+                 Doc.BindSeqCached (
+                    fun (kvp:KeyValuePair<int,string>) ->
+                        SiteParts.TaxiTemplate.LocationItem()
+                            .LocationID(string kvp.Key)
+                            .LocationName(kvp.Value)
+                            .Doc()
+                ) areaList.View
             )
-            .SelectSF(
-                fun e ->
-                    if e.Target.ParentElement.GetAttribute("name") = "image-map-source" then
-                        selectedRoute.Set {selectedRoute.Value with Source = 2}
-                    else
-                        selectedRoute.Set {selectedRoute.Value with Dest = 2}
+            .From(
+                selectedRoute.Lens (fun r -> string r.Source) (fun r s -> {r with Source = int s})
             )
-            .SelectBS(
-                fun e ->
-                    if e.Target.ParentElement.GetAttribute("name") = "image-map-source" then
-                        selectedRoute.Set {selectedRoute.Value with Source = 5}
-                    else
-                        selectedRoute.Set {selectedRoute.Value with Dest = 5}
-            )
-            .SelectOS(
-                fun e ->
-                    if e.Target.ParentElement.GetAttribute("name") = "image-map-source" then
-                        selectedRoute.Set {selectedRoute.Value with Source = 1}
-                    else
-                        selectedRoute.Set {selectedRoute.Value with Dest = 1}
-            )
-            .SelectCh(
-                fun e ->
-                    if e.Target.ParentElement.GetAttribute("name") = "image-map-source" then
-                        selectedRoute.Set {selectedRoute.Value with Source = 4}
-                    else
-                        selectedRoute.Set {selectedRoute.Value with Dest = 4}
+            .To(
+                selectedRoute.Lens (fun r -> string r.Dest) (fun r s -> {r with Dest = int s})
             )
             .Submit(
                 fun e ->
