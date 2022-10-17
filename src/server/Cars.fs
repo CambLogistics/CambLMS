@@ -18,8 +18,7 @@ type Car =
       Gearbox: int
       Turbo: int
       Tyres: int
-      KeyHolder1: Member option
-      KeyHolder2: Member option }
+      KeyHolder: Member option }
 
 module Cars =
     [<Rpc>]
@@ -52,14 +51,9 @@ module Cars =
                                     { Id = car.Id
                                       RegNum = car.RegNum
                                       CarType = car.Type
-                                      KeyHolder1 =
+                                      KeyHolder =
                                         if car.KeyHolder1.IsSome then
                                             User.getUserByID car.KeyHolder1.Value
-                                        else
-                                            None
-                                      KeyHolder2 =
-                                        if car.KeyHolder2.IsSome then
-                                            User.getUserByID car.KeyHolder2.Value
                                         else
                                             None
                                       AirRide = car.AirRide = (sbyte 1)
@@ -131,25 +125,16 @@ module Cars =
                     newCar.RegNum <- car.RegNum
 
                     newCar.KeyHolder1 <-
-                        if car.KeyHolder1.IsSome then
-                            Some car.KeyHolder1.Value.Id
+                        if car.KeyHolder.IsSome then
+                            Some car.KeyHolder.Value.Id
                         else
                             None
-
-                    newCar.KeyHolder2 <-
-                        if car.KeyHolder2.IsSome then
-                            Some car.KeyHolder2.Value.Id
-                        else
-                            None
-
                     newCar.AirRide <- if car.AirRide then sbyte 1 else sbyte 0
-
                     newCar.Ticket <-
                         if car.ParkTicket then
                             sbyte 1
                         else
                             sbyte 0
-
                     newCar.Gps <- if car.GPS then sbyte 1 else sbyte 0
                     newCar.Ecu <- car.ECU
                     newCar.Engine <- car.Engine
@@ -164,3 +149,24 @@ module Cars =
             with
             | e -> return OtherError e.Message
         }
+    [<Rpc>]
+    let delCar (sid,car) =
+        async{
+            try
+                if not (Permission.checkPermission sid Permissions.CarAdmin) then
+                    return ActionResult.InsufficientPermissions
+                else
+                    let db = Database.getDataContext ()
+                    let dbCar =
+                        query{
+                            for c in db.Camblogistics.cars do
+                                where(c.Id = car.Id)
+                                exactlyOne
+                        }
+                    dbCar.Delete()
+                    db.SubmitUpdates()
+                    return ActionResult.Success
+            with
+            | e -> return OtherError e.Message
+        }
+
