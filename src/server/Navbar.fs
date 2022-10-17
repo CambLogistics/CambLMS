@@ -1,61 +1,40 @@
 namespace camblms
 
-open SiteParts
+open SiteTemplates
 open WebSharper.Sitelets
 open WebSharper.UI
 
 module Navbar =
     type NavbarElement =
-        |Url of EndPoint*string
-        |Separator
-        |Logo
+        |Url of EndPoint*string*string
+        |ChangelogUrl of string
+        |LogoutUrl of string
     let NormalNavbar = [
-        Logo
-        Separator
-        Url (EndPoint.Information,"Információk")
-        Url (EndPoint.Changelog,"Changelog")
-        Separator
-        Url (EndPoint.Taxi,"Taxizás")
-        Url (EndPoint.Towing,"Vontatás")
-        Url (EndPoint.Delivery,"Beszállítás")
-        Separator
-        Url (EndPoint.Documents,"Iratbeküldés")
-        Url (EndPoint.ImageUpload,"Képfeltöltés")
-        Url (EndPoint.Inactivity,"Inaktivítás")
-        Separator
-        Url (EndPoint.AdminHome,"Adminfelület")
-        Url (EndPoint.Logout,"Kijelentkezés")
+        Url (EndPoint.Information,"Információk","users")
+        ChangelogUrl "Változásnapló"
+        Url (EndPoint.Taxi,"Taxizás","taxi")
+        Url (EndPoint.Towing,"Vontatás","truck")
+        Url (EndPoint.Documents,"Iratbeküldés","id-card")
+        Url (EndPoint.ImageUpload,"Képfeltöltés","file-image")
+        Url (EndPoint.Inactivity,"Inaktivítás","free-code-camp")
+        Url (EndPoint.Settings,"Beállítások","cog")
+        Url (EndPoint.AdminHome,"Adminfelület","shield")
+        LogoutUrl "Kijelentkezés"
     ]
     let AdminNavbar = [
-        Logo
-        Separator
-        Url (EndPoint.Home,"Normál felület")
-        Separator
-        Url (EndPoint.CallsAdmin,"Hívások")
-        Url (EndPoint.NameChangeAdmin,"Névváltoztatások")
-        Url (EndPoint.RegistrationAdmin,"Regisztációk")
-        Url (EndPoint.DocAdmin,"Iratok")
-        Separator
-        Url(EndPoint.MembersAdmin,"Tagok")
-        Url(EndPoint.InactivityAdmin,"Inaktivítás")
-        Url(EndPoint.CarsAdmin,"Autók")
-        Url(EndPoint.ImgAdmin,"Szervizképek")
-        Url(EndPoint.ServiceAdmin,"Szervizdíjak")
-        Separator
-        Url(EndPoint.Logout,"Kijelentkezés")
+        Url (EndPoint.AdminHome,"Kezdőoldal","shield")
+        Url (EndPoint.NameChangeAdmin,"Névváltoztatások","user-o")
+        Url (EndPoint.RegistrationAdmin,"Regisztációk","user-plus")
+        Url (EndPoint.DocAdmin,"Iratok","id-card")
+        Url(EndPoint.MembersAdmin,"Tagok","users")
+        Url(EndPoint.InactivityAdmin,"Inaktivítás","free-code-camp")
+        Url(EndPoint.CarsAdmin,"Autók","car")
+        Url(EndPoint.ServiceAdmin,"Szerviz","wrench")
+        Url (EndPoint.Home,"Normál felület","taxi")
+        LogoutUrl "Kijelentkezés"
     ]
-    let smoothNavbar nb = 
-        List.fold
-            (fun l nbi ->
-                match nbi with
-                    |Separator -> 
-                        match (List.head l) with
-                            |Separator -> l
-                            |_ -> nbi::l
-                    |_ ->  nbi::l
-            ) List.empty nb |> List.rev
     let MakeNavbar (ctx:Context<EndPoint>) isAdmin =
-        let navTemplate = NavTemplate()
+        let navTemplate = MainTemplate()
         let user =
             match ctx.Request.Cookies.Item "clms_sid" with
                 |Some s -> User.getUserFromSID s
@@ -63,20 +42,20 @@ module Navbar =
         let generateItems (ctx:Context<EndPoint>) elements =
             List.map(fun item ->
                 match item with
-                    |Logo -> NavTemplate.Logo().Doc()
-                    |Separator -> NavTemplate.Separator().Doc()
-                    |Url (ep,name) ->
-                        NavTemplate.NavbarElement().EndpointURL(ctx.Link ep).EndpointName(name).Doc()
+                    |LogoutUrl name -> MainTemplate.NavbarLogout().Url(ctx.Link EndPoint.Logout).Text(name).Doc()
+                    |ChangelogUrl name -> MainTemplate.NavbarChangelog().Url(ctx.Link EndPoint.Changelog).Text(name).Doc()
+                    |Url (ep,name,icon) ->
+                        MainTemplate.NavbarItem().Url(ctx.Link ep).Text(name).IconClass(icon).Doc()
             ) elements |> Doc.Concat
-        navTemplate.NavList(
+        navTemplate.Navbar(
             let navbarList = if isAdmin then AdminNavbar else NormalNavbar
             navbarList |> List.filter (
                 fun item ->
                     match item with
-                        |Logo -> true
-                        |Url (ep,_) ->
+                        |LogoutUrl _ -> user.IsSome
+                        |ChangelogUrl _ -> user.IsSome
+                        |Url (ep,_,_) ->
                             if user.IsSome then (Permission.getUserPermissions user.Value) &&& (LanguagePrimitives.EnumToValue (Map.find ep Permission.RequiredPermissions)) > 0u
                             else false
-                        |Separator -> user.IsSome
-            ) |> smoothNavbar |> generateItems ctx
+            ) |> generateItems ctx
         ).Doc()
