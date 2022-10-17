@@ -122,6 +122,7 @@ module Calls =
             call.Type <- int16 callType
             db.SubmitUpdates()
             ActionResult.Success
+   
 
     [<Rpc>]
     let rotateWeek sid =
@@ -203,6 +204,40 @@ module Calls =
             e -> return Error e.Message
 
         }
-
+    //The following three functions are intended for the info page -- no RPC
+    let getFullCallCount sid =
+            match User.getUserFromSID <| sid with
+                |None -> None
+                |Some u -> 
+                    match getCallsOfUser u with
+                        |Error _ -> None
+                        |Ok l -> Some <| List.length l
+    let getLastCalls sid =
+            match User.getUserFromSID <| sid with
+                |None -> None
+                |Some u -> 
+                    match getCallsOfUser u with
+                        |Error _ -> None
+                        |Ok l -> Some ( l |> List.sortByDescending (fun c -> c.Date) |> List.take 5)
+    let getWeeklyCallPercentage sid =
+            let user = User.getUserFromSID sid
+            match user with
+                |None -> 0
+                |Some u ->
+                    let db = Database.getDataContext()
+                    let callCount =
+                        query{
+                            for c in db.Camblogistics.calls do
+                                where(c.UserId = u.Id && (c.ThisWeek = (sbyte 1)))
+                                count
+                        } |> float32
+                    let callMin = 
+                        (query{
+                            for r in db.Camblogistics.requiredcalls do
+                                where(r.RoleId = u.Role)
+                                exactlyOne
+                        }).Calls |> float32
+                    if callMin = 0.0f then 100
+                    else ceil ((callCount/callMin)*100.0f) |> int
     [<Rpc>]
     let clientGetDPStatus () = async { return isDoublePrice () }
