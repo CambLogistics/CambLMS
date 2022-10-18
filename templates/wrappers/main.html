@@ -41,7 +41,7 @@
             <a href="#" class="cl-bar-item cl-button cl-padding-16 cl-hide-large cl-dark-grey cl-hover-red" onclick="cl_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Menü bezárás</a>
             <a ws-replace="Navbar"></a>
             <a ws-template="NavbarItem" href="${Url}" class="cl-bar-item cl-button cl-padding"><i class="fa fa-fw fa-${IconClass}">${Text}</i></a>
-            <a ws-template="NavbarChangelog" href="${Url}" class="cl-bar-item cl-button cl-padding cl-orange cl-text-white"><i class="fa fa-fw fa-bell">${Text}</i></a>
+            <a ws-template="NavbarActiveItem" href="${Url}" class="cl-bar-item cl-button cl-padding cl-orange cl-text-white"><i class="fa fa-fw fa-${IconClass}">${Text}</i></a>
             <a ws-template="NavbarLogout" href="${Url}" class="cl-bar-item cl-button cl-padding cl-hover-red"><i class="fa fa-fw fa-sign-out">${Text}</i></a>
         </div>
     </nav>
