@@ -12,67 +12,67 @@ module PageMakers =
             .FirstName(name)
             .Main(client <@RegistrationAdminPage.RenderPage()@>)
             .Doc()
-    let PasswordChange ctx (name:string) =
+    let PasswordChange ctx ep (name:string) =
         SiteTemplates.MainTemplate()
             .Navbar(Navbar.MakeNavbar ctx ep false)
             .FirstName(name)
             .Main(client <@PasswordChangePage.RenderPage()@>)
             .Doc()
-    let NameChange ctx (name:string) =
+    let NameChange ctx ep (name:string) =
          SiteTemplates.MainTemplate()
             .Navbar(Navbar.MakeNavbar ctx ep false)
             .FirstName(name)
             .Main(client <@NameChangePage.RenderPage()@>)
             .Doc()
-    let MembersAdmin ctx user (name:string) =
+    let MembersAdmin ctx ep user (name:string) =
         SiteTemplates.MainTemplate()
             .Navbar(Navbar.MakeNavbar ctx ep true)
             .FirstName(name)
             .Main(client <@MemberAdminPage.RenderPage user@>)
             .Doc()
-    let Changelog ctx (name:string) =
+    let Changelog ctx ep (name:string) =
         SiteTemplates.MainTemplate()
             .Navbar(Navbar.MakeNavbar ctx ep false)
             .FirstName(name)
             .Main(SiteParts.ChangelogTemplate().Doc())
             .Doc()
-    let CarsAdmin ctx (name:string) =
+    let CarsAdmin ctx ep (name:string) =
         SiteTemplates.MainTemplate()
             .Navbar(Navbar.MakeNavbar ctx ep true)
             .FirstName(name)
             .Main(client <@CarsAdmin.RenderPage()@>)
             .Doc()
-    let Information ctx (name:string) =
+    let Information ctx ep (name:string) =
         SiteTemplates.MainTemplate()
             .Navbar(Navbar.MakeNavbar ctx ep false)
             .FirstName(name)
             .Main(Information.RenderPage ctx)
             .Doc()
-    let Taxi ctx (name:string) =
+    let Taxi ctx ep (name:string) =
         SiteTemplates.MainTemplate()
             .Navbar(Navbar.MakeNavbar ctx ep false)
             .FirstName(name)
             .Main(client <@TaxiPage.RenderPage()@>)
             .Doc()
-    let Towing ctx (name:string) =
+    let Towing ctx ep (name:string) =
         SiteTemplates.MainTemplate()
             .Navbar(Navbar.MakeNavbar ctx ep false)
             .FirstName(name)
             .Main(client <@TowPage.RenderPage()@>)
             .Doc()
-    let AdminHome ctx (name:string) =
+    let AdminHome ctx ep (name:string) =
         SiteTemplates.MainTemplate()
             .Navbar(Navbar.MakeNavbar ctx ep true)
             .FirstName(name)
             .Main(Doc.Empty)
             .Doc()
-    let CallsAdmin ctx (name:string) =
+    let CallsAdmin ctx ep (name:string) =
         SiteTemplates.MainTemplate()
             .FirstName(name)
             .Navbar(Navbar.MakeNavbar ctx ep true)
             .Main(client <@CallsAdmin.RenderPage()@>)
             .Doc()
-    let ServiceAdmin ctx (name:string) =
+    let ServiceAdmin ctx ep (name:string) =
         SiteTemplates.MainTemplate()
             .FirstName(name)
             .Navbar(Navbar.MakeNavbar ctx ep true)
@@ -86,31 +86,31 @@ module PageMakers =
         SiteTemplates.LoginTemplate()
             .Main(client <@RegistrationPage.RenderPage()@>)
             .Doc()
-    let InactivityPage ctx (name:string) =
+    let InactivityPage ctx ep (name:string) =
         SiteTemplates.MainTemplate()
             .Navbar(Navbar.MakeNavbar ctx ep false)
             .FirstName(name)
             .Main(client <@InactivityPage.RenderPage()@>)
             .Doc()
-    let InactivityAdmin ctx (name:string) =
+    let InactivityAdmin ctx ep (name:string) =
         SiteTemplates.MainTemplate()   
             .Navbar(Navbar.MakeNavbar ctx ep true)
             .FirstName(name)
             .Main(client <@InactivityAdmin.RenderPage()@>)
             .Doc()
-    let NameChangeAdmin ctx (name:string) =
+    let NameChangeAdmin ctx ep (name:string) =
         SiteTemplates.MainTemplate()
             .FirstName(name) 
             .Navbar(Navbar.MakeNavbar ctx ep true)
             .Main(client <@NameChangeAdmin.RenderPage()@>)
             .Doc()
-    let DocAdmin ctx (name:string) =
+    let DocAdmin ctx ep (name:string) =
         SiteTemplates.MainTemplate()
             .Navbar(Navbar.MakeNavbar ctx ep true)
             .FirstName(name)
             .Main(client <@DocAdmin.RenderPage()@>)
             .Doc()
-    let ImgAdmin ctx (name:string) =
+    let ImgAdmin ctx ep (name:string) =
         SiteTemplates.MainTemplate()
             .Navbar(Navbar.MakeNavbar ctx ep true)
             .FirstName(name)
