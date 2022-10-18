@@ -7,11 +7,10 @@ open WebSharper.UI
 module Navbar =
     type NavbarElement =
         |Url of EndPoint*string*string
-        |ChangelogUrl of string
         |LogoutUrl of string
     let NormalNavbar = [
         Url (EndPoint.Information,"Információk","users")
-        ChangelogUrl "Változásnapló"
+        Url (EndPoint.Changelog,"Változásnapló","bell")
         Url (EndPoint.Taxi,"Taxizás","taxi")
         Url (EndPoint.Towing,"Vontatás","truck")
         Url (EndPoint.Documents,"Iratbeküldés","id-card")
@@ -33,7 +32,7 @@ module Navbar =
         Url (EndPoint.Home,"Normál felület","taxi")
         LogoutUrl "Kijelentkezés"
     ]
-    let MakeNavbar (ctx:Context<EndPoint>) isAdmin =
+    let MakeNavbar (ctx:Context<EndPoint>) current isAdmin =
         let navTemplate = MainTemplate()
         let user =
             match ctx.Request.Cookies.Item "clms_sid" with
@@ -43,9 +42,9 @@ module Navbar =
             List.map(fun item ->
                 match item with
                     |LogoutUrl name -> MainTemplate.NavbarLogout().Url(ctx.Link EndPoint.Logout).Text(name).Doc()
-                    |ChangelogUrl name -> MainTemplate.NavbarChangelog().Url(ctx.Link EndPoint.Changelog).Text(name).Doc()
                     |Url (ep,name,icon) ->
-                        MainTemplate.NavbarItem().Url(ctx.Link ep).Text(name).IconClass(icon).Doc()
+                        if ep = current then MainTemplate.NavbarActiveItem().Url(ctx.Link ep).Text(name).IconClass(icon).Doc()
+                        else MainTemplate.NavbarItem().Url(ctx.Link ep).Text(name).IconClass(icon).Doc()
             ) elements |> Doc.Concat
         navTemplate.Navbar(
             let navbarList = if isAdmin then AdminNavbar else NormalNavbar
