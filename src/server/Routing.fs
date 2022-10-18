@@ -12,7 +12,7 @@ module Routing =
         if not (Permission.checkPermission sessionID (Map.find endpoint Permission.RequiredPermissions)) then Content.RedirectTemporary(EndPoint.Home)
         else
         match endpoint with
-            |EndPoint.Home -> Content.Page(PageMakers.Information ctx endpoint name)
+            |EndPoint.Home -> Content.Page(PageMakers.Information ctx Endpoint.Information name)
             |EndPoint.Logout -> Content.Page(PageMakers.Logout ctx)
             |EndPoint.PasswordChange -> Content.Page(PageMakers.PasswordChange ctx endpoint name)
             |EndPoint.NameChange -> Content.Page(PageMakers.NameChange ctx endpoint name)
