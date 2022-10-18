@@ -22,7 +22,6 @@ module Information =
                     |Ok c -> c
                     |Error e ->  failwith e
                 SiteParts.InfoTemplate()
-                    .Name(u.Name)
                     .Rank(
                         let db = Database.getDataContext()
                         (query{
@@ -31,13 +30,6 @@ module Information =
                             exactlyOne
                         }).Name
                     )
-                    .AccID(string u.AccountID)
-                    .TaxiDaily(string taxiDaily)
-                    .TaxiWeekly(string taxiWeekly)
-                    .TaxiSum(string taxiAll)
-                    .TowDaily(string towingDaily)
-                    .TowWeekly(string towingWeekly)
-                    .TowSum(string towingAll)
                     .Cars(
                         List.fold (
                                 fun s rn -> (s + " " + rn)
@@ -48,7 +40,24 @@ module Information =
                                   )
                     )
                     .MoneySum((callsOfUser |> List.sumBy (fun c -> c.Price) |> string) + " $")
-                    .TwoWeekMoney((callsOfUser |> List.filter (fun c -> c.PreviousWeek || c.ThisWeek) |> List.sumBy (fun c -> c.Price) |> string) + " $")
+                    .CallSum(List.length callsOfUser |> string)
+                    .WeeklyCallPercentage(string <| Calls.getWeeklyCallPercentage sessionID.Value)
+                    .RecentCalls(
+                      callsOfUser |> List.sortByDescending (fun c -> c.Date) |> List.take 5 |> List.map (
+                        fun c -> 
+                          SiteParts.InfoTemplate.CallItem()
+                            .Date(sprintf "%04d-%02d-%02d %02d:%02d" c.Date.Year c.Date.Month c.Date.Day c.Date.Hour c.Date.Minute)
+                            .Type(
+                              match c.Type with
+                                |CallType.Taxi -> "Taxi"
+                                |CallType.Towing -> "Vonti"
+                                |CallType.Delivery -> "Fuvar (ELAVULT!)"
+                                |_ -> "Ismeretlen"
+                            )
+                            .Price(sprintf "%d $" c.Price)
+                            .Doc()
+                      ) |> Doc.Concat
+                    )
                     .Doc()
       with
         e -> SiteParts.NotFoundTemplate().ErrorMessage("Hiba az információs oldal betöltése közben! Értesítsd a (műszaki) igazgatót!").Doc()
