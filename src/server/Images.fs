@@ -5,10 +5,10 @@ open WebSharper.Sitelets
 open WebSharper.UI
 
 module Documents =
-    let MakePage ctx =
+    let MakePage ctx ep name =
         SiteTemplates.MainTemplate()
-            .Navbar(Navbar.MakeNavbar ctx false)
-            .Stylesheet(SiteTemplates.NormalStyle)
+            .FirstName(name)
+            .Navbar(Navbar.MakeNavbar ctx ep false)
             .Main(
                 SiteParts.DocumentsTemplate()
                     .Message(
@@ -48,10 +48,10 @@ module Documents =
             e  -> return Error e.Message
       }
 module ImageUpload =
-    let MakePage ctx =
+    let MakePage ctx ep name =
         SiteTemplates.MainTemplate()
-            .Navbar(Navbar.MakeNavbar ctx false)
-            .Stylesheet(SiteTemplates.NormalStyle)
+            .FirstName(name)
+            .Navbar(Navbar.MakeNavbar ctx ep false)
             .Main(
                 SiteParts.ImageUploadTemplate()
                     .Message(
