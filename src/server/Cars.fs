@@ -3,6 +3,12 @@ namespace camblms
 open WebSharper
 
 [<JavaScript>]
+type CarWorkType = 
+    |Other = -1
+    |Taxi = 0
+    |Tow = 1
+
+[<JavaScript>]
 type Car =
     { Id: string
       CarType: string
@@ -18,7 +24,8 @@ type Car =
       Gearbox: int
       Turbo: int
       Tyres: int
-      KeyHolder: Member option }
+      KeyHolder: Member option
+      WorkType: CarWorkType}
 
 module Cars =
     [<Rpc>]
@@ -52,8 +59,8 @@ module Cars =
                                       RegNum = car.RegNum
                                       CarType = car.Type
                                       KeyHolder =
-                                        if car.KeyHolder1.IsSome then
-                                            User.getUserByID car.KeyHolder1.Value
+                                        if car.KeyHolder.IsSome then
+                                            User.getUserByID car.KeyHolder.Value
                                         else
                                             None
                                       AirRide = car.AirRide = (sbyte 1)
@@ -66,7 +73,9 @@ module Cars =
                                       Gearbox = car.Gearbox
                                       Tyres = car.Tyres
                                       Turbo = car.Turbo
-                                      WeightReduction = car.WeightReduction }
+                                      WeightReduction = car.WeightReduction
+                                      WorkType = LanguagePrimitives.EnumOfValue car.WorkType
+                                     }
                                 )
                         }
                         |> Seq.toList
@@ -85,8 +94,7 @@ module Cars =
                 Ok(query {
                     for car in db.Camblogistics.cars do
                         where (
-                            car.KeyHolder1 = Some u.Id
-                            || car.KeyHolder2 = Some u.Id
+                            car.KeyHolder = Some u.Id
                         )
 
                         select (car.RegNum)
@@ -123,8 +131,7 @@ module Cars =
 
                     newCar.Type <- car.CarType
                     newCar.RegNum <- car.RegNum
-
-                    newCar.KeyHolder1 <-
+                    newCar.KeyHolder <-
                         if car.KeyHolder.IsSome then
                             Some car.KeyHolder.Value.Id
                         else
@@ -144,6 +151,7 @@ module Cars =
                     newCar.Turbo <- car.Turbo
                     newCar.Tyres <- car.Tyres
                     newCar.WeightReduction <- car.WeightReduction
+                    newCar.WorkType <- LanguagePrimitives.EnumToValue car.WorkType
                     db.SubmitUpdates()
                     return ActionResult.Success
             with
