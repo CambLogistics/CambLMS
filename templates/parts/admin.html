@@ -11,7 +11,7 @@
             <div class="cl-container cl-orange cl-text-white cl-padding-8">
                 <div class="cl-left"><i class="fa fa-taxi cl-xxlarge cl-padding-16"></i></div>
                 <div class="cl-right">
-                    <h3>${TaxiCar} / 16</h3>
+                    <h3>${TaxiCar} / ${AllTaxis}</h3>
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@
             <div class="cl-container cl-light-red cl-text-white cl-padding-8">
                 <div class="cl-left"><i class="fa fa-truck cl-xxlarge cl-padding-16"></i></div>
                 <div class="cl-right">
-                    <h3>${TowTruck} / 1</h3>
+                    <h3>${TowTruck} / ${AllTowingTrucks}</h3>
                 </div>
             </div>
         </div>
@@ -60,7 +60,6 @@
             <table class="cl-padding-top-16">
                 <tr class="szoveg_td">
                     <td class="cl-large" style="padding-right: 25px;">Név</td>
-                    <td class="cl-large" style="padding-right: 25px;">Rang</td>
                     <td class="cl-large" style="padding-right: 25px;">Hívásszám</td>
                     <td class="cl-large" style="padding-right: 25px;">Havi kereset</td>
                 </tr>
@@ -68,7 +67,6 @@
                 <tr ws-replace="TopMemberList">
                 <tr ws-template="TopMember">
                     <td class="cl-large">${Name}</td>
-                    <td class="cl-large">${Rank}</td>
                     <td class="cl-large">${CallMonth}</td>
                     <td class="cl-large">${MonthMoney}</td>
                 </tr>
