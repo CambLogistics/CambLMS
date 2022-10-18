@@ -21,7 +21,6 @@ module SiteParts =
     type CarTemplate = Templating.Template<"templates/parts/cars.html">
     type ChangelogTemplate = Templating.Template<"templates/parts/changelog.html">
     type ForgotPassTemplate = Templating.Template<"templates/parts/forgotpass.html">
-    type ImageViewingTemplate = Templating.Template<"templates/parts/img.html">
     type DocViewingTemplate = Templating.Template<"templates/parts/docsview.html">
     type InfoTemplate = Templating.Template<"templates/parts/info.html">
     type DocumentsTemplate = Templating.Template<"templates/parts/docs.html">
