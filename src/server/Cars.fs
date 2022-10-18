@@ -59,8 +59,8 @@ module Cars =
                                       RegNum = car.RegNum
                                       CarType = car.Type
                                       KeyHolder =
-                                        if car.KeyHolder.IsSome then
-                                            User.getUserByID car.KeyHolder.Value
+                                        if car.KeyHolder1.IsSome then
+                                            User.getUserByID car.KeyHolder1.Value
                                         else
                                             None
                                       AirRide = car.AirRide = (sbyte 1)
@@ -94,7 +94,7 @@ module Cars =
                 Ok(query {
                     for car in db.Camblogistics.cars do
                         where (
-                            car.KeyHolder = Some u.Id
+                            car.KeyHolder1 = Some u.Id
                         )
 
                         select (car.RegNum)
@@ -131,7 +131,7 @@ module Cars =
 
                     newCar.Type <- car.CarType
                     newCar.RegNum <- car.RegNum
-                    newCar.KeyHolder <-
+                    newCar.KeyHolder1 <-
                         if car.KeyHolder.IsSome then
                             Some car.KeyHolder.Value.Id
                         else
