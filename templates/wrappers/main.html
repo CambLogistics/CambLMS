@@ -15,15 +15,16 @@
     </style>
 </head>
 <body class="cl-white">
-
+    <div ws-replace="SuccessBox"></div>
+    <div ws-replace="ErrorBox"></div>
     <!-- alert success popup start -->
-    <div class="alert-box-wrap alert-success-popup" ws-template="SuccessMessageBox">
+    <div class="alert-box-wrap alert-success-popup" ws-template="SuccessMessageBox" id="${Active}">
         <div class="alert-content">
             <div class="icon">
                 <img class="iconimg" src="success_icon.png" alt="alert-icon">
             </div>
             <div class="alertbody">
-                <h3 class="alert-text">${StatusMessage}</h3>
+                <h3 id="successMessage" class="alert-text">${StatusMessage}</h3>
             </div>
             <div class="close-alert">
                 <label onclick="document.getElementsByClassName('alert-box-wrap')[0].removeAttribute('id')" for="alert-success-popup" class="alert-close">&times;</label>
@@ -32,13 +33,13 @@
     </div>
     <!-- alert success popup end -->
     <!-- alert error popup start -->
-    <div class="alert-box-wrap alert-error-popup" ws-template="ErrorMessageBox">
+    <div class="alert-box-wrap alert-error-popup" ws-template="ErrorMessageBox" id="${Active}">
         <div class="alert-content">
             <div class="icon">
                 <img class="iconimg" src="error_icon.png" alt="alert-icon">
             </div>
             <div class="alertbody">
-                <h3 class="alert-text">${StatusMessage}</h3>
+                <h3 id="errorMessage" class="alert-text">${StatusMessage}</h3>
             </div>
             <div class="close-alert">
                 <label onclick="document.getElementsByClassName('alert-box-wrap')[1].removeAttribute('id')" for="alert-error-popup" class="alert-close">&times;</label>
