@@ -16,6 +16,36 @@
 </head>
 <body class="cl-white">
 
+    <!-- alert success popup start -->
+    <div class="alert-box-wrap alert-success-popup">
+        <div class="alert-content">
+            <div class="icon">
+                <img class="iconimg" src="success_icon.png" alt="alert-icon">
+            </div>
+            <div class="alertbody">
+                <h3 class="alert-text">Sikeres művelet!</h3>
+            </div>
+            <div class="close-alert">
+                <label onclick="document.getElementsByClassName('alert-box-wrap')[0].removeAttribute('id')" for="alert-success-popup" class="alert-close">&times;</label>
+            </div>
+        </div>
+    </div>
+    <!-- alert success popup end -->
+    <!-- alert error popup start -->
+    <div class="alert-box-wrap alert-error-popup">
+        <div class="alert-content">
+            <div class="icon">
+                <img class="iconimg" src="error_icon.png" alt="alert-icon">
+            </div>
+            <div class="alertbody">
+                <h3 class="alert-text">Művelet sikertelen!</h3>
+            </div>
+            <div class="close-alert">
+                <label onclick="document.getElementsByClassName('alert-box-wrap')[1].removeAttribute('id')" for="alert-error-popup" class="alert-close">&times;</label>
+            </div>
+        </div>
+    </div>
+    <!-- alert error popup end -->
     <!-- Top container -->
     <div class="cl-bar cl-top cl-dark-grey cl-large" style="z-index:4">
         <button class="cl-bar-item cl-button cl-hide-large cl-hover-none cl-hover-text-light-grey" onclick="cl_open();"><i class="fa fa-bars"></i>  Menü</button>
