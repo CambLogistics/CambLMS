@@ -95,6 +95,14 @@
                             <option ws-template="KHListMember" value="${UserID}">${Name}</option>
                         </select>
                     </td>
+                    <td style="padding-right: 30px;padding-top: 25px;">
+                        <label class="cl-large">Típus</label><br>
+                        <select class="cl-select" ws-var="CarType" style="width: 150px">
+                            <option value="-1">Egyéb</option>
+                            <option ws-replace="CarTypeList"></option>
+                            <option ws-template="CarTypeListItem" value="${TypeID}">${TypeName}</option>
+                        </select>
+                    </td>
                     <td><button ws-onclick="Confirm" class="cl-button cl-large cl-green" id="approvecar">Jóváhagy</button></td>
                 </tr>
             </table>
