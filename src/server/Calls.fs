@@ -204,21 +204,7 @@ module Calls =
             e -> return Error e.Message
 
         }
-    //The following three functions are intended for the info page -- no RPC
-    let getFullCallCount sid =
-            match User.getUserFromSID <| sid with
-                |None -> None
-                |Some u -> 
-                    match getCallsOfUser u with
-                        |Error _ -> None
-                        |Ok l -> Some <| List.length l
-    let getLastCalls sid =
-            match User.getUserFromSID <| sid with
-                |None -> None
-                |Some u -> 
-                    match getCallsOfUser u with
-                        |Error _ -> None
-                        |Ok l -> Some ( l |> List.sortByDescending (fun c -> c.Date) |> List.take 5)
+    //The following function is intended for the info page -- no RPC
     let getWeeklyCallPercentage sid =
             let user = User.getUserFromSID sid
             match user with
