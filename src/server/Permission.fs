@@ -34,18 +34,16 @@ module Permission =
         (EndPoint.Information,Permissions.Nothing);
         (EndPoint.Taxi,Permissions.TaxiCall);
         (EndPoint.Towing,Permissions.TowCall);
+        (EndPoint.Settings,Permissions.Nothing);
         (EndPoint.Documents,Permissions.Nothing);
         (EndPoint.ImageUpload,Permissions.Nothing);
         (EndPoint.ImageSubmit,Permissions.Nothing);
         (EndPoint.DocumentSubmit,Permissions.Nothing);
         (EndPoint.AdminHome,Permissions.Admin);
-        (EndPoint.CallsAdmin,Permissions.ViewCallCount);
         (EndPoint.CarsAdmin,Permissions.ViewCars);
         (EndPoint.InactivityAdmin, Permissions.InactivityAdmin);
         (EndPoint.DocAdmin,Permissions.DocAdmin);
-        (EndPoint.ImgAdmin,Permissions.ServiceFeeAdmin);
         (EndPoint.MembersAdmin,Permissions.MemberAdmin);
-        (EndPoint.NameChangeAdmin,Permissions.MemberAdmin);
         (EndPoint.RegistrationAdmin,Permissions.MemberAdmin);
         (EndPoint.ServiceAdmin,Permissions.ServiceFeeAdmin);
     ]
