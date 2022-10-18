@@ -4,7 +4,7 @@
     <title>CambLogistics</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="/main.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" type="image/x-icon" href="/icon.png">
@@ -17,13 +17,13 @@
 <body class="cl-white">
 
     <!-- alert success popup start -->
-    <div class="alert-box-wrap alert-success-popup">
+    <div class="alert-box-wrap alert-success-popup" ws-template="SuccessMessageBox">
         <div class="alert-content">
             <div class="icon">
                 <img class="iconimg" src="success_icon.png" alt="alert-icon">
             </div>
             <div class="alertbody">
-                <h3 class="alert-text">Sikeres művelet!</h3>
+                <h3 class="alert-text">${StatusMessage}</h3>
             </div>
             <div class="close-alert">
                 <label onclick="document.getElementsByClassName('alert-box-wrap')[0].removeAttribute('id')" for="alert-success-popup" class="alert-close">&times;</label>
@@ -32,13 +32,13 @@
     </div>
     <!-- alert success popup end -->
     <!-- alert error popup start -->
-    <div class="alert-box-wrap alert-error-popup">
+    <div class="alert-box-wrap alert-error-popup" ws-template="ErrorMessageBox">
         <div class="alert-content">
             <div class="icon">
                 <img class="iconimg" src="error_icon.png" alt="alert-icon">
             </div>
             <div class="alertbody">
-                <h3 class="alert-text">Művelet sikertelen!</h3>
+                <h3 class="alert-text">${StatusMessage}</h3>
             </div>
             <div class="close-alert">
                 <label onclick="document.getElementsByClassName('alert-box-wrap')[1].removeAttribute('id')" for="alert-error-popup" class="alert-close">&times;</label>
