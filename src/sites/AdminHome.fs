@@ -5,7 +5,7 @@ open WebSharper.UI
 open WebSharper.UI.Client
 
 [<JavaScript>]
-module CallsAdmin =
+module AdminHome =
     let userList = ListModel.Create (fun (u:UserWithCalls) -> u) []
     let sessionID = JavaScript.Cookies.Get("clms_sid").Value
     let rankList = Var.Create [{Level = 0;Name="Beszállító"}]
@@ -30,11 +30,11 @@ module CallsAdmin =
     let RenderPage() =
         updateRankList()
         updateUserList()
-        SiteParts.CallsTemplate()
-            .MemberList(
+        SiteParts.AdminHomeTemplate()
+            .CallMemberList(
                 userList.View |> Doc.BindSeqCached (
                     fun u ->
-                        SiteParts.CallsTemplate.Member()
+                        SiteParts.AdminHomeTemplate.CallMember()
                             .Name(u.User.Name)
                             .CallNum(u.Calls |> List.length |> string)
                             .Rank(
