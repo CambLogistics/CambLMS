@@ -15,7 +15,7 @@ module CarsAdmin =
                                                             ParkTicket=false;ECU=0;GPS=false;
                                                             AirRide = false;Engine=0;Brakes=0;
                                                             Suspension=0;WeightReduction=0;Gearbox=0;
-                                                            Tyres=0;Turbo=0;KeyHolder=None;}
+                                                            Tyres=0;Turbo=0;KeyHolder=None;WorkType=CarWorkType.Other}
     let unHideEdit() = 
         JavaScript.JS.Document.GetElementById("edit").RemoveAttribute("style")
     let updateTuningList() =
@@ -104,6 +104,17 @@ module CarsAdmin =
                         } 
                 )
             )
+            .NewWorkType(
+                selectedCar.Lens(
+                    fun c ->
+                        LanguagePrimitives.EnumToValue c.WorkType |> string
+                )(
+                
+                    fun c wt -> 
+                        {c with WorkType = LanguagePrimitives.EnumOfValue <| int wt}
+                )
+                
+            )
             .NewAirRide((selectedCar.Lens (fun c -> c.AirRide) (fun c ar -> {c with AirRide = ar})))
             .NewGPS(selectedCar.Lens(fun c -> c.GPS) (fun c gps -> {c with GPS = gps}))
             .NewTicket(selectedCar.Lens (fun c -> c.ParkTicket) (fun c pt -> {c with ParkTicket = pt}))
@@ -151,6 +162,13 @@ module CarsAdmin =
                                 match c.KeyHolder with
                                     |None -> ""
                                     |Some u -> u.Name 
+                            )
+                            .WorkType(
+                                match c.WorkType with
+                                    |CarWorkType.Other -> "Egyéb"
+                                    |CarWorkType.Taxi -> "Taxi"
+                                    |CarWorkType.Tow -> "Vontatós"
+                                    |_ -> "Ismeretlen"
                             )
                             .EditButtonPlaceholder(
                                 if not canEdit then Doc.Empty
