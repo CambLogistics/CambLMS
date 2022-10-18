@@ -5,24 +5,7 @@ open WebSharper.Sitelets
 open WebSharper.UI
 
 module Documents =
-    let MakePage ctx ep name =
-        SiteTemplates.MainTemplate()
-            .FirstName(name)
-            .Navbar(Navbar.MakeNavbar ctx ep false)
-            .Main(
-                SiteParts.DocumentsTemplate()
-                    .Message(
-                        match ctx.Request.Get.Item "success" with
-                            |Some s -> 
-                                if s = "true" then 
-                                    SiteParts.DocumentsTemplate.Success().Message("Sikeres dokumentumbeküldés!").Doc()
-                                else 
-                                    SiteParts.DocumentsTemplate.Error().Message("Hiba feltöltés közben! Keresd a (műszaki) igazgatót!").Doc()
-                            |None -> Doc.Empty
-                    )
-                    .Doc()
-            )
-            .Doc()
+    
     [<Rpc>]
     let getUsersWithValidDocuments sid =
       async{
@@ -48,26 +31,7 @@ module Documents =
             e  -> return Error e.Message
       }
 module ImageUpload =
-    let MakePage ctx ep name =
-        SiteTemplates.MainTemplate()
-            .FirstName(name)
-            .Navbar(Navbar.MakeNavbar ctx ep false)
-            .Main(
-                SiteParts.ImageUploadTemplate()
-                    .Message(
-                        match ctx.Request.Get.Item "success" with
-                            |Some s -> 
-                                if s = "true" then 
-                                    SiteParts.DocumentsTemplate.Success().Message("Sikeres képfeltöltés!").Doc()
-                                else if s = "inactivity" then
-                                    SiteParts.DocumentsTemplate.Success().Message("Szabadság alatt nem tölthetsz fel képet!").Doc()
-                                else 
-                                    SiteParts.DocumentsTemplate.Error().Message("Hiba feltöltés közben! Keresd a (műszaki) igazgatót!").Doc()
-                            |None -> Doc.Empty
-                    )
-                    .Doc()
-            )
-            .Doc()
+    
     [<Rpc>]
     let DeleteImage(sid,filename) =
         async{

@@ -6,15 +6,20 @@ open WebSharper.UI.Html
 open WebSharper.Sitelets
 
 module PageMakers =
+    let popupActiveString = "active"
     let RegistrationAdmin ctx ep (name:string) =
         SiteTemplates.MainTemplate()
             .Navbar(Navbar.MakeNavbar ctx ep true)
+            .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
+            .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
             .FirstName(name)
             .Main(client <@RegistrationAdminPage.RenderPage()@>)
             .Doc()
     let PasswordChange ctx ep (name:string) =
         SiteTemplates.MainTemplate()
             .Navbar(Navbar.MakeNavbar ctx ep false)
+            .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
+            .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
             .FirstName(name)
             .Main(client <@PasswordChangePage.RenderPage()@>)
             .Doc()
@@ -22,11 +27,15 @@ module PageMakers =
          SiteTemplates.MainTemplate()
             .Navbar(Navbar.MakeNavbar ctx ep false)
             .FirstName(name)
+            .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
+            .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
             .Main(client <@NameChangePage.RenderPage()@>)
             .Doc()
     let MembersAdmin ctx ep user (name:string) =
         SiteTemplates.MainTemplate()
             .Navbar(Navbar.MakeNavbar ctx ep true)
+            .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
+            .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
             .FirstName(name)
             .Main(client <@MemberAdminPage.RenderPage user@>)
             .Doc()
@@ -39,6 +48,8 @@ module PageMakers =
     let CarsAdmin ctx ep (name:string) =
         SiteTemplates.MainTemplate()
             .Navbar(Navbar.MakeNavbar ctx ep true)
+            .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
+            .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
             .FirstName(name)
             .Main(client <@CarsAdmin.RenderPage()@>)
             .Doc()
@@ -52,30 +63,32 @@ module PageMakers =
         SiteTemplates.MainTemplate()
             .Navbar(Navbar.MakeNavbar ctx ep false)
             .FirstName(name)
+            .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
+            .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
             .Main(client <@TaxiPage.RenderPage()@>)
             .Doc()
     let Towing ctx ep (name:string) =
         SiteTemplates.MainTemplate()
             .Navbar(Navbar.MakeNavbar ctx ep false)
             .FirstName(name)
+            .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
+            .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
             .Main(client <@TowPage.RenderPage()@>)
             .Doc()
     let AdminHome ctx ep (name:string) =
         SiteTemplates.MainTemplate()
             .Navbar(Navbar.MakeNavbar ctx ep true)
             .FirstName(name)
-            .Main(Doc.Empty)
-            .Doc()
-    let CallsAdmin ctx ep (name:string) =
-        SiteTemplates.MainTemplate()
-            .FirstName(name)
-            .Navbar(Navbar.MakeNavbar ctx ep true)
-            .Main(client <@CallsAdmin.RenderPage()@>)
+            .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
+            .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
+            .Main(client <@AdminHome.RenderPage()@>)
             .Doc()
     let ServiceAdmin ctx ep (name:string) =
         SiteTemplates.MainTemplate()
             .FirstName(name)
             .Navbar(Navbar.MakeNavbar ctx ep true)
+            .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
+            .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
             .Main(client <@ServiceFeeAdmin.RenderPage()@>)
             .Doc()
     let LoginPage ctx =
@@ -89,6 +102,8 @@ module PageMakers =
     let InactivityPage ctx ep (name:string) =
         SiteTemplates.MainTemplate()
             .Navbar(Navbar.MakeNavbar ctx ep false)
+            .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
+            .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
             .FirstName(name)
             .Main(client <@InactivityPage.RenderPage()@>)
             .Doc()
@@ -96,25 +111,25 @@ module PageMakers =
         SiteTemplates.MainTemplate()   
             .Navbar(Navbar.MakeNavbar ctx ep true)
             .FirstName(name)
+            .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
+            .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
             .Main(client <@InactivityAdmin.RenderPage()@>)
             .Doc()
     let NameChangeAdmin ctx ep (name:string) =
         SiteTemplates.MainTemplate()
             .FirstName(name) 
             .Navbar(Navbar.MakeNavbar ctx ep true)
+            .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
+            .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
             .Main(client <@NameChangeAdmin.RenderPage()@>)
             .Doc()
     let DocAdmin ctx ep (name:string) =
         SiteTemplates.MainTemplate()
             .Navbar(Navbar.MakeNavbar ctx ep true)
             .FirstName(name)
+            .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
+            .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
             .Main(client <@DocAdmin.RenderPage()@>)
-            .Doc()
-    let ImgAdmin ctx ep (name:string) =
-        SiteTemplates.MainTemplate()
-            .Navbar(Navbar.MakeNavbar ctx ep true)
-            .FirstName(name)
-            .Main(client <@ImageAdmin.RenderPage()@>)
             .Doc()
     let ForgotPass ctx =
         SiteTemplates.LoginTemplate()
@@ -125,6 +140,50 @@ module PageMakers =
         SiteTemplates.MainTemplate()
             .Navbar()
             .Main(client <@LogoutClient.Logout()@>)
+            .Doc()
+    let DocumentPage (ctx:Context<EndPoint>) ep (name:string) =
+        SiteTemplates.MainTemplate()
+            .FirstName(name)
+            .ErrorBox(
+                 match ctx.Request.Get.Item "success" with
+                    |Some s -> 
+                        if not (s = "true") then 
+                            SiteTemplates.MainTemplate.ErrorMessageBox().Active(popupActiveString).StatusMessage("Hiba a dokumentumfeltöltés közben! Keresd a (műszaki) igazgatót!").Doc()
+                        else Doc.Empty
+                    |None -> Doc.Empty
+            )
+            .SuccessBox(
+                match ctx.Request.Get.Item "success" with
+                    |Some s -> if s = "true" then SiteTemplates.MainTemplate.SuccessMessageBox().StatusMessage("Sikeres iratfeltöltés!").Active(popupActiveString).Doc() else Doc.Empty
+                    |None -> Doc.Empty
+            )
+            .Navbar(Navbar.MakeNavbar ctx ep false)
+            .Main(
+                SiteParts.DocumentsTemplate()         
+                    .Doc()
+            )
+            .Doc()
+    let ImageUpload ctx ep (name:string) =
+        SiteTemplates.MainTemplate()
+            .FirstName(name)
+            .Navbar(Navbar.MakeNavbar ctx ep false)
+            .ErrorBox(
+                 match ctx.Request.Get.Item "success" with
+                    |Some s -> 
+                        if (not (s = "true")) && (not (s = "inactivity")) then 
+                            SiteTemplates.MainTemplate.ErrorMessageBox().Active(popupActiveString).StatusMessage("Hiba a szervizkép feltöltés közben! Keresd a (műszaki) igazgatót!").Doc()
+                        else if s = "inactivity" then SiteTemplates.MainTemplate.ErrorMessageBox().Active(popupActiveString).StatusMessage("Szabadság alatt nem tölthetsz fel szervizképet!").Doc()
+                        else Doc.Empty
+                    |None -> Doc.Empty
+            )
+            .SuccessBox(
+                match ctx.Request.Get.Item "success" with
+                    |Some s -> if s = "true" then SiteTemplates.MainTemplate.SuccessMessageBox().StatusMessage("Sikeres iratfeltöltés!").Doc() else Doc.Empty
+                    |None -> Doc.Empty
+            ) 
+            .Main(
+                SiteParts.ImageUploadTemplate().Doc()
+            )
             .Doc()
     let NotFound ctx =
         SiteTemplates.MainTemplate()
