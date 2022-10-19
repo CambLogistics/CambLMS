@@ -41,6 +41,7 @@
     <Compile Include="src/sites/MemberAdminPage.fs" />
     <Compile Include="src/sites/ForgotPassPage.fs" />
     <Compile Include="src/sites/RegistrationAdmin.fs" />
+    <Compile Include="src/sites/SettingsPage.fs"/>
     <Compile Include="src/server/PageMaker.fs" />
     <Compile Include="src/server/Routing.fs" />
     <Compile Include="src/server/Site.fs" />
