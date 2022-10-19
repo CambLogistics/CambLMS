@@ -25,6 +25,7 @@ module SiteParts =
     type InfoTemplate = Templating.Template<"templates/parts/info.html">
     type DocumentsTemplate = Templating.Template<"templates/parts/docs.html">
     type InactivityTemplate = Templating.Template<"templates/parts/inactivity.html">
+    type SettingsTemplate = Templating.Template<"templates/parts/settings.html">
     type InactivityAdminTemplate = Templating.Template<"templates/parts/inactivity_admin.html">
     type ImageUploadTemplate = Templating.Template<"templates/parts/img.html">
     type NameChangeTemplate = Templating.Template<"templates/parts/namechange.html">
