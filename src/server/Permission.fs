@@ -28,7 +28,7 @@ module Permission =
         (EndPoint.ForgotPass,Permissions.Nothing);
         (EndPoint.Changelog,Permissions.Nothing);
         (EndPoint.Inactivity,Permissions.Nothing);
-        (EndPoint.Registration,Permissions.Nothing);
+        (EndPoint.Settings,Permissions.Nothing);
         (EndPoint.PasswordChange,Permissions.Nothing);
         (EndPoint.NameChange,Permissions.Nothing);
         (EndPoint.Information,Permissions.Nothing);
