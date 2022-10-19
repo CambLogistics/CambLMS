@@ -129,6 +129,12 @@ module PageMakers =
             .Navbar()
             .Main(client <@LogoutClient.Logout()@>)
             .Doc()
+    let SettingsPage (ctx:Context<EndPoint>) ep (name:string) user =
+        SiteTemplates.MainTemplate()
+            .FirstName(name)
+            .Navbar(Navbar.MakeNavbar ctx ep false)
+            .Main(SettingsPage.RenderPage ctx user)
+            .Doc()
     let DocumentPage (ctx:Context<EndPoint>) ep (name:string) =
         SiteTemplates.MainTemplate()
             .FirstName(name)

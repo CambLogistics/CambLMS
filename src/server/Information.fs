@@ -15,8 +15,7 @@ module Information =
         match user with
             |None -> Doc.Empty
             |Some u ->
-                let (taxiDaily,taxiWeekly,taxiBiWeekly,taxiAll) = Taxi.getInfo sessionID.Value
-                let (towingDaily,towingWeekly,towingBiWeekly,towingAll) = Tow.getInfo sessionID.Value
+                
                 let callsOfUser = 
                   match Calls.getCallsBySID sessionID.Value with
                     |Ok c -> c

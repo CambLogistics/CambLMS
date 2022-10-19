@@ -4,7 +4,7 @@ open WebSharper
 open WebSharper.Sitelets
 
 module SettingsPage =
-    let RenderPage (ctx:Context<EndPoint>) user =
+    let RenderPage (ctx:Context<EndPoint>) (user:Member) =
         let sessionID = (ctx.Request.Cookies.Item "clms_sid").Value
         let callsOfUser = Calls.getCallsBySID sessionID
         SiteParts.SettingsTemplate()
