@@ -32,7 +32,6 @@
     <Compile Include="src/sites/CarsAdmin.fs" />
     <Compile Include="src\sites\AdminHome.fs" />
     <Compile Include="src/sites/InactivityAdmin.fs" />
-    <Compile Include="src/sites/NameChangeAdmin.fs" />
     <Compile Include="src/sites/InactivityPage.fs" />
     <Compile Include="src/sites/NameChangePage.fs" />
     <Compile Include="src/sites/DocAdmin.fs" />

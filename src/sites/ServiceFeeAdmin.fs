@@ -55,6 +55,7 @@ module ServiceFeeAdmin =
     let RenderPage() =
         updateOwedUserList()
         updatePendingFeeList()
+        updateImageLists()
         SiteParts.ServiceTemplate()
             .OwedMemberList(
                 OwedUserList.View |> Doc.BindSeqCached(

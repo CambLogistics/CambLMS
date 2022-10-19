@@ -28,18 +28,18 @@ module MemberAdminPage =
                     Feedback.giveFeedback true <| "Hiba a felhasználók lekérésekor: " + e
         }
         |> Async.Start
-
+    
     let RenderPage currentUser =
         updateRankList()
         updateUserList()
         SiteParts
             .MemberListTemplate()
-            .UserList(
+            .ActiveUserList(
                 UserList.View
                 |> Doc.BindSeqCached (fun u ->
                     SiteParts
                         .MemberListTemplate
-                        .UserListItem()
+                        .ActiveUserListItem()
                         .ID(string u.Id)
                         .Name(u.Name)
                         .AccID(string u.AccountID)
@@ -98,4 +98,5 @@ module MemberAdminPage =
                                     .Doc()
                         )
                         .Doc())
-            ).Doc()
+            )
+            .Doc()
