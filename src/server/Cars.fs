@@ -42,7 +42,6 @@ module Cars =
             with
             | e -> return Error e.Message
         }
-
     [<Rpc>]
     let getCars sid =
         async {
@@ -83,7 +82,22 @@ module Cars =
                 with
                 | e -> return Error e.Message
         }
-
+    [<Rpc>]
+    let getCarCountByWorkType sid (workType:CarWorkType) =
+        async{
+            if not (Permission.checkPermission sid Permissions.ViewCars) then
+                return Error "Nincs jogosultságod az autók megtekintéséhez!"
+            else
+                let db = Database.getDataContext()
+                let wt = LanguagePrimitives.EnumToValue workType
+                let carsByWorkType =
+                    query{
+                        for c in db.Camblogistics.cars do
+                            where(c.WorkType = wt)
+                            select c
+                    }
+                return Ok (Seq.length carsByWorkType,carsByWorkType |> Seq.filter (fun c -> c.KeyHolder1.IsSome) |> Seq.length)
+        }
     let getCarsOfKeyHolder sid =
         let user = User.getUserFromSID sid
         match user with
