@@ -14,7 +14,7 @@ module Navbar =
         Url (EndPoint.Taxi,"Taxizás","taxi")
         Url (EndPoint.Towing,"Vontatás","truck")
         Url (EndPoint.Documents,"Iratbeküldés","id-card")
-        Url (EndPoint.ImageUpload,"Képfeltöltés","file-image")
+        Url (EndPoint.ImageUpload,"Képfeltöltés","image")
         Url (EndPoint.Inactivity,"Inaktivítás","free-code-camp")
         Url (EndPoint.Settings,"Beállítások","cog")
         Url (EndPoint.AdminHome,"Adminfelület","shield")
@@ -32,7 +32,6 @@ module Navbar =
         LogoutUrl "Kijelentkezés"
     ]
     let MakeNavbar (ctx:Context<EndPoint>) current isAdmin =
-        let navTemplate = MainTemplate()
         let user =
             match ctx.Request.Cookies.Item "clms_sid" with
                 |Some s -> User.getUserFromSID s
@@ -40,19 +39,17 @@ module Navbar =
         let generateItems (ctx:Context<EndPoint>) elements =
             List.map(fun item ->
                 match item with
-                    |LogoutUrl name -> MainTemplate.NavbarLogout().Url(ctx.Link EndPoint.Logout).Text(name).Doc()
+                    |LogoutUrl name -> MainTemplate.NavbarLogout().Url(ctx.Link EndPoint.Logout).ItemTitle(name).Doc()
                     |Url (ep,name,icon) ->
-                        if ep = current then MainTemplate.NavbarActiveItem().Url(ctx.Link ep).Text(name).IconClass(icon).Doc()
-                        else MainTemplate.NavbarItem().Url(ctx.Link ep).Text(name).IconClass(icon).Doc()
+                        if ep = current then MainTemplate.NavbarActiveItem().Url(ctx.Link ep).ItemTitle(name).IconClass(icon).Doc()
+                        else MainTemplate.NavbarItem().Url(ctx.Link ep).ItemTitle(name).IconClass(icon).Doc()
             ) elements |> Doc.Concat
-        navTemplate.Navbar(
-            let navbarList = if isAdmin then AdminNavbar else NormalNavbar
-            navbarList |> List.filter (
-                fun item ->
-                    match item with
-                        |LogoutUrl _ -> user.IsSome
-                        |Url (ep,_,_) ->
-                            if user.IsSome then (Permission.getUserPermissions user.Value) &&& (LanguagePrimitives.EnumToValue (Map.find ep Permission.RequiredPermissions)) > 0u
-                            else false
+        let navbarList = if isAdmin then AdminNavbar else NormalNavbar
+        navbarList |> List.filter (
+            fun item ->
+                match item with
+                    |LogoutUrl _ -> user.IsSome
+                    |Url (ep,_,_) ->
+                        if user.IsSome then (Permission.getUserPermissions user.Value) &&& (LanguagePrimitives.EnumToValue (Map.find ep Permission.RequiredPermissions)) > 0u
+                        else false
             ) |> generateItems ctx
-        ).Doc()

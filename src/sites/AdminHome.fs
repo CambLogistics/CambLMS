@@ -89,11 +89,11 @@ module AdminHome =
                             .Doc()
                 )
             )
-            .AllTaxis(string allTaxis.Value)
-            .AllTowingTrucks(string allTowTrucks.Value)
-            .TaxiCar(string occupiedTaxis.Value)
-            .TowTruck(string occupiedTowTrucks.Value)
-            .CashSum(weeklyUserList.Value |> Seq.map (fun uc -> uc.Calls) |> Seq.map (fun cl -> cl |> List.map (fun c -> c.Price)) |> Seq.map (fun p -> List.sum p) |> Seq.sum |> string)
+            .AllTaxis((allTaxis.Lens (fun i -> string i) (fun i s -> int s)).View)
+            .AllTowingTrucks((allTowTrucks.Lens (fun i -> string i) (fun i s -> int s)).View)
+            .TaxiCar((occupiedTaxis.Lens (fun i -> string i) (fun i s -> int s)).View)
+            .TowTruck((occupiedTowTrucks.Lens (fun i -> string i) (fun i s -> int s)).View)
+            .CashSum((weeklyUserList.View.Bind (fun i -> (Var.Create (i |> Seq.map (fun uc -> uc.Calls) |> Seq.map (fun cl -> cl |> List.map (fun c -> c.Price)) |> Seq.map (fun p -> List.sum p) |> Seq.sum |> string)).View)))
             .CloseWeek(
                 fun _ ->
                     if not canClose then ()
@@ -104,6 +104,6 @@ module AdminHome =
                  fun _ ->
                     if not canClose then ()
                     else
-                        ActionDispatcher.RunAction Calls.rotateTopList sessionID (Some updateWeeklyUserList)
+                        ActionDispatcher.RunAction Calls.rotateTopList sessionID (Some updateTopList)
             )
             .Doc()

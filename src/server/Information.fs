@@ -38,11 +38,11 @@ module Information =
                                     |Error e -> failwith e
                                   )
                     )
-                    .MoneySum((callsOfUser |> List.sumBy (fun c -> c.Price) |> string) + " $")
+                    .MoneySum((callsOfUser |> List.sumBy (fun c -> c.Price) |> string))
                     .CallSum(List.length callsOfUser |> string)
                     .WeeklyCallPercentage(string <| Calls.getWeeklyCallPercentage sessionID.Value)
                     .RecentCalls(
-                      callsOfUser |> List.sortByDescending (fun c -> c.Date) |> List.take 5 |> List.map (
+                      callsOfUser |> List.sortByDescending (fun c -> c.Date) |>  List.take (if List.length callsOfUser >= 5 then 5 else List.length callsOfUser) |> List.map (
                         fun c -> 
                           SiteParts.InfoTemplate.CallItem()
                             .Date(sprintf "%04d-%02d-%02d %02d:%02d" c.Date.Year c.Date.Month c.Date.Day c.Date.Hour c.Date.Minute)
@@ -53,7 +53,7 @@ module Information =
                                 |CallType.Delivery -> "Fuvar (ELAVULT!)"
                                 |_ -> "Ismeretlen"
                             )
-                            .Price(sprintf "%d $" c.Price)
+                            .Price(sprintf "%d" c.Price)
                             .Doc()
                       ) |> Doc.Concat
                     )

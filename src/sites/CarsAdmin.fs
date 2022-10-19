@@ -107,11 +107,11 @@ module CarsAdmin =
             .NewWorkType(
                 selectedCar.Lens(
                     fun c ->
-                        LanguagePrimitives.EnumToValue c.WorkType |> string
+                        int c.WorkType |> string
                 )(
                 
                     fun c wt -> 
-                        {c with WorkType = LanguagePrimitives.EnumOfValue <| int wt}
+                        {c with WorkType = enum (int wt)}
                 )
                 
             )
