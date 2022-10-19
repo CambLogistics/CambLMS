@@ -22,7 +22,6 @@ module Navbar =
     ]
     let AdminNavbar = [
         Url (EndPoint.AdminHome,"Kezdőoldal","shield")
-        Url (EndPoint.NameChangeAdmin,"Névváltoztatások","user-o")
         Url (EndPoint.RegistrationAdmin,"Regisztációk","user-plus")
         Url (EndPoint.DocAdmin,"Iratok","id-card")
         Url(EndPoint.MembersAdmin,"Tagok","users")
@@ -52,7 +51,6 @@ module Navbar =
                 fun item ->
                     match item with
                         |LogoutUrl _ -> user.IsSome
-                        |ChangelogUrl _ -> user.IsSome
                         |Url (ep,_,_) ->
                             if user.IsSome then (Permission.getUserPermissions user.Value) &&& (LanguagePrimitives.EnumToValue (Map.find ep Permission.RequiredPermissions)) > 0u
                             else false

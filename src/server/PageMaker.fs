@@ -95,10 +95,6 @@ module PageMakers =
         SiteTemplates.LoginTemplate()
             .Main(client <@LoginPage.RenderPage()@>)
             .Doc()
-    let RegisterPage ctx =
-        SiteTemplates.LoginTemplate()
-            .Main(client <@RegistrationPage.RenderPage()@>)
-            .Doc()
     let InactivityPage ctx ep (name:string) =
         SiteTemplates.MainTemplate()
             .Navbar(Navbar.MakeNavbar ctx ep false)
@@ -114,14 +110,6 @@ module PageMakers =
             .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
             .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
             .Main(client <@InactivityAdmin.RenderPage()@>)
-            .Doc()
-    let NameChangeAdmin ctx ep (name:string) =
-        SiteTemplates.MainTemplate()
-            .FirstName(name) 
-            .Navbar(Navbar.MakeNavbar ctx ep true)
-            .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
-            .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
-            .Main(client <@NameChangeAdmin.RenderPage()@>)
             .Doc()
     let DocAdmin ctx ep (name:string) =
         SiteTemplates.MainTemplate()
