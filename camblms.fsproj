@@ -39,7 +39,6 @@
     <Compile Include="src/sites/PasswordChangePage.fs" />
     <Compile Include="src/sites/LoginPage.fs" />
     <Compile Include="src/sites/MemberAdminPage.fs" />
-    <Compile Include="src/sites/RegistrationPage.fs" />
     <Compile Include="src/sites/ForgotPassPage.fs" />
     <Compile Include="src/sites/RegistrationAdmin.fs" />
     <Compile Include="src/server/PageMaker.fs" />
