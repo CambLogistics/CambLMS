@@ -44,28 +44,28 @@
                     <tr>
                         <td style="padding-right: 30px;padding-top: 10px;">
                             <label class="cl-large">Név</label><br>
-                            <input class="cl-input" ws-var="Name" type="text" name="Name" disabled>
+                            <input class="cl-input" ws-var="BLName" type="text" name="Name" disabled>
                         </td>
                         <td style="padding-right: 30px;padding-top: 10px;">
                             <label class="cl-large">Account ID</label><br>
-                            <input class="cl-input" ws-var="AccID" type="text" name="AccID" disabled>
+                            <input class="cl-input" ws-var="BLAccID" type="text" name="AccID" disabled>
                         </td>
                         <td style="padding-right: 30px;padding-top: 10px;">
                             <label class="cl-large">Rang</label><br>
-                            <input class="cl-input" ws-var="Rank" type="text" name="Rank" disabled>
+                            <input class="cl-input" ws-var="BLRank" type="text" name="Rank" disabled>
                         </td>
                     </tr>
                     <tr>
                         <td style="padding-right: 30px;padding-top: 10px;">
                             <label class="cl-large">Indok</label><br>
-                            <input class="cl-input" ws-var="Reason" type="text" name="Reason">
+                            <input class="cl-input" ws-var="BLReason" type="text" name="Reason">
                         </td>
                         <td style="padding-right: 30px;padding-top: 25px;">
                             <label class="cl-large">Visszajöhet-e?</label><br>
-                            <input type="checkbox" ws-var="ComeBack" name="ComeBack" class="cl-checkbox">
+                            <input type="checkbox" ws-var="BLComeBack" name="ComeBack" class="cl-checkbox">
                         </td>
                         <td>
-                            <button ws-onclick="Confirm" class="cl-button cl-large cl-green" id="approveexmember">Jóváhagy</button>
+                            <button ws-onclick="BLConfirm" class="cl-button cl-large cl-green" id="approveexmember">Jóváhagy</button>
                         </td>
                     </tr>
                 </table>
@@ -85,7 +85,8 @@
                         <td class="cl-large">${Rank}</td>
                         <td class="cl-large">${Reason}</td>
                         <td class="cl-large">${ComeBack}</td>
-                        <td class="cl-large"><button ws-replace="EditButtonPlaceholder"></button><button ws-template="EditButtonTemplate" ws-onclick="Edit" class="cl-button cl-green">Szerkesztés</button></td>
+                        <td class="cl-large"><button ws-onclick="Edit" class="cl-button cl-green">Szerkesztés</button></td>
+                        <td class="cl-large"><button ws-onclick="Remove" class="cl-button cl-red">Törlés</button></td>
                     </tr>
                 </table>
             </div>
