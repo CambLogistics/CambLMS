@@ -66,7 +66,7 @@ module ImageUpload =
       }
 
 module ImageSubmitter =
-    let Documents (ctx:Context<EndPoint>) user =
+    let Documents (ctx:Context<EndPoint>) (user:Member) =
         try
             let (personal,license) =
                 (query{

@@ -31,7 +31,7 @@ module PageMakers =
             .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
             .Main(client <@NameChangePage.RenderPage()@>)
             .Doc()
-    let MembersAdmin ctx ep user (name:string) =
+    let MembersAdmin ctx ep (user:Member) (name:string) =
         SiteTemplates.MainTemplate()
             .Navbar(Navbar.MakeNavbar ctx ep true)
             .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
@@ -129,7 +129,7 @@ module PageMakers =
             .Navbar()
             .Main(client <@LogoutClient.Logout()@>)
             .Doc()
-    let SettingsPage (ctx:Context<EndPoint>) ep (name:string) user =
+    let SettingsPage (ctx:Context<EndPoint>) ep (name:string) (user:Member) =
         SiteTemplates.MainTemplate()
             .FirstName(name)
             .Navbar(Navbar.MakeNavbar ctx ep false)
