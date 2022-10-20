@@ -154,6 +154,10 @@ module MemberAdminPage =
             )
             .BLConfirm(
                 fun _ ->
-                    ActionDispatcher.RunAction Blacklist.setBlackListItem (sessionID,selectedBlackListItem.Value) (Some updateBlacklist)
+                    ActionDispatcher.RunAction Blacklist.setBlackListItem (sessionID,selectedBlackListItem.Value) (Some (
+                        fun () -> 
+                            updateBlacklist()
+                            selectedBlackListItem.Set {AccountID = 0;UserName = ""; Role = 0;Reason = ""; Comeback = false}
+                        ))
             )
             .Doc()
