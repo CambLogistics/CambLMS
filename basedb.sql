@@ -16,6 +16,7 @@ CREATE TABLE `calls` (
   `thisWeek` tinyint(1) NOT NULL,
   `type` smallint(6) NOT NULL,
   `previousWeek` tinyint(1) NOT NULL,
+  `currentTopList` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `userID` (`userID`),
   CONSTRAINT `calls_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE
@@ -37,10 +38,9 @@ CREATE TABLE `cars` (
   `suspension` int(11) NOT NULL,
   `weightReduction` int(11) NOT NULL,
   `keyHolder1` int(11) DEFAULT NULL,
-  `keyHolder2` int(11) DEFAULT NULL,
+  `workType` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `keyHolder1` (`keyHolder1`),
-  KEY `keyHolder2` (`keyHolder2`),
   KEY `engine` (`engine`),
   KEY `ecu` (`ecu`),
   KEY `brakes` (`brakes`),
@@ -51,7 +51,6 @@ CREATE TABLE `cars` (
   KEY `weightReduction` (`weightReduction`),
   CONSTRAINT `cars_ibfk_1` FOREIGN KEY (`keyHolder1`) REFERENCES `users` (`id`),
   CONSTRAINT `cars_ibfk_10` FOREIGN KEY (`weightReduction`) REFERENCES `tuningLevels` (`level`),
-  CONSTRAINT `cars_ibfk_2` FOREIGN KEY (`keyHolder2`) REFERENCES `users` (`id`),
   CONSTRAINT `cars_ibfk_3` FOREIGN KEY (`engine`) REFERENCES `tuningLevels` (`level`),
   CONSTRAINT `cars_ibfk_4` FOREIGN KEY (`ecu`) REFERENCES `tuningLevels` (`level`),
   CONSTRAINT `cars_ibfk_5` FOREIGN KEY (`brakes`) REFERENCES `tuningLevels` (`level`),
@@ -60,25 +59,6 @@ CREATE TABLE `cars` (
   CONSTRAINT `cars_ibfk_8` FOREIGN KEY (`turbo`) REFERENCES `tuningLevels` (`level`),
   CONSTRAINT `cars_ibfk_9` FOREIGN KEY (`suspension`) REFERENCES `tuningLevels` (`level`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-DROP TABLE IF EXISTS `deliveryPrices`;
-CREATE TABLE `deliveryPrices` (
-  `type` int(11) NOT NULL,
-  `price` int(11) NOT NULL,
-  PRIMARY KEY (`type`),
-  CONSTRAINT `deliveryPrices_ibfk_1` FOREIGN KEY (`type`) REFERENCES `deliveryTypes` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-LOCK TABLES `deliveryPrices` WRITE;
-INSERT INTO `deliveryPrices` VALUES (0,3000),(1,4000),(2,4500);
-UNLOCK TABLES;
-DROP TABLE IF EXISTS `deliveryTypes`;
-CREATE TABLE `deliveryTypes` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-LOCK TABLES `deliveryTypes` WRITE;
-INSERT INTO `deliveryTypes` VALUES (0,'Farm beszállítás'),(1,'Műhely beszállítás'),(2,'Autószállítás műhelynél');
-UNLOCK TABLES;
 DROP TABLE IF EXISTS `holidays`;
 CREATE TABLE `holidays` (
   `startDate` date NOT NULL,
@@ -211,7 +191,7 @@ CREATE TABLE inactivity(
   FOREIGN KEY (userid)
   REFERENCES users(id)
   );
-  DROP TABLE IF EXISTS permissions;
+DROP TABLE IF EXISTS permissions;
 CREATE TABLE `permissions` (
   `roleId` int(11) NOT NULL,
   `permissions` int(11) unsigned NOT NULL,
@@ -233,3 +213,23 @@ INSERT INTO `permissions` (`permissions`, `roleId`) VALUES (159, 11);
 INSERT INTO `permissions` (`permissions`, `roleId`) VALUES (4095, 12);
 INSERT INTO `permissions` (`permissions`, `roleId`) VALUES (4095, 13);
 INSERT INTO `permissions` (`permissions`, `roleId`) VALUES (4095, 14);
+DROP TABLE IF EXISTS blacklist;
+CREATE TABLE `blacklist` (
+  `accountID` int(11) NOT NULL,
+  `roleID` int(11) NOT NULL DEFAULT 0,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `reason` text COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ' ',
+  `canReturn` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`accountID`),
+  KEY `roleID` (`roleID`),
+  CONSTRAINT `blacklist_ibfk_1` FOREIGN KEY (`roleID`) REFERENCES `roles` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+DROP TABLE IF EXISTS `requiredCalls`;
+CREATE TABLE `requiredCalls` (
+  `roleId` int(11) NOT NULL,
+  `calls` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`roleId`),
+  CONSTRAINT `requiredCalls_ibfk_1` FOREIGN KEY (`roleId`) REFERENCES `roles` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+LOCK TABLES `requiredCalls` WRITE;
+INSERT INTO `requiredCalls` VALUES (0,0),(1,25),(2,25),(3,20),(4,20),(5,15),(6,15),(7,15),(8,10),(9,10),(10,5),(11,0),(12,0),(13,0),(14,0);
