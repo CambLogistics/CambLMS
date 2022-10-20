@@ -1,5 +1,23 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900');
 
+.alert-btn {color: #fff;padding: 10px 15px;cursor: pointer;font-size: 16px;display: inline-block;margin: 20px 10px;}
+.alert-success-btn {background-color: #279427;}
+.alert-error-btn {background-color: #ef754c;}
+.alert-box-wrap {position: fixed;left: 0;top: 0;right: 0;bottom: 0;background-color: 0,0,0,0.2;display: flex;align-items: center;justify-content: center;visibility: hidden;opacity: 0;z-index: 999;}
+.alert-box-wrap .alert-content {padding: 20px;display: flex;flex: 0 0 400px;max-width: 400px;align-items: center;border-radius: 10px;}
+.alert-box-wrap .alert-content .alert-text {font-synthesis: 20px;font-weight: bolder;margin: 0 0 5px;}
+.alert-box-wrap .alert-content .icon .iconimg {max-width: 40px;min-width: 30px;width: 100%;}
+.alert-box-wrap .alert-content .alertbody {padding: 0 20px;}
+.alert-box-wrap .alert-content .close-alert .alert-close {display: inline-block;height: 50px;width: 50px;cursor: pointer;font-size: 50px;line-height: 50px;text-align: center;}
+.alert-success-popup .alert-content {border: 2px solid #279427;background-color: #e8f4e8;}
+.alert-success-popup .alert-content .alert-text {color: #279427;}
+.alert-success-popup .alert-content .close-alert .alert-close {color: #279427;}
+.alert-error-popup .alert-content {border: 2px solid #ef754c;background-color: #ffe7e2;}
+.alert-error-popup .alert-content .alert-text {color: #ef754c;}
+.alert-error-popup .alert-content .close-alert .alert-close {color: #ef754c;}
+#active {opacity: 1;visibility: visible;transition: all 0.3s ease-in;animation: zoomIn 0.3s ease-in-out;}
+@keyframes zoomIn {0% {transform: scale(0.5);}100% {transform: scale(1);}}
+
 body {
     font-family: 'Poppins', sans-serif;
     font-weight: 300;
@@ -287,15 +305,15 @@ h6 span {
     box-shadow: 0 8px 24px 0 rgba(255,235,167,.2);
 }
 
-    .btn:active,
-    .btn:focus {
-        background-color: #fff;
-        color: #fe9f0c;
-        box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
-    }
+.btn:active,
+.btn:focus {
+    background-color: #fff;
+    color: #fe9f0c;
+    box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
+}
 
-    .btn:hover {
-        background-color: #fff;
-        color: #fe9f0c;
-        box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
-    }
+.btn:hover {
+    background-color: #fff;
+    color: #fe9f0c;
+    box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
+}
