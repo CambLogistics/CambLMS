@@ -16,7 +16,7 @@
 - [x] Members
 - [x] Name_admin
 - [x] Namechange
-- [] Navbar (I moved to the old templates because i probably cant separate it from the main)
+- [x] Navbar
 - [x] Notfound (We're not changing this!)
 - [x] Passchange
 - [x] Reg_admin
