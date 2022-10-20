@@ -9,7 +9,7 @@ module MemberAdminPage =
     let UserList = ListModel.Create (fun (u:Member) -> u) []
     let RankList = ListModel.FromSeq [ { Level = -1; Name = "???" } ]
     let BlackList = ListModel.Create (fun (bli:BlacklistItem) -> bli) []
-    let selectedBlackListItem = Var.Create {AccountID = 0;UserName = ""; Role = 0;Reason = ""; Comeback = false}
+    let selectedBlackListItem = Var.Create {AccountID = 0;UserName = ""; Role = 1;Reason = ""; Comeback = false}
     let sessionID = JavaScript.Cookies.Get("clms_sid").Value
     let updateRankList() =
         async {
@@ -157,7 +157,7 @@ module MemberAdminPage =
                     ActionDispatcher.RunAction Blacklist.setBlackListItem (sessionID,selectedBlackListItem.Value) (Some (
                         fun () -> 
                             updateBlacklist()
-                            selectedBlackListItem.Set {AccountID = 0;UserName = ""; Role = 0;Reason = ""; Comeback = false}
+                            selectedBlackListItem.Set {AccountID = 0;UserName = ""; Role = 1;Reason = ""; Comeback = false}
                         ))
             )
             .Doc()
