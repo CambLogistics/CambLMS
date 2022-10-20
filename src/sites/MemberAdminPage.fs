@@ -116,10 +116,12 @@ module MemberAdminPage =
             .BLRankList(
                 RankList.View |> Doc.BindSeqCached (
                     fun r ->
-                        SiteParts.MemberListTemplate.BLRankListItem()
-                            .Level(string r.Level)
-                            .Name(r.Name)
-                            .Doc()
+                        if(r.Level >= currentUser.Role) then Doc.Empty
+                        else
+                            SiteParts.MemberListTemplate.BLRankListItem()
+                                .Level(string r.Level)
+                                .Name(r.Name)
+                                .Doc()
                 )
             )
             .BLRank(selectedBlackListItem.Lens (fun i -> string i.Role) (fun i s -> {i with Role = int s}))
