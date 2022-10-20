@@ -162,7 +162,7 @@ module User =
             return Ok(query{
                 for r in db.Camblogistics.roles do
                 select({Level = r.Id;Name = r.Name})
-            } |> Seq.toList |> List.sortBy(fun r -> r.Level) |> List.filter(fun r -> not r.Level = 0)
+            } |> Seq.toList |> List.sortBy(fun r -> r.Level) |> List.filter(fun r -> not (r.Level = 0))
             )
         with
             e -> return Error e.Message
