@@ -17,11 +17,18 @@ module UserOperations =
                         exactlyOne
                 })
             user.Deleted <- (sbyte 1)
+            if System.IO.File.Exists(@"docs/" + string user.AccountId + "_license.png") then System.IO.File.Delete(@"docs/" + string user.AccountId + "_license.png")
+            if System.IO.File.Exists(@"docs/" + string user.AccountId + "_personal.png") then System.IO.File.Delete(@"docs/" + string user.AccountId + "_personal.png")
             query{
                 for s in db.Camblogistics.sessions do
                     where(s.UserId = userid)
                     select s
             } |> Seq.iter(fun s -> s.Delete())
+            query{
+                for c in db.Camblogistics.cars do
+                    where (c.KeyHolder1 = Some user.Id)
+                    select c
+            } |> Seq.iter (fun c -> (c.KeyHolder1 <- None))
             db.SubmitUpdates()
             return ActionResult.Success
         with
