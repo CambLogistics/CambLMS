@@ -39,13 +39,15 @@ module Blacklist =
             if not (Permission.checkPermission sid Permissions.MemberAdmin) then return ActionResult.InsufficientPermissions
             else
                 let db = Database.getDataContext()
-                let existing = query{
-                    for i in db.Camblogistics.blacklist do
-                        where(i.AccountId = bli.AccountID)
-                        select i
-                }
-                let newItem = if Seq.length existing > 0 then Seq.item 0 existing else db.Camblogistics.blacklist.Create()
-                newItem.AccountId <- bli.AccountID
+                let existing = 
+                    (query{
+                        for i in db.Camblogistics.blacklist do
+                            where(i.AccountId = bli.AccountID)
+                            select i
+                        }) |> Seq.toList
+                let newItem = if List.isEmpty existing then db.Camblogistics.blacklist.Create() else (List.item 0 existing)
+                if List.isEmpty existing then 
+                    newItem.AccountId <- bli.AccountID
                 newItem.CanReturn <- if bli.Comeback then sbyte 1 else sbyte 0
                 newItem.Reason <- bli.Reason
                 newItem.Name <- bli.UserName
