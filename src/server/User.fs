@@ -135,7 +135,7 @@ module User =
                     let newUser = db.Camblogistics.users.Create()
                     newUser.Accepted <- sbyte 0
                     newUser.AccountId <- accountid
-                    newUser.Role <- 0
+                    newUser.Role <- 1
                     newUser.Email <- email
                     newUser.Name <- name
                     newUser.Password <- hashPassword password
