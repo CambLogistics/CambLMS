@@ -113,6 +113,15 @@ module MemberAdminPage =
                         .Doc())
             )
             .BLAccID(selectedBlackListItem.Lens (fun i -> string i.AccountID) (fun i s -> {i with AccountID = int s}))
+            .BLRankList(
+                RankList.View |> Doc.BindSeqCached (
+                    fun r ->
+                        SiteParts.MemberListTemplate.BLRankListItem()
+                            .Level(string r.Level)
+                            .Name(r.Name)
+                            .Doc()
+                )
+            )
             .BLRank(selectedBlackListItem.Lens (fun i -> string i.Role) (fun i s -> {i with Role = int s}))
             .BLName(selectedBlackListItem.LensAuto (fun i -> i.UserName))
             .BLComeBack(selectedBlackListItem.LensAuto (fun i -> i.Comeback))

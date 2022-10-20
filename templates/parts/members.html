@@ -52,7 +52,10 @@
                         </td>
                         <td style="padding-right: 30px;padding-top: 10px;">
                             <label class="cl-large">Rang</label><br>
-                            <input class="cl-input" ws-var="BLRank" type="text" name="Rank">
+                            <select ws-var="BLRank" class="cl-select">
+                                <option ws-replace="BLRankList"></option>
+                                <option ws-template="BLRankListItem" value="${Level}">${Name}</option>
+                            </select>
                         </td>
                     </tr>
                     <tr>
