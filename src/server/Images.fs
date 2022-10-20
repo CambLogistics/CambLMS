@@ -111,7 +111,15 @@ module ImageServe =
                 if Permission.checkPermission s Permissions.DocAdmin then
                     if System.IO.File.Exists("docs/" + fn) then Content.File("../docs/" + fn,true)
                     else Content.NotFound
-                else Content.Forbidden
+                else
+                    let user = User.getUserFromSID s
+                    match user with
+                        |None -> Content.RedirectTemporary(EndPoint.Home)
+                        |Some u ->
+                            if System.String(fn).Split('_')[0] = string u.AccountID then
+                                if System.IO.File.Exists("docs/" + fn) then Content.File("../docs/" + fn,true)
+                                else Content.NotFound
+                            else Content.Forbidden
     let Service (ctx:Context<EndPoint>) fn =
         match ctx.Request.Cookies.Item "clms_sid" with
             |None -> Content.RedirectTemporary(EndPoint.Home)
