@@ -8,7 +8,7 @@
 
     <div class="cl-panel">
         <div class="cl-row-padding" style="margin:0 -16px">
-            <table>
+            <table id="edit" style="display:none">
                 <tr>
                     <td style="padding-right: 30px;padding-top: 10px;">
                         <label class="cl-large">ID</label><br>
@@ -95,6 +95,14 @@
                             <option ws-template="KHListMember" value="${UserID}">${Name}</option>
                         </select>
                     </td>
+                    <td style="padding-right: 30px;padding-top: 25px;">
+                        <label class="cl-large">Típus</label><br>
+                        <select class="cl-select" ws-var="NewWorkType" style="width: 150px">
+                            <option value="-1">Egyéb</option>
+                            <option value="0">Taxi</option>
+                            <option value="1">Vontatós</option>
+                        </select>
+                    </td>
                     <td><button ws-onclick="Confirm" class="cl-button cl-large cl-green" id="approvecar">Jóváhagy</button></td>
                 </tr>
             </table>
@@ -109,6 +117,7 @@
                     <td rowspan="2">GPS</td>
                     <td colspan="8">Tuning</td>
                     <td rowspan="2">Key1</td>
+                    <td rowspan="2">Milyen munkára</td>                    
                     <td rowspan="2">Szerkesztés</td>
                     <td rowspan="2">Törlés</td>
                 </tr>
@@ -148,6 +157,7 @@
                     <td class="adat">${WeightReduction}</td>
                     <td class="adat">${Suspension}</td>
                     <td class="adat">${Key1}</td>
+                    <td class="adat">${WorkType}</td>
                     <td class="adat">
                         <button ws-replace="EditButtonPlaceholder"></button><button ws-template="EditButtonTemplate" ws-onclick="Edit" class="cl-button cl-large cl-green">Szerkesztés</button>
                     </td>

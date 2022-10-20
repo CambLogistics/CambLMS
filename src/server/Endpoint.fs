@@ -6,7 +6,6 @@ type EndPoint =
     | [<EndPoint "/">] Home
     | [<EndPoint "/leave">] Logout
     | [<EndPoint "/login">] Login
-    | [<EndPoint "/registration">] Registration
     | [<EndPoint "/passchange">] PasswordChange
     | [<EndPoint "/inactivity">] Inactivity
     | [<EndPoint "/settings">] Settings
@@ -18,14 +17,11 @@ type EndPoint =
     | [<EndPoint "/docs">] Documents
     | [<EndPoint "/img">] ImageUpload
     | [<EndPoint "/admin">] AdminHome
-    | [<EndPoint "/admin/calls">] CallsAdmin
     | [<EndPoint "/admin/cars">] CarsAdmin
     | [<EndPoint "/admin/members">] MembersAdmin
     | [<EndPoint "/admin/regadmin">] RegistrationAdmin
-    | [<EndPoint "/admin/nameadmin">] NameChangeAdmin
     | [<EndPoint "/admin/service">] ServiceAdmin
     | [<EndPoint "/admin/docview">] DocAdmin
-    | [<EndPoint "/admin/imgview">] ImgAdmin
     | [<EndPoint "/admin/inactivity">] InactivityAdmin
     | [<EndPoint "POST /documentsubmit">] DocumentSubmit
     | [<EndPoint "POST /imagesubmit">] ImageSubmit

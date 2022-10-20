@@ -3,6 +3,12 @@ namespace camblms
 open WebSharper
 
 [<JavaScript>]
+type CarWorkType = 
+    |Other = -1
+    |Taxi = 0
+    |Tow = 1
+
+[<JavaScript>]
 type Car =
     { Id: string
       CarType: string
@@ -18,7 +24,8 @@ type Car =
       Gearbox: int
       Turbo: int
       Tyres: int
-      KeyHolder: Member option }
+      KeyHolder: Member option
+      WorkType: CarWorkType}
 
 module Cars =
     [<Rpc>]
@@ -35,7 +42,6 @@ module Cars =
             with
             | e -> return Error e.Message
         }
-
     [<Rpc>]
     let getCars sid =
         async {
@@ -66,7 +72,9 @@ module Cars =
                                       Gearbox = car.Gearbox
                                       Tyres = car.Tyres
                                       Turbo = car.Turbo
-                                      WeightReduction = car.WeightReduction }
+                                      WeightReduction = car.WeightReduction
+                                      WorkType = LanguagePrimitives.EnumOfValue car.WorkType
+                                     }
                                 )
                         }
                         |> Seq.toList
@@ -74,7 +82,22 @@ module Cars =
                 with
                 | e -> return Error e.Message
         }
-
+    [<Rpc>]
+    let getCarCountByWorkType sid (workType:CarWorkType) =
+        async{
+            if not (Permission.checkPermission sid Permissions.ViewCars) then
+                return Error "Nincs jogosultságod az autók megtekintéséhez!"
+            else
+                let db = Database.getDataContext()
+                let wt = LanguagePrimitives.EnumToValue workType
+                let carsByWorkType =
+                    query{
+                        for c in db.Camblogistics.cars do
+                            where(c.WorkType = wt)
+                            select c
+                    }
+                return Ok (Seq.length carsByWorkType,carsByWorkType |> Seq.filter (fun c -> c.KeyHolder1.IsSome) |> Seq.length)
+        }
     let getCarsOfKeyHolder sid =
         let user = User.getUserFromSID sid
         match user with
@@ -86,7 +109,6 @@ module Cars =
                     for car in db.Camblogistics.cars do
                         where (
                             car.KeyHolder1 = Some u.Id
-                            || car.KeyHolder2 = Some u.Id
                         )
 
                         select (car.RegNum)
@@ -123,7 +145,6 @@ module Cars =
 
                     newCar.Type <- car.CarType
                     newCar.RegNum <- car.RegNum
-
                     newCar.KeyHolder1 <-
                         if car.KeyHolder.IsSome then
                             Some car.KeyHolder.Value.Id
@@ -144,6 +165,7 @@ module Cars =
                     newCar.Turbo <- car.Turbo
                     newCar.Tyres <- car.Tyres
                     newCar.WeightReduction <- car.WeightReduction
+                    newCar.WorkType <- LanguagePrimitives.EnumToValue car.WorkType
                     db.SubmitUpdates()
                     return ActionResult.Success
             with

@@ -10,6 +10,7 @@ type CallType =
 [<JavaScript>]
 type CallDuration =
     | All
+    | TopList
     | TwoWeeks
     | Weekly
 
@@ -19,7 +20,8 @@ type Call =
       Price: int
       Date: System.DateTime
       ThisWeek: bool
-      PreviousWeek: bool }
+      PreviousWeek: bool
+      CurrentTopList: bool }
 
 [<JavaScript>]
 type UserWithCalls = { User: Member; Calls: Call list }
@@ -119,6 +121,7 @@ module Calls =
             call.UserId <- u.Id
             call.ThisWeek <- (sbyte 1)
             call.PreviousWeek <- (sbyte 0)
+            call.CurrentTopList <- (sbyte 1)
             call.Type <- int16 callType
             db.SubmitUpdates()
             ActionResult.Success
@@ -152,6 +155,29 @@ module Calls =
                 with
                     | _ -> return ActionResult.DatabaseError
         }
+    [<Rpc>]
+    let rotateTopList sid =
+        async{
+            if not (Permission.checkPermission sid Permissions.CloseWeek) then
+                return ActionResult.InsufficientPermissions
+            else
+                try
+                    let db = Database.SqlConnection.GetDataContext(Database.getConnectionString ())
+                    query {
+                        for call in db.Camblogistics.calls do
+                            where (
+                                call.CurrentTopList = (sbyte 1)
+                            )
+                            select call
+                    }
+                    |> Seq.iter (fun c ->
+                        c.CurrentTopList <- sbyte 0
+                        )
+                    db.SubmitUpdates()
+                    return ActionResult.Success
+                with
+                    | _ -> return ActionResult.DatabaseError
+        }
 
     let getCallsOfUser (user: Member) =
         try
@@ -164,7 +190,8 @@ module Calls =
                           Price = c.Price
                           Date = c.Date
                           ThisWeek = c.ThisWeek = (sbyte 1)
-                          PreviousWeek = c.PreviousWeek = (sbyte 1) }
+                          PreviousWeek = c.PreviousWeek = (sbyte 1) 
+                          CurrentTopList = c.CurrentTopList = (sbyte 1)}
             }
             |> Seq.toList
           )
@@ -194,6 +221,7 @@ module Calls =
                                         |> List.filter (fun c ->
                                         match duration with
                                         |All -> true
+                                        |TopList -> c.CurrentTopList
                                         |TwoWeeks -> c.PreviousWeek || c.ThisWeek
                                         |Weekly -> c.ThisWeek) 
                                 |Error e -> failwith e
@@ -204,21 +232,7 @@ module Calls =
             e -> return Error e.Message
 
         }
-    //The following three functions are intended for the info page -- no RPC
-    let getFullCallCount sid =
-            match User.getUserFromSID <| sid with
-                |None -> None
-                |Some u -> 
-                    match getCallsOfUser u with
-                        |Error _ -> None
-                        |Ok l -> Some <| List.length l
-    let getLastCalls sid =
-            match User.getUserFromSID <| sid with
-                |None -> None
-                |Some u -> 
-                    match getCallsOfUser u with
-                        |Error _ -> None
-                        |Ok l -> Some ( l |> List.sortByDescending (fun c -> c.Date) |> List.take 5)
+    //The following function is intended for the info page -- no RPC
     let getWeeklyCallPercentage sid =
             let user = User.getUserFromSID sid
             match user with

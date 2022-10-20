@@ -4,7 +4,7 @@
     <title>CambLogistics</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="/main.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" type="image/x-icon" href="/icon.png">
@@ -15,15 +15,16 @@
     </style>
 </head>
 <body class="cl-white">
-
+    <div ws-replace="SuccessBox"></div>
+    <div ws-replace="ErrorBox"></div>
     <!-- alert success popup start -->
-    <div class="alert-box-wrap alert-success-popup">
+    <div class="alert-box-wrap alert-success-popup" ws-template="SuccessMessageBox" id="${Active}">
         <div class="alert-content">
             <div class="icon">
-                <img class="iconimg" src="success_icon.png" alt="alert-icon">
+                <img class="iconimg" src="/success_icon.png" alt="alert-icon">
             </div>
             <div class="alertbody">
-                <h3 class="alert-text">Sikeres művelet!</h3>
+                <h3 id="successMessage" class="alert-text">${StatusMessage}</h3>
             </div>
             <div class="close-alert">
                 <label onclick="document.getElementsByClassName('alert-box-wrap')[0].removeAttribute('id')" for="alert-success-popup" class="alert-close">&times;</label>
@@ -32,13 +33,13 @@
     </div>
     <!-- alert success popup end -->
     <!-- alert error popup start -->
-    <div class="alert-box-wrap alert-error-popup">
+    <div class="alert-box-wrap alert-error-popup" ws-template="ErrorMessageBox" id="${Active}">
         <div class="alert-content">
             <div class="icon">
-                <img class="iconimg" src="error_icon.png" alt="alert-icon">
+                <img class="iconimg" src="/error_icon.png" alt="alert-icon">
             </div>
             <div class="alertbody">
-                <h3 class="alert-text">Művelet sikertelen!</h3>
+                <h3 id="errorMessage" class="alert-text">${StatusMessage}</h3>
             </div>
             <div class="close-alert">
                 <label onclick="document.getElementsByClassName('alert-box-wrap')[1].removeAttribute('id')" for="alert-error-popup" class="alert-close">&times;</label>
@@ -48,7 +49,7 @@
     <!-- alert error popup end -->
     <!-- Top container -->
     <div class="cl-bar cl-top cl-dark-grey cl-large" style="z-index:4">
-        <button class="cl-bar-item cl-button cl-hide-large cl-hover-none cl-hover-text-light-grey" onclick="cl_open();"><i class="fa fa-bars"></i>  Menü</button>
+        <button class="cl-bar-item cl-button cl-hide-large cl-hover-none cl-hover-text-light-grey" onclick="cl_open();"><i class="fa fa-bars"></i>Menü</button>
         <span class="cl-bar-item cl-right">CambLogistics</span>
     </div>
 
@@ -57,7 +58,7 @@
         <br>
         <div class="cl-container cl-row">
             <div class="cl-col s4">
-                <img src="avatar.png" class="cl-circle cl-margin-right" style="width:46px">
+                <img src="/avatar.png" class="cl-circle cl-margin-right" style="width:46px">
             </div>
             <div class="cl-col s8 cl-bar">
                 <span>Üdv, <strong>${FirstName}</strong></span><br>
@@ -68,21 +69,20 @@
             <h5>Vezérlőpult</h5>
         </div>
         <div class="cl-bar-block">
-            <a href="#" class="cl-bar-item cl-button cl-padding-16 cl-hide-large cl-dark-grey cl-hover-red" onclick="cl_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Menü bezárás</a>
-            <a ws-replace="Navbar"></a>
-            <a ws-template="NavbarItem" href="${Url}" class="cl-bar-item cl-button cl-padding"><i class="fa fa-fw fa-${IconClass}">${Text}</i></a>
-            <a ws-template="NavbarActiveItem" href="${Url}" class="cl-bar-item cl-button cl-padding cl-orange cl-text-white"><i class="fa fa-fw fa-${IconClass}">${Text}</i></a>
-            <a ws-template="NavbarLogout" href="${Url}" class="cl-bar-item cl-button cl-padding cl-hover-red"><i class="fa fa-fw fa-sign-out">${Text}</i></a>
+            <a href="#" class="cl-bar-item cl-button cl-padding-16 cl-hide-large cl-dark-grey cl-hover-red" onclick="cl_close()" title="close menu"><i class="fa fa-remove fa-fw"></i> Menü bezárás</a>
+            <div ws-replace="Navbar"></div>
+            <a ws-template="NavbarItem" href="${Url}" class="cl-bar-item cl-button cl-padding"><i class="fa fa-fw fa-${IconClass}">${ItemTitle}</i></a>
+            <a ws-template="NavbarActiveItem" href="${Url}" class="cl-bar-item cl-button cl-padding cl-orange cl-text-white"><i class="fa fa-fw fa-${IconClass}">${ItemTitle}</i></a>
+            <a ws-template="NavbarLogout" href="${Url}" class="cl-bar-item cl-button cl-padding cl-hover-red"><i class="fa fa-fw fa-sign-out">${ItemTitle}</i></a>
         </div>
     </nav>
 
 
     <!-- Overlay effect when opening sidebar on small screens -->
     <div class="cl-overlay cl-hide-large cl-animate-opacity" onclick="cl_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
-
     <div ws-replace="Main" class="cl-main main" style="margin-left:300px;margin-top:43px;">
     </div>
-
+    <div ws-replace="scripts"></div>
     <script>
         // Get the Sidebar
         var mySidebar = document.getElementById("mySidebar");

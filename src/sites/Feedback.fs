@@ -5,7 +5,6 @@ open WebSharper
 [<JavaScript>]
 module Feedback =
     let giveFeedback isError message=
-        (JavaScript.JS.Document.GetElementById (if isError then "success" else "error")).SetAttribute("style","display:none;")
-        let feedback = JavaScript.JS.Document.GetElementById (if isError then "error" else "success")
+        let feedback = JavaScript.JS.Document.GetElementById (if isError then "errorMessage" else "successMessage")
         feedback.InnerHTML <- message
-        feedback.SetAttribute("style","display:block;")
+        (JavaScript.JS.Document.GetElementsByClassName(if isError then "alert-error-popup" else "alert-success-popup")[0]).ChildNodes[0].ParentElement.SetAttribute("id","active")
