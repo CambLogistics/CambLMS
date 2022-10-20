@@ -139,7 +139,7 @@ module PageMakers =
             .Navbar(Navbar.MakeNavbar ctx ep false)
             .Main(SettingsPage.RenderPage ctx user)
             .Doc()
-    let DocumentPage (ctx:Context<EndPoint>) ep (name:string) =
+    let DocumentPage (ctx:Context<EndPoint>) ep (name:string) (user:Member) =
         SiteTemplates.MainTemplate()
             .FirstName(name)
             .ErrorBox(
@@ -157,7 +157,9 @@ module PageMakers =
             )
             .Navbar(Navbar.MakeNavbar ctx ep false)
             .Main(
-                SiteParts.DocumentsTemplate()         
+                SiteParts.DocumentsTemplate()
+                    .PersonalID(if System.IO.File.Exists("docs/" + string user.AccountID + "_personal.png") then ("/docs/" + string user.AccountID + "_personal.png") else "")
+                    .DriversLicense(if System.IO.File.Exists("docs/" + string user.AccountID + "_license.png") then ("/docs/" + string user.AccountID + "_license.png") else "")
                     .Doc()
             )
             .Doc()
