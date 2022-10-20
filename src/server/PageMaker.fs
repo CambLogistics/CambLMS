@@ -93,6 +93,8 @@ module PageMakers =
             .Doc()
     let LoginPage ctx =
         SiteTemplates.LoginTemplate()
+            .SuccessBox(SiteTemplates.LoginTemplate.SuccessMessageBox().Doc())
+            .ErrorBox(SiteTemplates.LoginTemplate.ErrorMessageBox().Doc())
             .Main(client <@LoginPage.RenderPage()@>)
             .Doc()
     let InactivityPage ctx ep (name:string) =
@@ -121,6 +123,8 @@ module PageMakers =
             .Doc()
     let ForgotPass ctx =
         SiteTemplates.LoginTemplate()
+            .SuccessBox(SiteTemplates.LoginTemplate.SuccessMessageBox().Doc())
+            .ErrorBox(SiteTemplates.LoginTemplate.ErrorMessageBox().Doc())
             .Main(client <@ForgotPassPage.RenderPage()@>)
             .Doc()
     let Logout (ctx:Context<EndPoint>) =
