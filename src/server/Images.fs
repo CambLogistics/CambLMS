@@ -76,7 +76,7 @@ module ImageSubmitter =
                 },
                 query{
                    for file in ctx.Request.Files do
-                        where(file.Key = "license")
+                        where(file.Key = "licence")
                         exactlyOne 
                 })
             if System.IO.Directory.Exists "docs" |> not then System.IO.Directory.CreateDirectory "docs" |> ignore

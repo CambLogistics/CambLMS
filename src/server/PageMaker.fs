@@ -147,13 +147,13 @@ module PageMakers =
                     |Some s -> 
                         if not (s = "true") then 
                             SiteTemplates.MainTemplate.ErrorMessageBox().Active(popupActiveString).StatusMessage("Hiba a dokumentumfeltöltés közben! Keresd a (műszaki) igazgatót!").Doc()
-                        else Doc.Empty
-                    |None -> Doc.Empty
+                        else SiteTemplates.MainTemplate.ErrorMessageBox().Doc()
+                    |None -> SiteTemplates.MainTemplate.ErrorMessageBox().Doc()
             )
             .SuccessBox(
                 match ctx.Request.Get.Item "success" with
-                    |Some s -> if s = "true" then SiteTemplates.MainTemplate.SuccessMessageBox().StatusMessage("Sikeres iratfeltöltés!").Active(popupActiveString).Doc() else Doc.Empty
-                    |None -> Doc.Empty
+                    |Some s -> if s = "true" then SiteTemplates.MainTemplate.SuccessMessageBox().StatusMessage("Sikeres iratfeltöltés!").Active(popupActiveString).Doc() else SiteTemplates.MainTemplate.SuccessMessageBox().Doc()
+                    |None -> SiteTemplates.MainTemplate.SuccessMessageBox().Doc()
             )
             .Navbar(Navbar.MakeNavbar ctx ep false)
             .Main(
@@ -171,13 +171,13 @@ module PageMakers =
                         if (not (s = "true")) && (not (s = "inactivity")) then 
                             SiteTemplates.MainTemplate.ErrorMessageBox().Active(popupActiveString).StatusMessage("Hiba a szervizkép feltöltés közben! Keresd a (műszaki) igazgatót!").Doc()
                         else if s = "inactivity" then SiteTemplates.MainTemplate.ErrorMessageBox().Active(popupActiveString).StatusMessage("Szabadság alatt nem tölthetsz fel szervizképet!").Doc()
-                        else Doc.Empty
-                    |None -> Doc.Empty
+                        else SiteTemplates.MainTemplate.ErrorMessageBox().Doc()
+                    |None -> SiteTemplates.MainTemplate.ErrorMessageBox().Doc()
             )
             .SuccessBox(
                 match ctx.Request.Get.Item "success" with
-                    |Some s -> if s = "true" then SiteTemplates.MainTemplate.SuccessMessageBox().StatusMessage("Sikeres iratfeltöltés!").Doc() else Doc.Empty
-                    |None -> Doc.Empty
+                    |Some s -> if s = "true" then SiteTemplates.MainTemplate.SuccessMessageBox().Active(popupActiveString).StatusMessage("Sikeres iratfeltöltés!").Doc() else SiteTemplates.MainTemplate.SuccessMessageBox().Doc()
+                    |None -> SiteTemplates.MainTemplate.SuccessMessageBox().Doc()
             ) 
             .Main(
                 SiteParts.ImageUploadTemplate().Doc()

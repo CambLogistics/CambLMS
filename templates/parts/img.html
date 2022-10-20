@@ -5,7 +5,7 @@
   <header class="cl-container" style="padding-top:22px">
     <h5><b><i class="fa fa-file-image-o"></i> Szervízképek beküldése</b></h5>
   </header>
-
+  <form action="/imagesubmit" method="post" enctype="multipart/form-data">
   <div class="cl-row-padding cl-margin-bottom">
       <div class="cl-quarter">
           <div class="cl-container cl-blue cl-padding-16">
@@ -17,9 +17,10 @@
           </div>
       </div>
       <div class="cl-quarter">
-          <button class="cl-button cl-margin-top cl-green cl-padding-16" ws-onclick="Submit">Beküldés</button>
+          <input type="submit" class="cl-button cl-margin-top cl-green cl-padding-16" value="Beküldés">
       </div>
   </div>
+  </form>
 
   <!-- End page content -->
 </div>

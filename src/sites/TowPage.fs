@@ -44,7 +44,7 @@ module TowPage =
                  selectedRoute.View.MapAsync(
                         fun r ->
                             async{
-                                if r.Source = -1 && r.Dest = -1 then 
+                                if r.Source = -1 || r.Dest = -1 then 
                                     JavaScript.JS.Document.GetElementById("Submit").SetAttribute("disabled","true")
                                     return "Jelenleg nincs kiválasztva útvonal."
                                 else 
