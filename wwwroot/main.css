@@ -43,7 +43,7 @@ hr{border:0;border-top:1px solid #000;margin:20px 0}
 .cl-tooltip,.cl-display-container{position:relative}.cl-tooltip .cl-text{display:none}.cl-tooltip:hover .cl-text{display:inline-block}
 .cl-ripple:active{opacity:0.5}.cl-ripple{transition:opacity 0s}
 .cl-input{padding:8px;display:block;border:none;border-bottom:1px solid #ccc;width:25%}
-.cl-select{padding:9px 0;width:50%;border:none;border-bottom:1px solid #ccc}
+.cl-select{padding:9px 0;border:none;border-bottom:1px solid #ccc}
 .cl-dropdown-click,.cl-dropdown-hover{position:relative;display:inline-block;cursor:pointer}
 .cl-dropdown-hover:hover .cl-dropdown-content{display:block}
 .cl-dropdown-hover:first-child,.cl-dropdown-click:hover{background-color:#ccc;color:#000}
