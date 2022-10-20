@@ -22,7 +22,7 @@ module Navbar =
     ]
     let AdminNavbar = [
         Url (EndPoint.AdminHome,"Kezdőoldal","shield")
-        Url (EndPoint.RegistrationAdmin,"Regisztációk","user-plus")
+        Url (EndPoint.RegistrationAdmin,"Regisztrációk","user-plus")
         Url (EndPoint.DocAdmin,"Iratok","id-card")
         Url(EndPoint.MembersAdmin,"Tagok","users")
         Url(EndPoint.InactivityAdmin,"Inaktivítás","free-code-camp")

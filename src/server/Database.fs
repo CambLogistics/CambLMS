@@ -7,5 +7,5 @@ module Database =
     let getConnectionString() =
             let config = Config.readDatabase()
             sprintf "Server=%s;Port=%i;Database=%s;Uid=%s;Pwd=%s" config.Host config.Port config.DatabaseName config.Username config.Password
-    let getDataContext() =
-        SqlConnection.GetDataContext (getConnectionString())
+    let dataContext = SqlConnection.GetDataContext (getConnectionString())
+    let getDataContext() = dataContext
