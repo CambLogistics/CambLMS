@@ -1,10 +1,24 @@
-       <div class="wrapper">
-         <div class="title">
-            Elfelejtett jelszó
-         </div>
-            <div class="field">
-               <input type="text" ws-var="Email" ws-onkeydown="Kbemail" required>
-               <label>Email</label>
+<div class="section">
+    <div class="container">
+        <div class="row full-height justify-content-center">
+            <div class="col-12 text-center align-self-center py-5">
+                <div class="section pb-5 pt-5 pt-sm-2 text-center">
+                    <div class="card-3d-wrap mx-auto">
+                        <div class="card-3d-wrapper">
+                            <div class="card-front">
+                                <div class="center-wrap">
+                                    <div class="section text-center">
+                                        <h4 class="mb-4 pb-3">Elfelejtett jelszó</h4>
+                                        <div class="form-group">
+                                            <input type="email" ws-var="Email" ws-onkeydown="Kbemail" name="logemail" class="form-style" placeholder="Email" id="logemail" autocomplete="off" required>
+                                            <i class="input-icon uil uil-at"></i>
+                                        </div>
+                                        <button class="btn mt-4" ws-onclick="Submit">Küldés</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <button class="submit" ws-onclick="Submit">Elküld</button>
-      </div>
+        </div>

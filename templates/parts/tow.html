@@ -1,35 +1,44 @@
-      <div class="main">
-         <p style="text-align: center;"><span id="success" style="display: none;"></span><span id="error" style="display: none;"></span></p>
-         <table class="uticel_taxi">
-            <th class="szoveg_th" colspan="2">Vontatás</th>
-            <tr>
-               <td ws-hole="Price" id="alap" class="szoveg_td" colspan="2"></td>
-            </tr>
-            <tr>
-               <td><button class="approve" id="Submit" ws-onclick="Submit">Számla átadva</button><button class="deny" ws-onclick="Reset">Fuvar törlés</button></td>
-            </tr>
-         </table>
-         <table class="terkepes_table">
-            <tr>
-               <td class="terkepes_td">
-                  <img src="terkep.png" usemap="#image-map-source">
-               </td>
-               <td class="terkepes_td">
-                  <img src="terkep_vonti.png" usemap="#image-map-towing">
-               </td>
-            </tr>
-         </table>
-         <map name="image-map-source">
-            <area ws-onclick="SelectBS" target="" alt="bs" title="bs" href="#" coords="21,120,33,119,118,48,115,0,0,0,0,121" shape="poly">
-            <area ws-onclick="SelectSF" target="" alt="sf" title="sf" href="#" coords="34,120,0,121,0,282,54,282,64,288,70,296,71,335,93,335,93,301,109,304,118,311,141,310,152,294,164,269,168,215,143,114" shape="poly">
-            <area ws-onclick="SelectCh" target="" alt="chili" title="chili" href="#" coords="1,347,36,324,54,330,73,350,96,374,105,385,92,394,80,406,73,422,56,436,31,443,0,417" shape="poly">
-            <area ws-onclick="SelectAP" target="" alt="ap" title="ap" href="#" coords="-1,282,54,282,69,291,71,316,69,334,93,333,93,302,106,303,116,311,139,310,156,291,157,278,190,278,223,278,230,297,236,315,244,325,254,325,254,334,255,343,253,353,250,362,252,374,261,498,-1,498,-1,417,29,442,54,437,76,420,80,405,92,396,106,385,83,361,54,329,35,325,1,347,-1,350,1,347" shape="poly">
-            <area ws-onclick="SelectLS" target="" alt="ls" title="ls" href="#" coords="498,333,497,499,260,498,253,378,250,360,253,345,253,332,289,322,316,310,337,298,361,294,379,298,382,313,400,320,415,326" shape="poly">
-            <area ws-onclick="SelectOS" target="" alt="kul" title="kul" href="#" coords="496,181,498,334,417,326,383,314,379,297,362,293,336,298,291,322,254,331,253,325,245,324,235,316,224,278,161,277,169,216,325,183" shape="poly">
-         </map>
-         <map name="image-map-towing">
-            <area ws-onclick="SelectFix" target="" alt="fix" title="fix" href="#" coords="130,176,55" shape="circle">
-            <area ws-onclick="SelectJunk" target="" alt="junk" title="junk" href="#" coords="90,398,30" shape="circle">
-            <area ws-onclick="SelectBMS" target="" alt="bms" title="bms" href="#" coords="397,341,35" shape="circle">
-         </map>
-      </div>
+<!-- !PAGE CONTENT! -->
+<div class="cl-main main" style="margin-left:300px;margin-top:43px;">
+
+    <!-- Header -->
+    <header class="cl-container" style="padding-top:22px">
+        <h5><b><i class="fa fa-truck"></i> Vontatás</b></h5>
+    </header>
+
+    <div class="cl-row-padding cl-margin-bottom">
+        <div class="cl-panel">
+            <div class="cl-row-padding" style="margin:0 -16px">
+                <h4 ws-hole="Price"></h4>
+            </div>
+        </div>
+        <div class="cl-panel">
+            <div class="cl-row-padding" style="margin:0 -16px">
+                <div class="cl-quarter">
+                    <label>Honnan</label>
+                    <select class="cl-select" ws-var="From">
+                        <option value="-1"></option>
+                        <option ws-replace="LocationList"></option>
+                        <option ws-template="LocationItem" value="${LocationID}">${LocationName}</option>
+                    </select><br>
+                </div>
+                <div class="cl-quarter">
+                    <label>Hova</label>
+                    <select class="cl-select" ws-var="To">
+                        <option value="-1"></option>
+                        <option ws-replace="LocationGarageList"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="cl-panel">
+            <div class="cl-row-padding" style="margin:0 -16px">
+                <div class="cl-third">
+                    <button class="cl-button cl-margin-top cl-green" id="Submit" ws-onclick="Submit">Számla átadva</button>
+                    <button class="cl-button cl-margin-top cl-red" id="Reset" ws-onclick="Reset">Fuvar törlése</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End page content -->
+</div>

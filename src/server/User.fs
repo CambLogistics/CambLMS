@@ -86,6 +86,9 @@ module User =
         newSession.Expiry <- expDate
         dbContext.SubmitUpdates()
         sessId
+    let getFirstName (user:Member) =
+        let name = System.String(user.Name)
+        (((name.Split ' ')[0]).Split '_')[0]
     [<Rpc>]
     let loginUser (name, password) =
         async{
@@ -119,7 +122,7 @@ module User =
                         select user
                     } |> Seq.toList
                 if List.length existing > 0 then
-                    (*If there is 2 or more accounts with the same accountID or Email, then there is huge trouble...
+                    (*If there are 2 or more accounts with the same accountID or Email, then there is huge trouble...
                     ..maybe handle it later*)
                     let user = List.item 0 existing
                     if user.Deleted = (sbyte 0) then return Exists
@@ -146,7 +149,7 @@ module User =
         let db = Database.getDataContext()
         (query{
             for session in db.Camblogistics.sessions do
-                where(session.Id = (ctx.Request.Cookies.Item "clms_sid").Value)
+                where(session.Id = (ctx.Request.Cookies.Item "clms_sid").Value || session.Expiry < System.DateTime.Now)
                 select session
             }) |> Seq.iter(fun s -> s.Delete())
         db.SubmitUpdates()

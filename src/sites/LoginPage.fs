@@ -5,48 +5,58 @@ open WebSharper.JavaScript
 
 [<JavaScript>]
 module LoginPage =
-    let callLogin name password rememberme =
+    let callLogin name password =
         async {
             let! result = User.loginUser(name,password)
             match result with
             | LoginResult.Success id ->
                 JS.Document.Cookie <- "clms_sid=" + id
-                if rememberme then
-                    JavaScript.Cookies.Set("clms_rm", "true")
-                    JavaScript.Cookies.Set("clms_rm_name", name)
-                else
-                    JavaScript.Cookies.Expire("clms_rm_name")
-                    JavaScript.Cookies.Set("clms_rm", "false")
                 JS.Window.Location.Replace "/"
             | LoginResult.CredentialError -> Feedback.giveFeedback true "Hibás felhasználónév vagy jelszó!"
             | LoginResult.DatabaseError -> Feedback.giveFeedback true "Adatbázishiba. Értesítsd a (műszaki) igazgatót!"
             | LoginResult.NotApproved ->
                 Feedback.giveFeedback true "Regisztrációd még nem lett jóváhagyva. Kérjük légy türelemmel!"
         }
+    let register name password accid email =
+        async {
+            if not (JS.IsNaN accid) then
+                let! result = User.registerUser(name,password,(int accid),email)
+                match result with
+                | RegisterResult.Success -> JS.Window.Location.Replace "/login?registered=true"
+                | Exists -> Feedback.giveFeedback true "Ilyen felhasználó már létezik!"
+                | RegisterResult.DatabaseError ->
+                    Feedback.giveFeedback true "Adatbázishiba. Kérjük értesítsd a (műszaki) igazgatót!"
+                | MissingData -> Feedback.giveFeedback true "Ellenőrizd a bevitt adatokat!"
+                | BadName -> Feedback.giveFeedback true "Nem megfelelő név!"
+                | BadPassword -> Feedback.giveFeedback true "Nem megfelelő jelszó!"
+            else
+                Feedback.giveFeedback true "Ellenőrizd a bevitt adatokat!"
+        }
     let RenderPage () =
         if JS.Window.Location.Href.Contains "registered" then
             Feedback.giveFeedback false "Regisztrációd sikeres és hamarosan jóváhagyásra kerül!"
         SiteParts
             .LoginPage()
-            .RememberMe(
-                match JavaScript.Cookies.Get "clms_rm"
-                      |> Optional.toOption
-                    with
-                | None -> false
-                | Some s -> s = "true"
-            )
-            .Name(
-                match JavaScript.Cookies.Get "clms_rm_name"
-                      |> Optional.toOption
-                    with
-                | None -> ""
-                | Some s -> s
-            )
             .Login(fun e ->
-                callLogin e.Vars.Name.Value e.Vars.Password.Value e.Vars.RememberMe.Value
+                callLogin e.Vars.Name.Value e.Vars.Password.Value
                 |> Async.Start)
             .Kblogin(
                 fun e ->
-                    if e.Event.KeyCode = 13 then callLogin e.Vars.Name.Value e.Vars.Password.Value e.Vars.RememberMe.Value |> Async.Start
+                    if e.Event.KeyCode = 13 then callLogin e.Vars.Name.Value e.Vars.Password.Value |> Async.Start
             )
+            .Kbregister(fun e ->
+                if e.Event.KeyCode = 13 then
+                    register
+                        e.Vars.Name.Value
+                        e.Vars.Password.Value
+                        e.Vars.AccID.Value
+                        e.Vars.Email.Value
+                    |> Async.Start)
+            .Register(fun e ->
+                register
+                    e.Vars.Name.Value
+                    e.Vars.Password.Value
+                    e.Vars.AccID.Value
+                    e.Vars.Email.Value
+                |> Async.Start)
             .Doc()

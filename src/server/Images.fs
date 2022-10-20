@@ -5,24 +5,7 @@ open WebSharper.Sitelets
 open WebSharper.UI
 
 module Documents =
-    let MakePage ctx =
-        SiteTemplates.MainTemplate()
-            .Navbar(Navbar.MakeNavbar ctx false)
-            .Stylesheet(SiteTemplates.NormalStyle)
-            .Main(
-                SiteParts.DocumentsTemplate()
-                    .Message(
-                        match ctx.Request.Get.Item "success" with
-                            |Some s -> 
-                                if s = "true" then 
-                                    SiteParts.DocumentsTemplate.Success().Message("Sikeres dokumentumbeküldés!").Doc()
-                                else 
-                                    SiteParts.DocumentsTemplate.Error().Message("Hiba feltöltés közben! Keresd a (műszaki) igazgatót!").Doc()
-                            |None -> Doc.Empty
-                    )
-                    .Doc()
-            )
-            .Doc()
+    
     [<Rpc>]
     let getUsersWithValidDocuments sid =
       async{
@@ -48,26 +31,7 @@ module Documents =
             e  -> return Error e.Message
       }
 module ImageUpload =
-    let MakePage ctx =
-        SiteTemplates.MainTemplate()
-            .Navbar(Navbar.MakeNavbar ctx false)
-            .Stylesheet(SiteTemplates.NormalStyle)
-            .Main(
-                SiteParts.ImageUploadTemplate()
-                    .Message(
-                        match ctx.Request.Get.Item "success" with
-                            |Some s -> 
-                                if s = "true" then 
-                                    SiteParts.DocumentsTemplate.Success().Message("Sikeres képfeltöltés!").Doc()
-                                else if s = "inactivity" then
-                                    SiteParts.DocumentsTemplate.Success().Message("Szabadság alatt nem tölthetsz fel képet!").Doc()
-                                else 
-                                    SiteParts.DocumentsTemplate.Error().Message("Hiba feltöltés közben! Keresd a (műszaki) igazgatót!").Doc()
-                            |None -> Doc.Empty
-                    )
-                    .Doc()
-            )
-            .Doc()
+    
     [<Rpc>]
     let DeleteImage(sid,filename) =
         async{
@@ -102,7 +66,7 @@ module ImageUpload =
       }
 
 module ImageSubmitter =
-    let Documents (ctx:Context<EndPoint>) user =
+    let Documents (ctx:Context<EndPoint>) (user:Member) =
         try
             let (personal,license) =
                 (query{
@@ -112,7 +76,7 @@ module ImageSubmitter =
                 },
                 query{
                    for file in ctx.Request.Files do
-                        where(file.Key = "license")
+                        where(file.Key = "licence")
                         exactlyOne 
                 })
             if System.IO.Directory.Exists "docs" |> not then System.IO.Directory.CreateDirectory "docs" |> ignore
@@ -147,7 +111,15 @@ module ImageServe =
                 if Permission.checkPermission s Permissions.DocAdmin then
                     if System.IO.File.Exists("docs/" + fn) then Content.File("../docs/" + fn,true)
                     else Content.NotFound
-                else Content.Forbidden
+                else
+                    let user = User.getUserFromSID s
+                    match user with
+                        |None -> Content.RedirectTemporary(EndPoint.Home)
+                        |Some u ->
+                            if System.String(fn).Split('_')[0] = string u.AccountID then
+                                if System.IO.File.Exists("docs/" + fn) then Content.File("../docs/" + fn,true)
+                                else Content.NotFound
+                            else Content.Forbidden
     let Service (ctx:Context<EndPoint>) fn =
         match ctx.Request.Cookies.Item "clms_sid" with
             |None -> Content.RedirectTemporary(EndPoint.Home)

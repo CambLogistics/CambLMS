@@ -1,0 +1,27 @@
+## New design integration
+- [x] Admin
+- [x] Calls
+- [x] Cars
+- [x] Changelog
+- [x] Docview
+- [x] Docs
+- [x] Exmembers
+- [x] Forgotpass
+- [x] Img
+- [x] Imgview
+- [x] Inactivity
+- [x] Inactivity_admin
+- [x] Info
+- [x] Login
+- [x] Members
+- [x] Name_admin
+- [x] Namechange
+- [x] Navbar
+- [x] Notfound (We're not changing this!)
+- [x] Passchange
+- [x] Reg_admin
+- [x] Registration
+- [x] Service
+- [x] Settings
+- [x] Taxi
+- [x] Tow

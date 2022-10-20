@@ -3,6 +3,12 @@ namespace camblms
 open WebSharper
 
 [<JavaScript>]
+type CarWorkType = 
+    |Other = -1
+    |Taxi = 0
+    |Tow = 1
+
+[<JavaScript>]
 type Car =
     { Id: string
       CarType: string
@@ -18,8 +24,8 @@ type Car =
       Gearbox: int
       Turbo: int
       Tyres: int
-      KeyHolder1: Member option
-      KeyHolder2: Member option }
+      KeyHolder: Member option
+      WorkType: CarWorkType}
 
 module Cars =
     [<Rpc>]
@@ -36,7 +42,6 @@ module Cars =
             with
             | e -> return Error e.Message
         }
-
     [<Rpc>]
     let getCars sid =
         async {
@@ -52,14 +57,9 @@ module Cars =
                                     { Id = car.Id
                                       RegNum = car.RegNum
                                       CarType = car.Type
-                                      KeyHolder1 =
+                                      KeyHolder =
                                         if car.KeyHolder1.IsSome then
                                             User.getUserByID car.KeyHolder1.Value
-                                        else
-                                            None
-                                      KeyHolder2 =
-                                        if car.KeyHolder2.IsSome then
-                                            User.getUserByID car.KeyHolder2.Value
                                         else
                                             None
                                       AirRide = car.AirRide = (sbyte 1)
@@ -72,7 +72,9 @@ module Cars =
                                       Gearbox = car.Gearbox
                                       Tyres = car.Tyres
                                       Turbo = car.Turbo
-                                      WeightReduction = car.WeightReduction }
+                                      WeightReduction = car.WeightReduction
+                                      WorkType = LanguagePrimitives.EnumOfValue car.WorkType
+                                     }
                                 )
                         }
                         |> Seq.toList
@@ -80,7 +82,22 @@ module Cars =
                 with
                 | e -> return Error e.Message
         }
-
+    [<Rpc>]
+    let getCarCountByWorkType sid (workType:CarWorkType) =
+        async{
+            if not (Permission.checkPermission sid Permissions.ViewCars) then
+                return Error "Nincs jogosultságod az autók megtekintéséhez!"
+            else
+                let db = Database.getDataContext()
+                let wt = LanguagePrimitives.EnumToValue workType
+                let carsByWorkType =
+                    query{
+                        for c in db.Camblogistics.cars do
+                            where(c.WorkType = wt)
+                            select c
+                    }
+                return Ok (Seq.length carsByWorkType,carsByWorkType |> Seq.filter (fun c -> c.KeyHolder1.IsSome) |> Seq.length)
+        }
     let getCarsOfKeyHolder sid =
         let user = User.getUserFromSID sid
         match user with
@@ -92,7 +109,6 @@ module Cars =
                     for car in db.Camblogistics.cars do
                         where (
                             car.KeyHolder1 = Some u.Id
-                            || car.KeyHolder2 = Some u.Id
                         )
 
                         select (car.RegNum)
@@ -129,27 +145,17 @@ module Cars =
 
                     newCar.Type <- car.CarType
                     newCar.RegNum <- car.RegNum
-
                     newCar.KeyHolder1 <-
-                        if car.KeyHolder1.IsSome then
-                            Some car.KeyHolder1.Value.Id
+                        if car.KeyHolder.IsSome then
+                            Some car.KeyHolder.Value.Id
                         else
                             None
-
-                    newCar.KeyHolder2 <-
-                        if car.KeyHolder2.IsSome then
-                            Some car.KeyHolder2.Value.Id
-                        else
-                            None
-
                     newCar.AirRide <- if car.AirRide then sbyte 1 else sbyte 0
-
                     newCar.Ticket <-
                         if car.ParkTicket then
                             sbyte 1
                         else
                             sbyte 0
-
                     newCar.Gps <- if car.GPS then sbyte 1 else sbyte 0
                     newCar.Ecu <- car.ECU
                     newCar.Engine <- car.Engine
@@ -159,8 +165,30 @@ module Cars =
                     newCar.Turbo <- car.Turbo
                     newCar.Tyres <- car.Tyres
                     newCar.WeightReduction <- car.WeightReduction
+                    newCar.WorkType <- LanguagePrimitives.EnumToValue car.WorkType
                     db.SubmitUpdates()
                     return ActionResult.Success
             with
             | e -> return OtherError e.Message
         }
+    [<Rpc>]
+    let delCar (sid,car) =
+        async{
+            try
+                if not (Permission.checkPermission sid Permissions.CarAdmin) then
+                    return ActionResult.InsufficientPermissions
+                else
+                    let db = Database.getDataContext ()
+                    let dbCar =
+                        query{
+                            for c in db.Camblogistics.cars do
+                                where(c.Id = car.Id)
+                                exactlyOne
+                        }
+                    dbCar.Delete()
+                    db.SubmitUpdates()
+                    return ActionResult.Success
+            with
+            | e -> return OtherError e.Message
+        }
+

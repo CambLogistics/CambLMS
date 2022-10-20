@@ -15,8 +15,7 @@ module CarsAdmin =
                                                             ParkTicket=false;ECU=0;GPS=false;
                                                             AirRide = false;Engine=0;Brakes=0;
                                                             Suspension=0;WeightReduction=0;Gearbox=0;
-                                                            Tyres=0;Turbo=0;KeyHolder1=None;
-                                                            KeyHolder2=None}
+                                                            Tyres=0;Turbo=0;KeyHolder=None;WorkType=CarWorkType.Other}
     let unHideEdit() = 
         JavaScript.JS.Document.GetElementById("edit").RemoveAttribute("style")
     let updateTuningList() =
@@ -82,28 +81,19 @@ module CarsAdmin =
                             .Doc()
                 )
             )
-            .MemberList2(
-                memberList.View |> Doc.BindSeqCached(
-                    fun u ->
-                        SiteParts.CarTemplate.KHListMember()
-                            .UserID(string u.Id)
-                            .Name(u.Name)
-                            .Doc()
-                )
-            )
             .NewID(selectedCar.Lens (fun c -> c.Id) (fun c id -> {c with Id = id}))
             .NewType(selectedCar.Lens (fun c -> c.CarType) (fun c t -> {c with CarType = t}))
             .NewRegNum(selectedCar.Lens(fun c -> c.RegNum) (fun c rn -> {c with RegNum = rn}))
             .NewKeyHolder1(selectedCar.Lens(
                 fun c ->
-                    match c.KeyHolder1 with
+                    match c.KeyHolder with
                         |None -> "-1"
                         |Some m -> string m.Id
                 )
                 (
                     fun c idS ->
                         {
-                            c with KeyHolder1 = 
+                            c with KeyHolder = 
                                     if idS = "-1" then None 
                                     else
                                     query{
@@ -114,26 +104,17 @@ module CarsAdmin =
                         } 
                 )
             )
-            .NewKeyHolder2(selectedCar.Lens(
-                fun c ->
-                    match c.KeyHolder2 with
-                        |None -> "-1"
-                        |Some m -> string m.Id
+            .NewWorkType(
+                selectedCar.Lens(
+                    fun c ->
+                        int c.WorkType |> string
+                )(
+                
+                    fun c wt -> 
+                        {c with WorkType = enum (int wt)}
                 )
-                (
-                    fun c idS ->
-                        {
-                            c with KeyHolder2 = 
-                                    if idS = "-1" then None 
-                                    else
-                                    query{
-                                        for u in memberList do
-                                        where(u.Id = int idS)
-                                        exactlyOne
-                                    } |> Some
-                        } 
-                )
-                )
+                
+            )
             .NewAirRide((selectedCar.Lens (fun c -> c.AirRide) (fun c ar -> {c with AirRide = ar})))
             .NewGPS(selectedCar.Lens(fun c -> c.GPS) (fun c gps -> {c with GPS = gps}))
             .NewTicket(selectedCar.Lens (fun c -> c.ParkTicket) (fun c pt -> {c with ParkTicket = pt}))
@@ -178,19 +159,37 @@ module CarsAdmin =
                             .OldGPS(c.GPS)
                             .OldTicket(c.ParkTicket)
                             .Key1(
-                                match c.KeyHolder1 with
+                                match c.KeyHolder with
                                     |None -> ""
                                     |Some u -> u.Name 
                             )
-                            .Key2(
-                                match c.KeyHolder2 with
-                                    |None -> ""
-                                    |Some u -> u.Name 
+                            .WorkType(
+                                match c.WorkType with
+                                    |CarWorkType.Other -> "Egyéb"
+                                    |CarWorkType.Taxi -> "Taxi"
+                                    |CarWorkType.Tow -> "Vontatós"
+                                    |_ -> "Ismeretlen"
                             )
-                           .EditButtonPlaceholder(
+                            .EditButtonPlaceholder(
                                 if not canEdit then Doc.Empty
                                 else SiteParts.CarTemplate.EditButtonTemplate().Edit(fun _ -> selectedCar.Set c).Doc()
-                           )
+                            )
+                            .DeleteButtonPlaceholder(
+                                if not canEdit then Doc.Empty
+                                else 
+                                    SiteParts.CarTemplate.DeleteButtonTemplate().Delete(
+                                        fun _ ->
+                                            async{
+                                                ActionDispatcher.RunAction Cars.delCar (sessionID,c) (Some (
+                                                    fun () ->
+                                                        updateCarList()
+                                                        updateMemberList()
+                                                        updateTuningList() 
+                                                    ))
+                                                
+                                            } |> Async.Start
+                                    ).Doc()
+                            )
                             .Doc()
                 )
             )

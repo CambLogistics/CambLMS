@@ -3,13 +3,14 @@ namespace camblms
 open WebSharper
 
 type CallType =
-    | Delivery = 0
+    | Delivery = 0 //Left here for backwards-compatibility reasons
     | Taxi = 1
     | Towing = 2
 
 [<JavaScript>]
 type CallDuration =
     | All
+    | TopList
     | TwoWeeks
     | Weekly
 
@@ -19,7 +20,8 @@ type Call =
       Price: int
       Date: System.DateTime
       ThisWeek: bool
-      PreviousWeek: bool }
+      PreviousWeek: bool
+      CurrentTopList: bool }
 
 [<JavaScript>]
 type UserWithCalls = { User: Member; Calls: Call list }
@@ -76,7 +78,6 @@ module Calls =
       try
         if isDoublePrice () then
             match callType with
-                |CallType.Delivery -> int (float price * 1.25)
                 |CallType.Towing -> int (float price * 1.25)
                 |CallType.Taxi -> price * 2
                 |_ -> price
@@ -103,8 +104,8 @@ module Calls =
                 match callType with
                         |CallType.Taxi -> Permissions.TaxiCall
                         |CallType.Towing -> Permissions.TowCall
-                        |CallType.Delivery -> Permissions.DeliveryCall
-                        |_ -> Permissions.Nothing
+                        |CallType.Delivery -> Permissions.Admin //Left here (disabled) for backwards-compatibility reasons
+                        |_ -> Permissions.Admin
         let user = User.getUserFromSID sid
         match user with
         | None -> ActionResult.InvalidSession
@@ -120,9 +121,11 @@ module Calls =
             call.UserId <- u.Id
             call.ThisWeek <- (sbyte 1)
             call.PreviousWeek <- (sbyte 0)
+            call.CurrentTopList <- (sbyte 1)
             call.Type <- int16 callType
             db.SubmitUpdates()
             ActionResult.Success
+   
 
     [<Rpc>]
     let rotateWeek sid =
@@ -152,6 +155,29 @@ module Calls =
                 with
                     | _ -> return ActionResult.DatabaseError
         }
+    [<Rpc>]
+    let rotateTopList sid =
+        async{
+            if not (Permission.checkPermission sid Permissions.CloseWeek) then
+                return ActionResult.InsufficientPermissions
+            else
+                try
+                    let db = Database.SqlConnection.GetDataContext(Database.getConnectionString ())
+                    query {
+                        for call in db.Camblogistics.calls do
+                            where (
+                                call.CurrentTopList = (sbyte 1)
+                            )
+                            select call
+                    }
+                    |> Seq.iter (fun c ->
+                        c.CurrentTopList <- sbyte 0
+                        )
+                    db.SubmitUpdates()
+                    return ActionResult.Success
+                with
+                    | _ -> return ActionResult.DatabaseError
+        }
 
     let getCallsOfUser (user: Member) =
         try
@@ -164,7 +190,8 @@ module Calls =
                           Price = c.Price
                           Date = c.Date
                           ThisWeek = c.ThisWeek = (sbyte 1)
-                          PreviousWeek = c.PreviousWeek = (sbyte 1) }
+                          PreviousWeek = c.PreviousWeek = (sbyte 1) 
+                          CurrentTopList = c.CurrentTopList = (sbyte 1)}
             }
             |> Seq.toList
           )
@@ -194,6 +221,7 @@ module Calls =
                                         |> List.filter (fun c ->
                                         match duration with
                                         |All -> true
+                                        |TopList -> c.CurrentTopList
                                         |TwoWeeks -> c.PreviousWeek || c.ThisWeek
                                         |Weekly -> c.ThisWeek) 
                                 |Error e -> failwith e
@@ -204,6 +232,26 @@ module Calls =
             e -> return Error e.Message
 
         }
-
+    //The following function is intended for the info page -- no RPC
+    let getWeeklyCallPercentage sid =
+            let user = User.getUserFromSID sid
+            match user with
+                |None -> 0
+                |Some u ->
+                    let db = Database.getDataContext()
+                    let callCount =
+                        query{
+                            for c in db.Camblogistics.calls do
+                                where(c.UserId = u.Id && (c.ThisWeek = (sbyte 1)))
+                                count
+                        } |> float32
+                    let callMin = 
+                        (query{
+                            for r in db.Camblogistics.requiredcalls do
+                                where(r.RoleId = u.Role)
+                                exactlyOne
+                        }).Calls |> float32
+                    if callMin = 0.0f then 100
+                    else ceil ((callCount/callMin)*100.0f) |> int
     [<Rpc>]
     let clientGetDPStatus () = async { return isDoublePrice () }

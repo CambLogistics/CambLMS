@@ -7,7 +7,7 @@ open WebSharper
 type Permissions =
     |Nothing = 4095u
     |Admin = 4088u
-    |DeliveryCall = 1u
+    |DeliveryCall = 1u //Left here for backwards-compatibility reasons
     |TowCall = 2u
     |TaxiCall = 4u
     |ViewCars = 8u
@@ -28,25 +28,22 @@ module Permission =
         (EndPoint.ForgotPass,Permissions.Nothing);
         (EndPoint.Changelog,Permissions.Nothing);
         (EndPoint.Inactivity,Permissions.Nothing);
-        (EndPoint.Registration,Permissions.Nothing);
+        (EndPoint.Settings,Permissions.Nothing);
         (EndPoint.PasswordChange,Permissions.Nothing);
         (EndPoint.NameChange,Permissions.Nothing);
         (EndPoint.Information,Permissions.Nothing);
-        (EndPoint.Delivery,Permissions.DeliveryCall);
         (EndPoint.Taxi,Permissions.TaxiCall);
         (EndPoint.Towing,Permissions.TowCall);
+        (EndPoint.Settings,Permissions.Nothing);
         (EndPoint.Documents,Permissions.Nothing);
         (EndPoint.ImageUpload,Permissions.Nothing);
         (EndPoint.ImageSubmit,Permissions.Nothing);
         (EndPoint.DocumentSubmit,Permissions.Nothing);
         (EndPoint.AdminHome,Permissions.Admin);
-        (EndPoint.CallsAdmin,Permissions.ViewCallCount);
         (EndPoint.CarsAdmin,Permissions.ViewCars);
         (EndPoint.InactivityAdmin, Permissions.InactivityAdmin);
         (EndPoint.DocAdmin,Permissions.DocAdmin);
-        (EndPoint.ImgAdmin,Permissions.ServiceFeeAdmin);
         (EndPoint.MembersAdmin,Permissions.MemberAdmin);
-        (EndPoint.NameChangeAdmin,Permissions.MemberAdmin);
         (EndPoint.RegistrationAdmin,Permissions.MemberAdmin);
         (EndPoint.ServiceAdmin,Permissions.ServiceFeeAdmin);
     ]

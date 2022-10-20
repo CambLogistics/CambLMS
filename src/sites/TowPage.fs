@@ -2,6 +2,8 @@ namespace camblms
 
 open WebSharper
 open WebSharper.UI
+open WebSharper.UI.Client
+open System.Collections.Generic
 
 [<JavaScript>]
 type TowRoute = {Source: int; Dest: int}
@@ -42,7 +44,7 @@ module TowPage =
                  selectedRoute.View.MapAsync(
                         fun r ->
                             async{
-                                if r.Source = -1 && r.Dest = -1 then 
+                                if r.Source = -1 || r.Dest = -1 then 
                                     JavaScript.JS.Document.GetElementById("Submit").SetAttribute("disabled","true")
                                     return "Jelenleg nincs kiválasztva útvonal."
                                 else 
@@ -53,15 +55,26 @@ module TowPage =
                             } 
                 )
             )
-            .SelectAP(fun e -> selectedRoute.Set {selectedRoute.Value with Source = 3})
-            .SelectOS(fun e -> selectedRoute.Set {selectedRoute.Value with Source = 1})
-            .SelectSF(fun e -> selectedRoute.Set {selectedRoute.Value with Source = 2})
-            .SelectLS(fun e -> selectedRoute.Set {selectedRoute.Value with Source = 0})
-            .SelectCh(fun e -> selectedRoute.Set {selectedRoute.Value with Source = 4})
-            .SelectBS(fun e -> selectedRoute.Set {selectedRoute.Value with Source = 5})
-            .SelectFix(fun e -> selectedRoute.Set {selectedRoute.Value with Dest = 1})
-            .SelectBMS(fun e -> selectedRoute.Set {selectedRoute.Value with Dest = 0})
-            .SelectJunk(fun e -> selectedRoute.Set {selectedRoute.Value with Dest = 2})
+            .LocationList(
+                 Doc.BindSeqCached (
+                    fun (kvp:KeyValuePair<int,string>) ->
+                        SiteParts.TowTemplate.LocationItem()
+                            .LocationID(string kvp.Key)
+                            .LocationName(kvp.Value)
+                            .Doc()
+                ) areaList.View
+            )
+            .LocationGarageList(
+                Doc.BindSeqCached (
+                    fun (kvp:KeyValuePair<int,string>) ->
+                        SiteParts.TowTemplate.LocationItem()
+                            .LocationID(string kvp.Key)
+                            .LocationName(kvp.Value)
+                            .Doc()
+                ) garageList.View
+            )
+            .From(selectedRoute.Lens (fun r -> string r.Source) (fun r s -> {r with Source = int s}))
+            .To(selectedRoute.Lens (fun r -> string r.Dest) (fun r s -> {r with Dest = int s}))
             .Submit(
                  fun e ->
                     async{

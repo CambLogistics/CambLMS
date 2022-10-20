@@ -1,20 +1,47 @@
-      <div class="main">
-         <p style="text-align: center;"><span id="success" style="display: none;"></span><span id="error" style="display: none;"></span></p>
-         <p style="text-align: center;"><span ws-replace="Message"></span><span id="success" ws-template="Success">${Message}</span><span id="error" ws-template="Error">${Message}</span></p>  
-         <table class="uticel_taxi">
-            <th class="szoveg_th" colspan="2">Iratbeküldés</th>
-            <tr>
-               <td class="table_file">
-                  <form onsubmit="" method="post" action="/documentsubmit" enctype="multipart/form-data">
-                     <label for="personal">Válaszd ki a személyiről készült képet</label><br>
-                     <input class="file" id="personal" type="file" name="personal" accept="image/png" required><br>
-                     <label for="license">Válaszd ki a jogsiról készült képet</label><br>
-                     <input class="file" id="license" type="file" name="license" accept="image/png" required><br>
-                     <input class="approve" type="submit" value="Beküldés"></form>
-                  </form>
-               </td>
-            </tr>
-         </table>
+<!-- !PAGE CONTENT! -->
+<div class="cl-main main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+  <header class="cl-container" style="padding-top:22px">
+    <h5><b><i class="fa fa-id-card"></i> Iratok beküldése</b></h5>
+  </header>
+  <form method="post" action="/documentsubmit" enctype="multipart/form-data">
+  <div class="cl-row-padding cl-margin-bottom">
+      <div class="cl-quarter">   
+          <div class="cl-container cl-blue cl-padding-16">
+              <div class="cl-right">
+                  <input class="cl-button" type="file" name="personal" accept="image/png" required><br>
+              </div>
+              <div class="cl-clear"></div>
+              <h4>Személyi</h4>
+          </div>
       </div>
-   </body>
-</html>
+      <div class="cl-quarter">
+          <div class="cl-container cl-light-red cl-padding-16">
+              <div class="cl-right">
+                  <input class="cl-button" type="file" name="licence" accept="image/png" required><br>
+              </div>
+              <div class="cl-clear"></div>
+              <h4>Jogsi</h4>
+          </div>
+      </div>
+      <div class="cl-quarter">
+          <input type="submit" class="cl-button cl-margin-top cl-green cl-padding-16" value="Beküldés">
+      </div>
+  </div>
+  </form>
+
+  <div class="cl-panel">
+    <div class="cl-row-padding" style="margin:0 -16px">
+      <div class="cl-quarter">
+        <h5>Személyi</h5>
+        <img src="${PersonalID}" style="width:100%">
+      </div>
+      <div class="cl-quarter">
+        <h5>Jogsi</h5>
+        <img src="${DriversLicense}" style="width:100%">
+      </div>
+    </div>
+  </div>
+  <!-- End page content -->
+</div>
