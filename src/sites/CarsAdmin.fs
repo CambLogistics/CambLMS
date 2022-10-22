@@ -167,7 +167,7 @@ module CarsAdmin =
                                 match c.WorkType with
                                     |CarWorkType.Other -> "Egyéb"
                                     |CarWorkType.Taxi -> "Taxi"
-                                    |CarWorkType.Tow -> "Vontatós"
+                                    |CarWorkType.Tow -> "Vontató"
                                     |_ -> "Ismeretlen"
                             )
                             .EditButtonPlaceholder(
