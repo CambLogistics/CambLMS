@@ -19,9 +19,9 @@
 - [x] Double prices / holidays
 - [x] Config file
 - [x] Access images from admin UI
-- [] Top members
-- [] Responsive (and less glitchy) design
-- [] Deletable cars
+- [x] Top members
+- [x] Responsive (and less glitchy) design
+- [x] Deletable cars
 - [x] Forgot password
 - [x] Inactivity
 ## Beta

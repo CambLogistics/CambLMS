@@ -1,7 +1,7 @@
 # CambLogistics Management System
 This is the administration system for the virtual (in-game) logistics company CambLogistics
 ## Status
-We are in alpha stage, bugs are present and some features are missing. See *TODO.md*
+We are in beta stage, bugs are present and some features are missing. See *TODO.md*
 ## Compilation
 - Create a database in MySQL and run the contents of *basedb.sql* on it.
 
