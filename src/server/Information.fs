@@ -8,6 +8,7 @@ module Information =
     let RenderPage (ctx:Context<EndPoint>) =
       try
         let sessionID = ctx.Request.Cookies.Item "clms_sid"
+        let callPercentage = Calls.getWeeklyCallPercentage sessionID.Value
         let user = 
             match sessionID with
                 |Some s -> User.getUserFromSID s
@@ -40,7 +41,7 @@ module Information =
                     )
                     .MoneySum((callsOfUser |> List.sumBy (fun c -> c.Price) |> string))
                     .CallSum(List.length callsOfUser |> string)
-                    .WeeklyCallPercentage(string <| (if (Calls.getWeeklyCallPercentage sessionID.Value) <= 100 then (Calls.getWeeklyCallPercentage sessionID.Value) else 100))
+                    .WeeklyCallPercentage(string <| (if callPercentage <= 100 then callPercentage else 100))
                     .RecentCalls(
                       callsOfUser |> List.sortByDescending (fun c -> c.Date) |>  List.take (if List.length callsOfUser >= 5 then 5 else List.length callsOfUser) |> List.map (
                         fun c -> 
