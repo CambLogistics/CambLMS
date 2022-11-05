@@ -41,7 +41,8 @@ module Information =
                     )
                     .MoneySum((callsOfUser |> List.sumBy (fun c -> c.Price) |> string))
                     .CallSum(List.length callsOfUser |> string)
-                    .WeeklyCallPercentage(string <| (if callPercentage <= 100 then callPercentage else 100))
+                    .WeeklyCallWidth(string <| (if callPercentage <= 100 then callPercentage else 100))
+                    .WeeklyCallPercentage(string <| callPercentage)
                     .RecentCalls(
                       callsOfUser |> List.sortByDescending (fun c -> c.Date) |>  List.take (if List.length callsOfUser >= 5 then 5 else List.length callsOfUser) |> List.map (
                         fun c -> 
