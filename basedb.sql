@@ -233,3 +233,10 @@ CREATE TABLE `requiredCalls` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 LOCK TABLES `requiredCalls` WRITE;
 INSERT INTO `requiredCalls` VALUES (0,0),(1,25),(2,25),(3,20),(4,20),(5,15),(6,15),(7,15),(8,10),(9,10),(10,5),(11,0),(12,0),(13,0),(14,0);
+DROP TABLE IF EXISTS `permissionOverrides`;
+CREATE TABLE `permissionOverrides` (
+  `userId` int,
+  `permissions` int UNSIGNED NOT NULL,
+   PRIMARY KEY (`userId`),
+   FOREIGN KEY (`userId`) REFERENCES `users` (`id`)
+);
