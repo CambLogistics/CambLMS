@@ -104,6 +104,28 @@
             mySidebar.style.display = "none";
             overlayBg.style.display = "none";
         }
+
+        //Multimedia soundeffects
+        var audioInac = new Audio('/effects/imad_az_orszag.m4a');
+        var audioImg = new Audio('/effects/nav.mp3');
+        var succes = new Audio('/effects/cipozzed.mp3');
+        var fail = new Audio('/effects/egy_rakas_szar.m4a');
+
+        function playInac() {
+            audioInac.play();
+        }
+
+        function playImage() {
+            audioImg.play();
+        }
+
+        function playSucces() {
+            succes.play();
+        }
+
+        function playFail() {
+            fail.play();
+        }
     </script>
 
 </body>

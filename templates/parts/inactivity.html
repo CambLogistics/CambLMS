@@ -16,18 +16,10 @@
                     <input class="cl-select" type="date" ws-var="End" required><br>
                     <label class="cl-padding-top-16">Oka</label><br>
                     <input class="cl-input" type="text" ws-var="Reason" required>
-                    <button class="cl-button cl-green cl-margin-top" onclick="playSound()" ws-onclick="Submit">Elküldés</button>
+                    <button class="cl-button cl-green cl-margin-top" onclick="playInac()" ws-onclick="Submit">Elküldés</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- End page content -->
 </div>
-
-<script>
-    var audo = new Audio('/effects/imad_az_orszag.m4a');
-
-    function playSound() {
-        audo.play();
-    }
-</script>
