@@ -85,6 +85,5 @@ module TowPage =
             .Reset(
                 fun e -> 
                     selectedRoute.Set {Source = -1;Dest = -1}
-                    JavaScript.JS.Window.Location.Replace "/"
                 )
             .Doc()
