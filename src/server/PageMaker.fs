@@ -5,6 +5,10 @@ open WebSharper.UI
 open WebSharper.UI.Html
 open WebSharper.Sitelets
 
+(*
+    TODO: Replace deprecated client calls to ClientServer.client
+*)
+
 module PageMakers =
     let popupActiveString = "active"
     let RegistrationAdmin ctx ep (name:string) =
