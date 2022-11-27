@@ -34,11 +34,24 @@
         <div class="cl-panel">
             <div class="cl-row-padding" style="margin:0 -16px">
                 <div class="cl-third">
-                    <button class="cl-button cl-margin-top cl-green" id="Submit" ws-onclick="Submit">Számla átadva</button>
-                    <button class="cl-button cl-margin-top cl-red" id="Reset" ws-onclick="Reset">Fuvar törlése</button>
+                    <button class="cl-button cl-margin-top cl-green" id="Submit" onclick="playSucces()" ws-onclick="Submit">Számla átadva</button>
+                    <button class="cl-button cl-margin-top cl-red" id="Reset" onclick="playFail()" ws-onclick="Reset">Fuvar törlése</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- End page content -->
 </div>
+
+<script>
+    var succes = new Audio('/effects/cipozzed.mp3');
+    var fail = new Audio('/effects/egy_rakas_szar.m4a');
+
+    function playSucces() {
+        succes.play();
+    }
+
+    function playFail() {
+        fail.play();
+    }
+</script>
