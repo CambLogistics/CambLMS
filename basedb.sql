@@ -1,3 +1,15 @@
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` int(11) NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `accepted` tinyint(1) NOT NULL,
+  `accountID` int(11) NOT NULL,
+  `email` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'NULL',
+  `deleted` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 DROP TABLE IF EXISTS `areas`;
 CREATE TABLE `areas` (
   `id` int(11) NOT NULL,
@@ -21,6 +33,15 @@ CREATE TABLE `calls` (
   KEY `userID` (`userID`),
   CONSTRAINT `calls_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+DROP TABLE IF EXISTS `tuningLevels`;
+CREATE TABLE `tuningLevels` (
+  `level` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'NULL',
+  PRIMARY KEY (`level`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+LOCK TABLES `tuningLevels` WRITE;
+INSERT INTO `tuningLevels` VALUES (0,'Gyári'),(1,'Alap'),(2,'Profi'),(3,'Verseny'),(4,'Venom');
+UNLOCK TABLES;
 DROP TABLE IF EXISTS `cars`;
 CREATE TABLE `cars` (
   `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -158,27 +179,6 @@ CREATE TABLE `towPrices` (
 LOCK TABLES `towPrices` WRITE;
 INSERT INTO `towPrices` VALUES (0,0,4000),(0,1,5000),(1,0,4500),(1,1,4500),(2,0,5000),(2,1,4000),(3,0,4500),(3,1,4500),(4,0,6500),(4,1,6500),(5,0,6000),(5,1,4500);
 UNLOCK TABLES;
-DROP TABLE IF EXISTS `tuningLevels`;
-CREATE TABLE `tuningLevels` (
-  `level` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'NULL',
-  PRIMARY KEY (`level`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-LOCK TABLES `tuningLevels` WRITE;
-INSERT INTO `tuningLevels` VALUES (0,'Gyári'),(1,'Alap'),(2,'Profi'),(3,'Verseny'),(4,'Venom');
-UNLOCK TABLES;
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `role` int(11) NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `accepted` tinyint(1) NOT NULL,
-  `accountID` int(11) NOT NULL,
-  `email` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'NULL',
-  `deleted` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 DROP TABLE IF EXISTS inactivity;
 CREATE TABLE inactivity(
   userid int NOT NULL,
