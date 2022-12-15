@@ -5,10 +5,6 @@ open WebSharper.UI
 open WebSharper.UI.Html
 open WebSharper.Sitelets
 
-(*
-    TODO: Replace deprecated client calls to ClientServer.client
-*)
-
 module PageMakers =
     let popupActiveString = "active"
     let RegistrationAdmin ctx ep (name:string) =
@@ -17,7 +13,7 @@ module PageMakers =
             .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
             .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
             .FirstName(name)
-            .Main(client <@RegistrationAdminPage.RenderPage()@>)
+            .Main(ClientServer.client (RegistrationAdminPage.RenderPage()))
             .Doc()
     let PasswordChange ctx ep (name:string) =
         SiteTemplates.MainTemplate()
@@ -25,7 +21,7 @@ module PageMakers =
             .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
             .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
             .FirstName(name)
-            .Main(client <@PasswordChangePage.RenderPage()@>)
+            .Main(ClientServer.client (PasswordChangePage.RenderPage()))
             .Doc()
     let NameChange ctx ep (name:string) =
          SiteTemplates.MainTemplate()
@@ -33,7 +29,7 @@ module PageMakers =
             .FirstName(name)
             .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
             .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
-            .Main(client <@NameChangePage.RenderPage()@>)
+            .Main(ClientServer.client (NameChangePage.RenderPage()))
             .Doc()
     let MembersAdmin ctx ep (user:Member) (name:string) =
         SiteTemplates.MainTemplate()
@@ -41,7 +37,7 @@ module PageMakers =
             .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
             .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
             .FirstName(name)
-            .Main(client <@MemberAdminPage.RenderPage user@>)
+            .Main(ClientServer.client (MemberAdminPage.RenderPage user))
             .Doc()
     let Changelog ctx ep (name:string) =
         SiteTemplates.MainTemplate()
@@ -55,7 +51,7 @@ module PageMakers =
             .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
             .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
             .FirstName(name)
-            .Main(client <@CarsAdmin.RenderPage()@>)
+            .Main(ClientServer.client (CarsAdmin.RenderPage()))
             .Doc()
     let Information ctx ep (name:string) =
         SiteTemplates.MainTemplate()
@@ -69,7 +65,7 @@ module PageMakers =
             .FirstName(name)
             .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
             .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
-            .Main(client <@TaxiPage.RenderPage()@>)
+            .Main(ClientServer.client (TaxiPage.RenderPage()))
             .Doc()
     let Towing ctx ep (name:string) =
         SiteTemplates.MainTemplate()
@@ -77,7 +73,7 @@ module PageMakers =
             .FirstName(name)
             .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
             .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
-            .Main(client <@TowPage.RenderPage()@>)
+            .Main(ClientServer.client (TowPage.RenderPage()))
             .Doc()
     let AdminHome ctx ep (name:string) =
         SiteTemplates.MainTemplate()
@@ -85,7 +81,7 @@ module PageMakers =
             .FirstName(name)
             .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
             .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
-            .Main(client <@AdminHome.RenderPage()@>)
+            .Main(ClientServer.client (AdminHome.RenderPage()))
             .Doc()
     let ServiceAdmin ctx ep (name:string) =
         SiteTemplates.MainTemplate()
@@ -93,13 +89,13 @@ module PageMakers =
             .Navbar(Navbar.MakeNavbar ctx ep true)
             .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
             .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
-            .Main(client <@ServiceFeeAdmin.RenderPage()@>)
+            .Main(ClientServer.client (ServiceFeeAdmin.RenderPage()))
             .Doc()
     let LoginPage ctx =
         SiteTemplates.LoginTemplate()
             .SuccessBox(SiteTemplates.LoginTemplate.SuccessMessageBox().Doc())
             .ErrorBox(SiteTemplates.LoginTemplate.ErrorMessageBox().Doc())
-            .Main(client <@LoginPage.RenderPage()@>)
+            .Main(ClientServer.client (LoginPage.RenderPage()))
             .Doc()
     let InactivityPage ctx ep (name:string) =
         SiteTemplates.MainTemplate()
@@ -107,7 +103,7 @@ module PageMakers =
             .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
             .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
             .FirstName(name)
-            .Main(client <@InactivityPage.RenderPage()@>)
+            .Main(ClientServer.client (InactivityPage.RenderPage()))
             .Doc()
     let InactivityAdmin ctx ep (name:string) =
         SiteTemplates.MainTemplate()   
@@ -115,7 +111,7 @@ module PageMakers =
             .FirstName(name)
             .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
             .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
-            .Main(client <@InactivityAdmin.RenderPage()@>)
+            .Main(ClientServer.client (InactivityAdmin.RenderPage()))
             .Doc()
     let DocAdmin ctx ep (name:string) =
         SiteTemplates.MainTemplate()
@@ -123,19 +119,19 @@ module PageMakers =
             .FirstName(name)
             .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
             .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
-            .Main(client <@DocAdmin.RenderPage()@>)
+            .Main(ClientServer.client (DocAdmin.RenderPage()))
             .Doc()
     let ForgotPass ctx =
         SiteTemplates.LoginTemplate()
             .SuccessBox(SiteTemplates.LoginTemplate.SuccessMessageBox().Doc())
             .ErrorBox(SiteTemplates.LoginTemplate.ErrorMessageBox().Doc())
-            .Main(client <@ForgotPassPage.RenderPage()@>)
+            .Main(ClientServer.client (ForgotPassPage.RenderPage()))
             .Doc()
     let Logout (ctx:Context<EndPoint>) =
         User.logoutUser ctx
         SiteTemplates.MainTemplate()
             .Navbar()
-            .Main(client <@LogoutClient.Logout()@>)
+            .Main(ClientServer.client (LogoutClient.Logout()))
             .Doc()
     let SettingsPage (ctx:Context<EndPoint>) ep (name:string) (user:Member) =
         SiteTemplates.MainTemplate()
