@@ -165,7 +165,7 @@ hr{border:0;border-top:1px solid #000;margin:20px 0}
 .cl-deep-purple,.cl-hover-deep-purple:hover{color:#fff!important;background-color:#673ab7!important}
 .cl-red,.cl-hover-red:hover{color:#fff!important;background-color:#f44336!important}
 .cl-light-red,.cl-hover-light-red:hover{color:#fff!important;background-color:#f5756c!important}
-.cl-sand,.cl-hover-sand:hover{color:#fff!important;background-color:#fdf5e6!important}
+.cl-sand,.cl-hover-sand:hover{color: #000 !important;background-color:#fdf5e6!important}
 .cl-teal,.cl-hover-teal:hover{color:#fff!important;background-color:#009688!important}
 .cl-yellow,.cl-hover-yellow:hover{color:#000!important;background-color:#ffeb3b!important}
 .cl-white,.cl-hover-white:hover{color:#000!important;background-color:#fff!important}
