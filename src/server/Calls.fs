@@ -78,8 +78,8 @@ module Calls =
       try
         if isDoublePrice () then
             match callType with
-                |CallType.Towing -> int (float price * 1.25)
-                |CallType.Taxi -> price * 2
+                |CallType.Towing -> int (round ((float (price) * 1.251) / 100.0) * 100.0)
+                |CallType.Taxi -> int (round ((float (price) * 1.251) / 100.0) * 100.0)
                 |_ -> price
         else
             price
