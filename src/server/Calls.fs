@@ -40,8 +40,9 @@ module Calls =
             }
             |> Seq.map (fun h ->
                 if h.EveryYear = (sbyte 1) then
-                    ((new System.DateTime(System.DateTime.Now.Year, h.StartDate.Month, h.StartDate.Day)),
-                    (new System.DateTime(System.DateTime.Now.Year, h.EndDate.Month, h.EndDate.Day)))
+                    let newStartDate = new System.DateTime(System.DateTime.Now.Year, h.StartDate.Month, h.StartDate.Day)
+                    ((newStartDate),
+                    ((newStartDate.Add(h.EndDate.Subtract(h.StartDate)))))
                 else
                     (h.StartDate,h.EndDate)
                 )
@@ -66,7 +67,7 @@ module Calls =
              for (startDate, endDate) in convertedHolidays do
                  where (
                      startDate <= System.DateTime.Now
-                     && endDate > System.DateTime.Now
+                     && endDate.AddHours(23).AddMinutes(59).AddSeconds(59) > System.DateTime.Now
                  )
 
                  count
