@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="light-mode">
 <head>
     <title>CambLogistics</title>
     <meta charset="UTF-8">
@@ -72,6 +72,7 @@
             <a ws-template="NavbarItem" href="${Url}" class="cl-bar-item cl-button cl-padding"><i class="fa fa-${IconClass}"></i> ${ItemTitle}</a>
             <a ws-template="NavbarActiveItem" href="${Url}" class="cl-bar-item cl-button cl-padding cl-orange cl-text-white"><i class="fa fa-${IconClass}"></i> ${ItemTitle}</a>
             <a ws-template="NavbarLogout" href="${Url}" class="cl-bar-item cl-button cl-padding cl-hover-red"><i class="fa fa-sign-out"></i> ${ItemTitle}</a>
+            <a href="#" onclick="toggle_dark_mode()" class="cl-bar-item cl-button cl-padding"><i class="fa fa-moon-o"></i> Sötét mód</a>
         </div>
     </nav>
 
@@ -84,6 +85,7 @@
     <script>
         // Get the Sidebar
         var mySidebar = document.getElementById("mySidebar");
+        var html = document.getElementsByTagName("html")[0]
 
         // Get the DIV with overlay effect
         var overlayBg = document.getElementById("myOverlay");
@@ -103,6 +105,14 @@
         function cl_close() {
             mySidebar.style.display = "none";
             overlayBg.style.display = "none";
+        }
+        function toggle_dark_mode(){
+            if(html.getAttribute("class") == "dark-mode"){
+                html.setAttribute("class","light-mode");
+            }
+            else{
+                html.setAttribute("class","dark-mode");
+            }
         }
     </script>
 
