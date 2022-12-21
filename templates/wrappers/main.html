@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="light-mode">
+<html class="${DarkMode}">
 <head>
     <title>CambLogistics</title>
     <meta charset="UTF-8">
@@ -85,11 +85,23 @@
     <script>
         // Get the Sidebar
         var mySidebar = document.getElementById("mySidebar");
+
+        //Get the HTML tag
         var html = document.getElementsByTagName("html")[0]
 
         // Get the DIV with overlay effect
         var overlayBg = document.getElementById("myOverlay");
 
+        if(!document.cookie.includes("camblms_preferred_mode")){
+            if(window.matchMedia("(prefers-color-scheme: dark)").matches){
+                html.classList.add("dark-mode");
+                document.cookie = "camblms_preferred_mode=dark;path=/;expires=Fri, 31 Dec 9999 23:59:59 GMT"
+            }
+            else{
+                html.classList.add("light-mode");
+                document.cookie = "camblms_preferred_mode=light;path=/;expires=Fri, 31 Dec 9999 23:59:59 GMT"
+            }
+        }
         // Toggle between showing and hiding the sidebar, and add overlay effect
         function cl_open() {
             if (mySidebar.style.display === 'block') {
@@ -109,9 +121,13 @@
         function toggle_dark_mode(){
             if(html.getAttribute("class") == "dark-mode"){
                 html.setAttribute("class","light-mode");
+                document.cookie = "camblms_preferred_mode=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/"
+                document.cookie = "camblms_preferred_mode=light;path=/;expires=Fri, 31 Dec 9999 23:59:59 GMT"
             }
             else{
                 html.setAttribute("class","dark-mode");
+                document.cookie = "camblms_preferred_mode=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/"
+                document.cookie = "camblms_preferred_mode=dark;path=/;expires=Fri, 31 Dec 9999 23:59:59 GMT"
             }
         }
     </script>
