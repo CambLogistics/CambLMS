@@ -8,6 +8,7 @@ module Navbar =
     type NavbarElement =
         |Url of EndPoint*string*string
         |LogoutUrl of string
+        |DarkModeToggle
     let NormalNavbar = [
         Url (EndPoint.Information,"Információk","users")
         Url (EndPoint.Changelog,"Változásnapló","bell")
@@ -18,6 +19,7 @@ module Navbar =
         Url (EndPoint.Inactivity,"Inaktivítás","free-code-camp")
         Url (EndPoint.Settings,"Beállítások","cog")
         Url (EndPoint.AdminHome,"Adminfelület","shield")
+        DarkModeToggle
         LogoutUrl "Kijelentkezés"
     ]
     let AdminNavbar = [
@@ -29,6 +31,7 @@ module Navbar =
         Url(EndPoint.CarsAdmin,"Autók","car")
         Url(EndPoint.ServiceAdmin,"Szerviz","wrench")
         Url (EndPoint.Home,"Normál felület","taxi")
+        DarkModeToggle
         LogoutUrl "Kijelentkezés"
     ]
     let MakeNavbar (ctx:Context<EndPoint>) current isAdmin =
@@ -43,6 +46,7 @@ module Navbar =
                     |Url (ep,name,icon) ->
                         if ep = current then MainTemplate.NavbarActiveItem().Url(ctx.Link ep).ItemTitle(name).IconClass(icon).Doc()
                         else MainTemplate.NavbarItem().Url(ctx.Link ep).ItemTitle(name).IconClass(icon).Doc()
+                    |DarkModeToggle -> MainTemplate.NavbarDarkToggle().Doc()
             ) elements |> Doc.Concat
         let navbarList = if isAdmin then AdminNavbar else NormalNavbar
         navbarList |> List.filter (
@@ -52,4 +56,5 @@ module Navbar =
                     |Url (ep,_,_) ->
                         if user.IsSome then (Permission.getUserPermissions user.Value) &&& (LanguagePrimitives.EnumToValue (Map.find ep Permission.RequiredPermissions)) > 0u
                         else false
+                    |DarkModeToggle -> user.IsSome
             ) |> generateItems ctx
