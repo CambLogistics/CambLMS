@@ -46,7 +46,7 @@ DROP TABLE IF EXISTS `cars`;
 CREATE TABLE `cars` (
   `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `regNum` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `regNum` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
   `airRide` tinyint(1) NOT NULL,
   `gps` tinyint(1) NOT NULL,
   `ticket` tinyint(1) NOT NULL,
