@@ -8,23 +8,31 @@
 
     <div class="cl-panel">
         <div class="cl-row-padding" style="margin:0 -16px">
-            <div class="cl-half">
-                <table>
-                    <th colspan="10" class="cl-large">Tagok</th>
-                    <tr class="szoveg_td">
-                        <td class="cl-large">ID</td>
-                        <td class="cl-large">Név</td>
-                        <td class="cl-large">Account ID</td>
-                        <td class="cl-large">Rang</td>
-                        <td class="cl-large">Törlés</td>
-                    </tr>
-                    <tr><td colspan="10" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td></tr>
-                    <tr ws-replace="ActiveUserList"></tr>
-                    <tr ws-template="ActiveUserListItem">
-                        <td class="cl-large">${ID}</td>
-                        <td class="cl-large">${Name}</td>
-                        <td class="cl-large">${AccID}</td>
-                        <td class="cl-large">
+            <table id="edit" style="display:none">
+                <tr>
+                    <td style="padding-right: 30px;padding-top: 10px;">
+                        <label class="cl-large">Név</label><br>
+                        <input class="cl-input" ws-var="NewName" type="text" name="Name">
+                    </td>
+                    <td style="padding-right: 30px;padding-top: 10px;">
+                        <label class="cl-large">AccountID</label><br>
+                        <input class="cl-input" ws-var="AccID" type="text" name="AccID">
+                    </td>
+                    <td style="padding-right: 30px;padding-top: 10px;">
+                        <label class="cl-large">Telefonszám</label><br>
+                        <input class="cl-input" ws-var="PhoneNum" type="text" name="Phone">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-right: 30px;padding-top: 10px;">
+                        <label class="cl-large">Lakcím</label><br>
+                        <input class="cl-input" ws-var="Address" type="text" name="Address">
+                    </td>
+                    <td style="padding-right: 30px;padding-top: 10px;">
+                        <label class="cl-large">Születési dátum</label><br>
+                        <input class="cl-input" ws-var="BirthDate" type="text" name="BirthDate">
+                    </td>
+                    <td class="cl-large">
                             <div ws-replace="RoleSelectHole"></div>
                             <select ws-template="RoleSelectorEnabled" class="cl-select" ws-var="Rank" ws-onchange="ChangeRank">
                                 <option ws-replace="RankList"></option>
@@ -33,7 +41,26 @@
                             <select ws-template="RoleSelectorDisabled" class="cl-select" ws-var="Rank" disabled>
                                 <option ws-replace="RankList"></option>
                             </select>
-                        </td>
+                    </td>
+                    <td><button ws-onclick="Confirm" class="cl-button cl-large cl-green" id="approvecar">Jóváhagy</button></td>
+                </tr>
+            </table>
+            
+            <div class="cl-half">
+                <table>
+                    <th colspan="10" class="cl-large">Tagok</th>
+                    <tr class="szoveg_td">
+                        <td class="cl-large">ID</td>
+                        <td class="cl-large">Név</td>
+                        <td class="cl-large">Adatok</td>
+                        <td class="cl-large">Törlés</td>
+                    </tr>
+                    <tr><td colspan="10" style="border-bottom: 2px solid rgba(255, 180, 40, 0.9);"></td></tr>
+                    <tr ws-replace="ActiveUserList"></tr>
+                    <tr ws-template="ActiveUserListItem">
+                        <td class="cl-large">${ID}</td>
+                        <td class="cl-large">${Name}</td>
+                        <td class="cl-large"><div ws-replace="DataButtonHole"></div><button ws-template="DataButton" class="cl-button cl-large cl-green" ws-onclick="EditData">Edit</button></td>
                         <td class="cl-large"><div ws-replace="DeleteButtonHole"></div><button ws-template="DeleteButton" value="${ID}" class="cl-large cl-button cl-red" ws-onclick="DeleteUser">X</button></td>
                     </tr>
                 </table>
