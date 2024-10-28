@@ -1,4 +1,4 @@
-namespace camblms
+namespace camblms.server
 
 module RandomString =
     let getRandomString length =

@@ -1,13 +1,18 @@
-namespace camblms
+namespace camblms.sites
 
 open WebSharper
 open WebSharper.JavaScript
+
+open camblms.dto
+open camblms.templating
+open camblms.server.controller
 
 [<JavaScript>]
 module LoginPage =
     let callLogin name password =
         async {
-            let! result = User.loginUser(name,password)
+            let! result = UserController.loginUser (name, password)
+
             match result with
             | LoginResult.Success id ->
                 JS.Document.Cookie <- "clms_sid=" + id
@@ -17,10 +22,12 @@ module LoginPage =
             | LoginResult.NotApproved ->
                 Feedback.giveFeedback true "Regisztrációd még nem lett jóváhagyva. Kérjük légy türelemmel!"
         }
+
     let register name password accid email =
         async {
             if not (JS.IsNaN accid) then
-                let! result = User.registerUser(name,password,(int accid),email)
+                let! result = UserController.registerUser (name, password, (int accid), email)
+
                 match result with
                 | RegisterResult.Success -> JS.Window.Location.Replace "/login?registered=true"
                 | Exists -> Feedback.giveFeedback true "Ilyen felhasználó már létezik!"
@@ -32,31 +39,22 @@ module LoginPage =
             else
                 Feedback.giveFeedback true "Ellenőrizd a bevitt adatokat!"
         }
+
     let RenderPage () =
         if JS.Window.Location.Href.Contains "registered" then
             Feedback.giveFeedback false "Regisztrációd sikeres és hamarosan jóváhagyásra kerül!"
+
         SiteParts
             .LoginPage()
-            .Login(fun e ->
-                callLogin e.Vars.Name.Value e.Vars.Password.Value
-                |> Async.Start)
-            .Kblogin(
-                fun e ->
-                    if e.Event.KeyCode = 13 then callLogin e.Vars.Name.Value e.Vars.Password.Value |> Async.Start
-            )
+            .Login(fun e -> callLogin e.Vars.Name.Value e.Vars.Password.Value |> Async.Start)
+            .Kblogin(fun e ->
+                if e.Event.KeyCode = 13 then
+                    callLogin e.Vars.Name.Value e.Vars.Password.Value |> Async.Start)
             .Kbregister(fun e ->
                 if e.Event.KeyCode = 13 then
-                    register
-                        e.Vars.Name.Value
-                        e.Vars.Password.Value
-                        e.Vars.AccID.Value
-                        e.Vars.Email.Value
+                    register e.Vars.Name.Value e.Vars.Password.Value e.Vars.AccID.Value e.Vars.Email.Value
                     |> Async.Start)
             .Register(fun e ->
-                register
-                    e.Vars.Name.Value
-                    e.Vars.Password.Value
-                    e.Vars.AccID.Value
-                    e.Vars.Email.Value
+                register e.Vars.Name.Value e.Vars.Password.Value e.Vars.AccID.Value e.Vars.Email.Value
                 |> Async.Start)
             .Doc()

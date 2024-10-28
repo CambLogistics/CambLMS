@@ -1,55 +1,83 @@
-namespace camblms
+namespace camblms.sites
 
 open WebSharper
-open WebSharper.Sitelets
+open WebSharper.UI
 
+open camblms.dto
+open camblms.templating
+open camblms.server.controller
+
+[<JavaScript>]
 module SettingsPage =
-    let RenderPage (ctx:Context<EndPoint>) (user:Member) =
-        let sessionID = (ctx.Request.Cookies.Item "clms_sid").Value
-        let callsOfUser = Calls.getCallsBySID sessionID
-        SiteParts.SettingsTemplate()
-            .AccID(string user.AccountID)
-            .Name(user.Name)
-            .Cars(
-                 List.fold (
-                                fun s rn -> (s + " " + rn)
-                                ) "" (
-                                  match Cars.getCarsOfKeyHolder sessionID with
-                                    |Ok c -> c
-                                    |Error e -> failwith e
-                                  )
-            )
-             .Rank(
-                        let db = Database.getDataContext()
-                        (query{
-                            for r in db.Camblogistics.roles do
-                            where(r.Id = user.Role)
-                            exactlyOne
-                        }).Name
-                    )
-            .MoneySum(
-                match callsOfUser with
-                    |Ok calls ->
-                        (calls |> List.sumBy (fun c -> c.Price) |> string) + " $"
-                    |Error e -> "Hiba"
-            )
+    let user =
+        Var.Create
+            { Id = 0
+              Role = { Level = 0; Name = "" }
+              Name = ""
+              AccountID = 0
+              Email = "" }
+
+    let sessionID = JavaScript.Cookies.Get("clms_sid").Value
+    let callsOfUser = Var.Create []
+    let carsOfUser = Var.Create []
+
+    let getUser () =
+        async {
+            let! userProfile = UserController.getUserProfile sessionID
+            user.Set userProfile.Value
+        }
+        |> Async.Start
+
+    let getCarsOfUser () =
+        async {
+            let! carList = CarController.getCarsOfKeyHolder sessionID
+
+            match carList with
+            | Some c -> carsOfUser.Set c
+            | None -> Feedback.giveFeedback true <| "Hiba az autólista lekérésekor!"
+        }
+        |> Async.Start
+
+    let getCallsOfUser () =
+        async {
+            let! callList = CallsController.getCallsOfUser sessionID
+
+            match callList with
+            | Some c -> callsOfUser.Set c
+            | None -> Feedback.giveFeedback true <| "Hiba az hívások lekérésekor!"
+        }
+        |> Async.Start
+
+    let RenderPage () =
+        getUser ()
+        getCarsOfUser ()
+        getCallsOfUser ()
+
+        SiteParts
+            .SettingsTemplate()
+            .AccID(string user.V.AccountID)
+            .Name(user.V.Name)
+            .Cars(List.fold (fun s rn -> (s + " " + rn)) "" carsOfUser.V)
+            .Rank(user.V.Role.Name)
+            .MoneySum((callsOfUser.V |> List.sumBy (fun c -> c.Price) |> string) + " $")
             .TwoWeekMoney(
-                match callsOfUser with
-                    |Ok calls ->
-                        (calls |> List.filter (fun c -> c.ThisWeek || c.PreviousWeek) |> List.sumBy (fun c -> c.Price) |> string) + " $"
-                    |Error e -> "Hiba"
+                (callsOfUser.V
+                 |> List.filter (fun c -> c.ThisWeek || c.PreviousWeek)
+                 |> List.sumBy (fun c -> c.Price)
+                 |> string)
+                + " $"
             )
             .TaxiSum(
-                match callsOfUser with
-                    |Ok calls ->
-                        calls |> List.filter (fun c -> c.Type = CallType.Taxi) |> List.length |> string
-                    |Error e -> "Hiba"
+                callsOfUser.V
+                |> List.filter (fun c -> c.Type = CallType.Taxi)
+                |> List.length
+                |> string
             )
             .TowSum(
-                match callsOfUser with
-                    |Ok calls ->
-                        calls |> List.filter (fun c -> c.Type = CallType.Towing) |> List.length |> string
-                    |Error e -> "Hiba"
+                callsOfUser.V
+                |> List.filter (fun c -> c.Type = CallType.Towing)
+                |> List.length
+                |> string
             )
             .Contract("#") //Not implemented
             .Doc()
