@@ -10,9 +10,10 @@ open Microsoft.AspNetCore.HttpOverrides
 [<EntryPoint>]
 let main args =
     let builder = WebApplication.CreateBuilder(args)
-    
+
     // Add services to the container.
-    builder.Services.AddSitelet(Site.Main)
+    builder.Services
+        .AddSitelet(Site.Main)
         .AddAuthentication("WebSharper")
         .AddCookie("WebSharper", fun options -> ())
     |> ignore
@@ -21,7 +22,8 @@ let main args =
 
     // Configure the HTTP request pipeline.
     if not (app.Environment.IsDevelopment()) then
-        app.UseExceptionHandler("/Error")
+        app
+            .UseExceptionHandler("/Error")
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             .UseHsts()
         |> ignore
@@ -29,9 +31,9 @@ let main args =
     app
         //Prepare for reverse proxy
         .UseForwardedHeaders(
-           let fho = new ForwardedHeadersOptions()
-           fho.ForwardedHeaders <- ForwardedHeaders.XForwardedFor ||| ForwardedHeaders.XForwardedProto
-           fho 
+            let fho = new ForwardedHeadersOptions()
+            fho.ForwardedHeaders <- ForwardedHeaders.XForwardedFor ||| ForwardedHeaders.XForwardedProto
+            fho
         )
         .UseAuthentication()
         .UseStaticFiles()
