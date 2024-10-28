@@ -55,7 +55,7 @@ module SettingsPage =
 
         SiteParts
             .SettingsTemplate()
-            .AccID(string user.Value.AccountID)
+            .AccID(string user.V.AccountID)
             .Name(user.V.Name)
             .Cars(List.fold (fun s rn -> (s + " " + rn)) "" carsOfUser.V)
             .Rank(user.V.Role.Name)
