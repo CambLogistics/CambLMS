@@ -1,8 +1,8 @@
 namespace camblms.server.routing
 
-open WebSharper
+open System.Reflection
+
 open WebSharper.UI
-open WebSharper.UI.Html
 open WebSharper.Sitelets
 
 open camblms.dto
@@ -21,118 +21,88 @@ module PageMakers =
         else if cookieValue.Value.Equals "dark" then "dark-mode"
         else "light-mode"
 
-    let RegistrationAdmin ctx ep (name: string) =
+    let versionInfo =
+        let infVersionType = typedefof<AssemblyInformationalVersionAttribute>
+        Assembly.GetCallingAssembly()
+            .GetCustomAttributes(infVersionType,false)
+        |> Seq.item 0 :?> AssemblyInformationalVersionAttribute
+
+    let buildMainTemplate ctx ep (name: string) isAdmin =
         SiteTemplates
             .MainTemplate()
             .DarkMode(getDarkModeStatus ctx)
-            .Navbar(Navbar.MakeNavbar ctx ep true)
+            .Navbar(Navbar.MakeNavbar ctx ep isAdmin)
+            .FirstName(name)
+            .VersionString(versionInfo.InformationalVersion)
+
+    let RegistrationAdmin ctx ep (name: string) =
+        (buildMainTemplate ctx ep name true)
             .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
             .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
-            .FirstName(name)
             .Main(ClientServer.client (RegistrationAdminPage.RenderPage()))
             .Doc()
 
     let PasswordChange ctx ep (name: string) =
-        SiteTemplates
-            .MainTemplate()
-            .DarkMode(getDarkModeStatus ctx)
-            .Navbar(Navbar.MakeNavbar ctx ep false)
+        (buildMainTemplate ctx ep name false)
             .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
             .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
-            .FirstName(name)
             .Main(ClientServer.client (PasswordChangePage.RenderPage()))
             .Doc()
 
     let NameChange ctx ep (name: string) =
-        SiteTemplates
-            .MainTemplate()
-            .DarkMode(getDarkModeStatus ctx)
-            .Navbar(Navbar.MakeNavbar ctx ep false)
-            .FirstName(name)
+        (buildMainTemplate ctx ep name false)
             .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
             .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
             .Main(ClientServer.client (NameChangePage.RenderPage()))
             .Doc()
 
     let MembersAdmin ctx ep (user: Member) (name: string) =
-        SiteTemplates
-            .MainTemplate()
-            .DarkMode(getDarkModeStatus ctx)
-            .Navbar(Navbar.MakeNavbar ctx ep true)
+        (buildMainTemplate ctx ep name true)
             .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
             .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
-            .FirstName(name)
             .Main(ClientServer.client (MemberAdminPage.RenderPage user))
             .Doc()
 
     let Changelog ctx ep (name: string) =
-        SiteTemplates
-            .MainTemplate()
-            .DarkMode(getDarkModeStatus ctx)
-            .Navbar(Navbar.MakeNavbar ctx ep false)
-            .FirstName(name)
+        (buildMainTemplate ctx ep name false)
             .Main(SiteParts.ChangelogTemplate().Doc())
             .Doc()
 
     let CarsAdmin ctx ep (name: string) =
-        SiteTemplates
-            .MainTemplate()
-            .DarkMode(getDarkModeStatus ctx)
-            .Navbar(Navbar.MakeNavbar ctx ep true)
+        (buildMainTemplate ctx ep name true)
             .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
             .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
-            .FirstName(name)
             .Main(ClientServer.client (CarsAdmin.RenderPage()))
             .Doc()
 
     let Information ctx ep (name: string) =
-        SiteTemplates
-            .MainTemplate()
-            .DarkMode(getDarkModeStatus ctx)
-            .Navbar(Navbar.MakeNavbar ctx ep false)
-            .FirstName(name)
+        (buildMainTemplate ctx ep name false)
             .Main(ClientServer.client (Information.RenderPage()))
             .Doc()
 
     let Taxi ctx ep (name: string) =
-        SiteTemplates
-            .MainTemplate()
-            .DarkMode(getDarkModeStatus ctx)
-            .Navbar(Navbar.MakeNavbar ctx ep false)
-            .FirstName(name)
+        (buildMainTemplate ctx ep name false)
             .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
             .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
             .Main(ClientServer.client (TaxiPage.RenderPage()))
             .Doc()
 
     let Towing ctx ep (name: string) =
-        SiteTemplates
-            .MainTemplate()
-            .DarkMode(getDarkModeStatus ctx)
-            .Navbar(Navbar.MakeNavbar ctx ep false)
-            .FirstName(name)
+        (buildMainTemplate ctx ep name false)
             .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
             .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
             .Main(ClientServer.client (TowPage.RenderPage()))
             .Doc()
 
     let AdminHome ctx ep (name: string) =
-        SiteTemplates
-            .MainTemplate()
-            .DarkMode(getDarkModeStatus ctx)
-            .Navbar(Navbar.MakeNavbar ctx ep true)
-            .FirstName(name)
+        (buildMainTemplate ctx ep name true)
             .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
             .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
             .Main(ClientServer.client (AdminHome.RenderPage()))
             .Doc()
 
     let ServiceAdmin ctx ep (name: string) =
-        SiteTemplates
-            .MainTemplate()
-            .DarkMode(getDarkModeStatus ctx)
-            .FirstName(name)
-            .Navbar(Navbar.MakeNavbar ctx ep true)
+        (buildMainTemplate ctx ep name true)
             .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
             .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
             .Main(ClientServer.client (ServiceFeeAdmin.RenderPage()))
@@ -147,33 +117,21 @@ module PageMakers =
             .Doc()
 
     let InactivityPage ctx ep (name: string) =
-        SiteTemplates
-            .MainTemplate()
-            .DarkMode(getDarkModeStatus ctx)
-            .Navbar(Navbar.MakeNavbar ctx ep false)
+        (buildMainTemplate ctx ep name false)
             .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
             .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
-            .FirstName(name)
             .Main(ClientServer.client (InactivityPage.RenderPage()))
             .Doc()
 
     let InactivityAdmin ctx ep (name: string) =
-        SiteTemplates
-            .MainTemplate()
-            .DarkMode(getDarkModeStatus ctx)
-            .Navbar(Navbar.MakeNavbar ctx ep true)
-            .FirstName(name)
+        (buildMainTemplate ctx ep name true)
             .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
             .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
             .Main(ClientServer.client (InactivityAdmin.RenderPage()))
             .Doc()
 
     let DocAdmin ctx ep (name: string) =
-        SiteTemplates
-            .MainTemplate()
-            .DarkMode(getDarkModeStatus ctx)
-            .Navbar(Navbar.MakeNavbar ctx ep true)
-            .FirstName(name)
+        (buildMainTemplate ctx ep name true)
             .ErrorBox(SiteTemplates.MainTemplate.ErrorMessageBox().Doc())
             .SuccessBox(SiteTemplates.MainTemplate.SuccessMessageBox().Doc())
             .Main(ClientServer.client (DocAdmin.RenderPage()))
@@ -197,19 +155,12 @@ module PageMakers =
             .Doc()
 
     let SettingsPage (ctx: Context<EndPoint>) ep (name: string) (user: Member) =
-        SiteTemplates
-            .MainTemplate()
-            .DarkMode(getDarkModeStatus ctx)
-            .FirstName(name)
-            .Navbar(Navbar.MakeNavbar ctx ep false)
+        (buildMainTemplate ctx ep name false)
             .Main(ClientServer.client (SettingsPage.RenderPage()))
             .Doc()
 
     let DocumentPage (ctx: Context<EndPoint>) ep (name: string) (user: Member) =
-        SiteTemplates
-            .MainTemplate()
-            .DarkMode(getDarkModeStatus ctx)
-            .FirstName(name)
+        (buildMainTemplate ctx ep name false)
             .ErrorBox(
                 match ctx.Request.Get.Item "success" with
                 | Some s ->
@@ -236,7 +187,6 @@ module PageMakers =
                         SiteTemplates.MainTemplate.SuccessMessageBox().Doc()
                 | None -> SiteTemplates.MainTemplate.SuccessMessageBox().Doc()
             )
-            .Navbar(Navbar.MakeNavbar ctx ep false)
             .Main(
                 SiteParts
                     .DocumentsTemplate()
@@ -257,11 +207,7 @@ module PageMakers =
             .Doc()
 
     let ImageUpload ctx ep (name: string) =
-        SiteTemplates
-            .MainTemplate()
-            .DarkMode(getDarkModeStatus ctx)
-            .FirstName(name)
-            .Navbar(Navbar.MakeNavbar ctx ep false)
+        (buildMainTemplate ctx ep name false)
             .ErrorBox(
                 match ctx.Request.Get.Item "success" with
                 | Some s ->
