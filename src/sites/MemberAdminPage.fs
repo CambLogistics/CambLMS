@@ -70,7 +70,7 @@ module MemberAdminPage =
                         .Name(u.Name)
                         .AccID(string u.AccountID)
                         .RoleSelectHole(
-                            if u.Role >= currentUser.Role || currentUser.Id = u.Id then
+                            if u.Role.Level >= currentUser.Role.Level || currentUser.Id = u.Id then
                                 SiteParts.MemberListTemplate
                                     .RoleSelectorDisabled()
                                     .RankList(
@@ -82,7 +82,7 @@ module MemberAdminPage =
                                                 .Name(r.Name)
                                                 .Doc())
                                     )
-                                    .Rank(string u.Role)
+                                    .Rank(string u.Role.Level)
                                     .Doc()
                             else
                                 SiteParts.MemberListTemplate
@@ -99,7 +99,7 @@ module MemberAdminPage =
                                                     .Name(r.Name)
                                                     .Doc())
                                     )
-                                    .Rank(string u.Role)
+                                    .Rank(string u.Role.Level)
                                     .ChangeRank(fun e ->
                                         ActionDispatcher.RunAction
                                             UserController.changeUserRank

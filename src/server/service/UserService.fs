@@ -232,7 +232,7 @@ module UserService =
 
                 where (
                     user.Accepted = (sbyte (if pending then 0 else 1))
-                    && user.Deleted = (sbyte (if showDeleted then 0 else 1))
+                    && user.Deleted = (sbyte (if showDeleted then 1 else 0))
                 )
 
                 sortByDescending user.Role
